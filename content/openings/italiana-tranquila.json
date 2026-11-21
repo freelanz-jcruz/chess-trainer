@@ -1,0 +1,31 @@
+{
+  "id": "italiana-tranquila",
+  "name": "Apertura Italiana: Giuoco Pianissimo",
+  "eco": "C54",
+  "side": "white",
+  "kind": "repertoire",
+  "block": 5,
+  "level": "principiante",
+  "summary": "Desarrollo tranquilo y sólido: sacar las piezas, enrocar y preparar el centro sin prisas.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "e4", "note": "Un peón al centro: controla casillas clave y abre camino al alfil y a la dama." },
+    { "san": "e5", "note": "Las negras responden igual y también reclaman su parte del centro." },
+    { "san": "Nf3", "note": "Se desarrolla una pieza y, de paso, se ataca el peón de e5." },
+    { "san": "Nc6", "note": "Defender desarrollando: el caballo protege e5 y sale hacia el centro." },
+    { "san": "Bc4", "note": "El alfil mira hacia f7, la casilla más delicada del rey negro al principio." },
+    { "san": "Bc5", "note": "Las negras colocan su alfil en la diagonal equivalente, apuntando a f2." },
+    { "san": "c3", "note": "Preparar d4 más adelante y dar al alfil una casilla de retirada." },
+    { "san": "Nf6", "note": "Otra pieza menor fuera, presionando el peón de e4." },
+    { "san": "d3", "note": "Defender e4 con calma. Es la idea de la versión tranquila: primero, terminar el desarrollo." },
+    { "san": "d6", "note": "Las negras hacen lo mismo: sostienen e5 y abren paso al alfil de casillas blancas." },
+    { "san": "O-O", "note": "Enrocar pronto pone al rey a salvo y conecta la torre con el juego." },
+    { "san": "O-O", "note": "Las negras también ponen su rey a salvo." },
+    { "san": "Re1", "note": "La torre se coloca detrás del peón de e4, en la columna donde puede abrirse el juego." },
+    { "san": "a6", "note": "Prepara una retirada para el alfil y la posibilidad de avanzar ...b5." },
+    { "san": "Bb3", "note": "El alfil se aparta antes de que lo molesten, sin dejar de mirar a f7." },
+    { "san": "Ba7", "note": "El alfil negro también se pone a salvo en su diagonal." },
+    { "san": "h3", "note": "Una casilla de escape para el rey y se impide que un alfil o caballo rival se instale en g4." }
+  ],
+  "alternatives": {}
+}

@@ -1,0 +1,78 @@
+{
+  "blocks": [
+    {
+      "id": 1,
+      "title": "Fundamentos",
+      "description": "Las piezas y cómo se mueven, capturar, el valor de cada pieza, jaque, mate y tablas.",
+      "lessons": [
+        { "id": "piezas", "title": "El tablero y las piezas", "type": "explanation", "status": "soon" },
+        { "id": "captura-valor", "title": "Capturar y el valor de las piezas", "type": "task", "status": "soon" },
+        { "id": "jaque-mate", "title": "Jaque y jaque mate", "type": "task", "status": "soon" },
+        { "id": "tablas", "title": "Ahogado y tablas", "type": "explanation", "status": "soon" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Movimientos especiales",
+      "description": "Enroque, captura al paso y coronación.",
+      "lessons": [
+        { "id": "enroque", "title": "El enroque", "type": "task", "status": "soon" },
+        { "id": "al-paso", "title": "Captura al paso", "type": "task", "status": "soon" },
+        { "id": "coronacion", "title": "Coronación", "type": "task", "status": "soon" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Mates comunes",
+      "description": "Patrones de mate que conviene reconocer y saber ejecutar.",
+      "lessons": [
+        { "id": "mate-en-1", "title": "Mate en 1", "type": "puzzles", "status": "available", "themes": ["mateIn1"] },
+        { "id": "mate-en-2", "title": "Mate en 2", "type": "puzzles", "status": "available", "themes": ["mateIn2"] },
+        { "id": "mate-pastor", "title": "Mate del pastor y cómo evitarlo", "type": "opening", "status": "soon" },
+        { "id": "mate-pasillo", "title": "Mate del pasillo", "type": "task", "status": "soon" },
+        { "id": "mate-coz", "title": "Mate de la coz", "type": "task", "status": "soon" },
+        { "id": "dama-rey", "title": "Dama y rey contra rey", "type": "vsEngine", "status": "soon" },
+        { "id": "torre-rey", "title": "Torre y rey contra rey", "type": "vsEngine", "status": "soon" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Principios de apertura",
+      "description": "Centro, desarrollo, enroque y otros consejos para las primeras jugadas.",
+      "lessons": [
+        { "id": "principios", "title": "Los cinco principios", "type": "explanation", "status": "soon" }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Repertorio",
+      "description": "Las aperturas que vas a jugar, paso a paso.",
+      "lessons": [
+        { "id": "italiana-tranquila", "title": "Italiana tranquila (blancas)", "type": "opening", "status": "available", "ref": "italiana-tranquila" },
+        { "id": "e5-contra-e4", "title": "1...e5 contra 1.e4 (negras)", "type": "opening", "status": "soon" },
+        { "id": "gambito-dama-rehusado", "title": "Gambito de Dama rehusado (negras)", "type": "opening", "status": "soon" },
+        { "id": "trampas", "title": "Trampas típicas: Fegatello y Légal", "type": "opening", "status": "soon" }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Táctica",
+      "description": "Golpes tácticos básicos para ganar material.",
+      "lessons": [
+        { "id": "pieza-colgada", "title": "Pieza colgada", "type": "puzzles", "status": "available", "themes": ["hangingPiece"] },
+        { "id": "ataque-doble", "title": "Ataque doble", "type": "puzzles", "status": "available", "themes": ["fork"] },
+        { "id": "clavada", "title": "Clavada", "type": "puzzles", "status": "soon" },
+        { "id": "descubierta", "title": "Ataque a la descubierta", "type": "puzzles", "status": "soon" }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Finales básicos",
+      "description": "Rey y peón contra rey, y la oposición.",
+      "lessons": [
+        { "id": "rey-peon", "title": "Rey y peón contra rey", "type": "vsEngine", "status": "soon" },
+        { "id": "oposicion", "title": "La oposición", "type": "task", "status": "soon" }
+      ]
+    }
+  ]
+}
