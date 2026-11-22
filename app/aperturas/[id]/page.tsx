@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Note } from '@/components/Trainer';
 import { notFound } from 'next/navigation';
 import OpeningWalkthrough from '@/components/OpeningWalkthrough';
 import { getOpening, openings } from '@/lib/content/load';
@@ -20,12 +21,12 @@ export default async function OpeningPage({ params }: { params: Promise<{ id: st
   return (
     <>
       <h1>{opening.name}</h1>
-      <p className="muted small">
+      <Note className="my-3.5">
         {opening.kind === 'trap' ? 'Trampa' : 'Recorrido paso a paso'} · juegas con{' '}
         {opening.side === 'white' ? 'blancas' : 'negras'}
         {opening.eco && <> · ECO {opening.eco}</>} ·{' '}
         <Link href={`/aperturas/${opening.id}/practica/`}>Ir a la práctica</Link>
-      </p>
+      </Note>
       <OpeningWalkthrough opening={opening} />
     </>
   );

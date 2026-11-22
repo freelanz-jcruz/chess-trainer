@@ -73,3 +73,17 @@ describe('progreso guardado e importado', () => {
     expect(again).toEqual(original);
   });
 });
+
+describe('borrar progreso', () => {
+  it('vacía todo salvo los ajustes', async () => {
+    const { resetKeepingSettings } = await import('@/lib/progress/store');
+    const p = parseProgress(null);
+    p.lessons.tablero = { completed: true, lastPage: 3 };
+    p.reviews['puzzle:x'] = { box: 1, due: DAY };
+    p.settings = { ...p.settings, theme: 'light', showCoordinates: false };
+    const r = resetKeepingSettings(p);
+    expect(r.lessons).toEqual({});
+    expect(r.reviews).toEqual({});
+    expect(r.settings).toEqual(p.settings);
+  });
+});

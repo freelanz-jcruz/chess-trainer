@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <>
       <h1>Página no encontrada</h1>
-      <p>
+      <p className="my-4">
         <Link href="/">Volver al temario</Link>
       </p>
     </>

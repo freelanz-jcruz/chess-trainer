@@ -1,5 +1,8 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
+import { Lightbulb, RotateCcw } from 'lucide-react';
+import { Controls, Note, Panel, Trainer } from '../Trainer';
+import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
 import RichText from './RichText';
@@ -107,7 +110,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
   };
 
   return (
-    <div className="trainer">
+    <Trainer>
       <Board
         fen={fen}
         orientation={page.orientation ?? myColor}
@@ -117,22 +120,22 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
         coordinates={coordinates}
         onMove={onMove}
       />
-      <div className="panel">
+      <Panel>
         <div className="prose">
           <RichText text={page.body} />
         </div>
         <Feedback state={feedback} />
-        <div className="controls">
-          <button type="button" onClick={showHint} disabled={phase !== 'user'}>
-            💡 Pista
-          </button>
+        <Controls>
+          <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
+            <Lightbulb /> Pista
+          </Button>
           {phase === 'done' && (
-            <button type="button" onClick={retry}>
-              ↺ Repetir
-            </button>
+            <Button variant="outline" onClick={retry}>
+              <RotateCcw /> Repetir
+            </Button>
           )}
-        </div>
-      </div>
-    </div>
+        </Controls>
+      </Panel>
+    </Trainer>
   );
 }

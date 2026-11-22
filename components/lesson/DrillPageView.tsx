@@ -1,5 +1,8 @@
 'use client';
 import { useCallback, useState } from 'react';
+import { Lightbulb, RotateCcw } from 'lucide-react';
+import { Controls, Note, Panel, Trainer } from '../Trainer';
+import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
 import RichText from './RichText';
@@ -65,7 +68,7 @@ export default function DrillPageView({ page, onComplete, coordinates }: PagePro
   const target = page.goal.type === 'reach' ? [page.goal.square] : [];
 
   return (
-    <div className="trainer">
+    <Trainer>
       <Board
         fen={fen}
         orientation={me}
@@ -76,20 +79,20 @@ export default function DrillPageView({ page, onComplete, coordinates }: PagePro
         coordinates={coordinates}
         onMove={onMove}
       />
-      <div className="panel">
+      <Panel>
         <div className="prose">
           <RichText text={page.body} />
         </div>
         <Feedback state={feedback} />
-        <div className="controls">
-          <button type="button" onClick={showHint} disabled={done}>
-            💡 Pista
-          </button>
-          <button type="button" onClick={reset}>
-            ↺ Empezar de nuevo
-          </button>
-        </div>
-      </div>
-    </div>
+        <Controls>
+          <Button variant="outline" onClick={showHint} disabled={done}>
+            <Lightbulb /> Pista
+          </Button>
+          <Button variant="outline" onClick={reset}>
+            <RotateCcw /> Empezar de nuevo
+          </Button>
+        </Controls>
+      </Panel>
+    </Trainer>
   );
 }

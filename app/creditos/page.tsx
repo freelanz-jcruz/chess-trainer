@@ -42,7 +42,7 @@ export default function Credits() {
           <a href="https://serwist.pages.dev/">Serwist</a> (MIT) para el funcionamiento sin conexión.
         </li>
       </ul>
-      <p className="muted small">Este proyecto no está afiliado a Lichess ni a Stockfish.</p>
+      <p className="text-sm text-muted-foreground">Este proyecto no está afiliado a Lichess ni a Stockfish.</p>
     </article>
   );
 }

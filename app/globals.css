@@ -1,11 +1,75 @@
+/*
+ * Orden de las capas (de menor a mayor prioridad):
+ *   reset      → preflight de Tailwind (por debajo de Chessground, que necesita su propio box-sizing y padding)
+ *   vendor     → CSS de Chessground (tablero y piezas)
+ *   theme      → variables de Tailwind
+ *   base       → estilos base propios: cuerpo, títulos y enlaces
+ *   components → lo que no se puede expresar con clases: el tablero de Chessground y el texto de las lecciones
+ *   utilities  → clases de Tailwind
+ */
+@layer reset, vendor, theme, base, components, utilities;
+
+@import 'tailwindcss/preflight.css' layer(reset);
+@import '@lichess-org/chessground/assets/chessground.base.css' layer(vendor);
+@import '@lichess-org/chessground/assets/chessground.cburnett.css' layer(vendor);
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import 'tw-animate-css';
+
+/* `dark:` se aplica con el tema oscuro, que es el de defecto: todo salvo data-theme="light". */
+@custom-variant dark (&:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *));
+
+/* Paleta con los nombres de shadcn/ui. Tema oscuro por defecto; el claro con data-theme="light" (ver ThemeScript). */
 :root {
-  --bg: #f6f3ee;
-  --surface: #ffffff;
-  --text: #24211d;
-  --muted: #6d665d;
+  color-scheme: dark;
+  --radius: 10px;
+  --background: #1d1b19;
+  --foreground: #ece7df;
+  --card: #282522;
+  --card-foreground: #ece7df;
+  --popover: #282522;
+  --popover-foreground: #ece7df;
+  --primary: #5fae84;
+  --primary-foreground: #10130f;
+  --secondary: #33302c;
+  --secondary-foreground: #ece7df;
+  --muted: #2f2c28;
+  --muted-foreground: #a59d92;
+  --accent: #33302c;
+  --accent-foreground: #ece7df;
+  --destructive: #f2776f;
+  --border: #3a3631;
+  --input: #3a3631;
+  --ring: #5fae84;
+  /* Propios del ajedrez: casillas y valoración de jugadas */
+  --sq-light: #c9c0ad;
+  --sq-dark: #6f7f62;
+  --ok: #6cc584;
+  --good: #a2cf6f;
+  --inacc: #e6c04d;
+  --mistake: #f0955a;
+  --blunder: #f2776f;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --background: #f6f3ee;
+  --foreground: #24211d;
+  --card: #ffffff;
+  --card-foreground: #24211d;
+  --popover: #ffffff;
+  --popover-foreground: #24211d;
+  --primary: #2f6f4f;
+  --primary-foreground: #ffffff;
+  --secondary: #efeae2;
+  --secondary-foreground: #24211d;
+  --muted: #f0ebe3;
+  --muted-foreground: #6d665d;
+  --accent: #efeae2;
+  --accent-foreground: #24211d;
+  --destructive: #b3261e;
   --border: #e2dbd0;
-  --accent: #2f6f4f;
-  --accent-text: #ffffff;
+  --input: #e2dbd0;
+  --ring: #2f6f4f;
   --sq-light: #ece3d0;
   --sq-dark: #8f9f7f;
   --ok: #2f7d43;
@@ -13,186 +77,98 @@
   --inacc: #b58a00;
   --mistake: #c4621a;
   --blunder: #b3261e;
-  --radius: 10px;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1d1b19;
-    --surface: #282522;
-    --text: #ece7df;
-    --muted: #a59d92;
-    --border: #3a3631;
-    --accent: #5fae84;
-    --accent-text: #10130f;
-    --sq-light: #c9c0ad;
-    --sq-dark: #6f7f62;
-    --ok: #6cc584;
-    --good: #a2cf6f;
-    --inacc: #e6c04d;
-    --mistake: #f0955a;
-    --blunder: #f2776f;
+
+/* Las variables anteriores como utilidades de Tailwind: bg-card, text-muted-foreground, border-border, text-blunder… */
+@theme {
+  /* Punto en que tablero y panel pasan a dos columnas: variante `trainer:`. */
+  --breakpoint-trainer: 51.25rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sq-light: var(--sq-light);
+  --color-sq-dark: var(--sq-dark);
+  --color-ok: var(--ok);
+  --color-good: var(--good);
+  --color-inacc: var(--inacc);
+  --color-mistake: var(--mistake);
+  --color-blunder: var(--blunder);
+}
+
+/* Alto de la barra de pestañas inferior (solo en móvil): el contenido y los elementos fijos dejan ese hueco. */
+:root { --tabbar-h: calc(3.5rem + env(safe-area-inset-bottom)); }
+@media (min-width: 48rem) { :root { --tabbar-h: 0px; } }
+
+@layer base {
+  *, ::before, ::after { border-color: var(--border); }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    /* Inter se sirve desde la propia app (next/font): funciona sin conexión y sin peticiones a Google. */
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
+  h1 { font-size: 1.625rem; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; margin: 14px 0 6px; }
+  h2 { font-size: 1.15rem; line-height: 1.3; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 4px; }
+  a { color: var(--primary); text-decoration: underline; }
+  button:not(:disabled), [role='button']:not(:disabled) { cursor: pointer; }
 }
 
-* { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+@layer components {
+  /* Texto de las lecciones y de Créditos (párrafos, negritas y listas). */
+  .prose { max-width: 680px; }
+  .prose p { margin: 0 0 0.6em; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose ul { margin: 0 0 0.6em; padding-left: 1.2em; list-style: disc; }
+  .prose h2:not(:first-child) { margin-top: 0.9em; }
+
+  /* Tablero: colores propios (casilla a8 clara). Chessground crea estos elementos, por eso van aquí y no como clases. */
+  cg-board {
+    background-color: var(--sq-light);
+    background-image: conic-gradient(var(--sq-dark) 0 25%, transparent 0 50%, var(--sq-dark) 0 75%, transparent 0);
+    background-size: 25% 25%;
+  }
+  cg-board square.last-move { background-color: rgba(205, 210, 106, 0.55); }
+  cg-board square.selected { background-color: rgba(20, 85, 30, 0.45); }
+  cg-board square.move-dest { background: radial-gradient(rgba(20, 85, 30, 0.45) 19%, rgba(0, 0, 0, 0) 20%); }
+  cg-board square.oc.move-dest { background: radial-gradient(transparent 0%, transparent 79%, rgba(20, 85, 30, 0.35) 80%); }
+  cg-board square.check { background: radial-gradient(ellipse at center, rgba(255, 0, 0, 1) 0%, rgba(231, 0, 0, 1) 25%, rgba(169, 0, 0, 0) 89%, rgba(158, 0, 0, 0) 100%); }
+  /* Casillas resaltadas en explicaciones */
+  cg-board square.hint { background: radial-gradient(rgba(47, 111, 79, 0.55) 22%, rgba(47, 111, 79, 0.18) 24%, transparent 60%); }
+  .cg-wrap coords { font-size: 10px; font-weight: 600; }
+  .cg-wrap coords coord { color: #4b4537; }
+  /* Letras de columna dentro de su casilla (abajo a la derecha), sin desplazamiento fijo en píxeles */
+  .cg-wrap coords.files { left: 0; bottom: 0; height: auto; text-transform: none; }
+  .cg-wrap coords.files coord { flex: 1 1 0; text-align: right; padding-right: 3px; }
+  /* Pieza dentro de los botones del selector de coronación */
+  .promo-piece piece { width: 100% !important; height: 100% !important; position: static; display: block; }
 }
-a { color: var(--accent); }
-main { max-width: 960px; margin: 0 auto; padding: 8px 16px 48px; }
-h1 { font-size: 1.5rem; margin: 12px 0 4px; }
-h2 { font-size: 1.15rem; margin: 0 0 4px; }
-.muted { color: var(--muted); }
-.small { font-size: 0.875rem; }
-
-.site-header {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--surface);
-}
-.site-header .brand { font-weight: 700; text-decoration: none; color: var(--text); }
-.site-header nav { display: flex; gap: 14px; }
-.site-header nav a { text-decoration: none; }
-
-button, .button {
-  font: inherit; cursor: pointer; border-radius: 8px; padding: 8px 14px;
-  border: 1px solid var(--border); background: var(--surface); color: var(--text);
-  text-decoration: none; display: inline-block; min-height: 40px;
-}
-button:disabled { opacity: 0.45; cursor: default; }
-button.primary, .button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
-
-/* Temario */
-.blocks { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 12px; }
-.block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
-.block-num {
-  display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%;
-  background: var(--accent); color: var(--accent-text); font-size: 0.85em; margin-right: 4px;
-}
-.lessons { list-style: none; padding: 0; margin: 8px 0 0; }
-.lesson { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid var(--border); }
-.lesson.soon { color: var(--muted); }
-.badge { font-size: 0.8rem; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--border); white-space: nowrap; }
-
-/* Entrenador: tablero + panel */
-.trainer { display: grid; gap: 16px; margin-top: 12px; }
-@media (min-width: 820px) {
-  .trainer { grid-template-columns: minmax(0, 560px) minmax(260px, 1fr); align-items: start; }
-}
-.board-frame { width: 100%; max-width: 560px; aspect-ratio: 1; margin: 0 auto; }
-.board { width: 100%; height: 100%; }
-.panel { display: grid; gap: 12px; align-content: start; }
-.controls { display: flex; gap: 8px; flex-wrap: wrap; }
-.step-note, .feedback {
-  background: var(--surface); border: 1px solid var(--border); border-left-width: 5px;
-  border-radius: var(--radius); padding: 10px 12px; min-height: 3.2em;
-}
-.feedback-text { margin-top: 4px; font-size: 0.95rem; }
-.verdict-icon { font-weight: 700; margin-right: 6px; }
-.verdict-correct { border-left-color: var(--ok); }
-.verdict-correct .verdict-icon { color: var(--ok); }
-.verdict-good { border-left-color: var(--good); }
-.verdict-inaccuracy { border-left-color: var(--inacc); }
-.verdict-inaccuracy .verdict-icon { color: var(--inacc); }
-.verdict-mistake { border-left-color: var(--mistake); }
-.verdict-mistake .verdict-icon { color: var(--mistake); }
-.verdict-blunder { border-left-color: var(--blunder); }
-.verdict-blunder .verdict-icon { color: var(--blunder); }
-
-.move-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 2px 4px; }
-.move-list li { display: flex; align-items: center; }
-.move-num { color: var(--muted); margin: 0 2px 0 6px; font-size: 0.9rem; }
-.move { border: none; background: none; padding: 2px 6px; min-height: 0; border-radius: 6px; }
-.move:disabled { opacity: 1; }
-.move.active { background: var(--accent); color: var(--accent-text); }
-.cta { margin: 0; }
-
-.chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
-.chip { padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border); text-decoration: none; color: var(--text); background: var(--surface); font-size: 0.9rem; }
-.chip.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
-
-.prose { max-width: 680px; }
-
-/* Tablero: colores propios (casilla a8 clara) */
-cg-board {
-  background-color: var(--sq-light);
-  background-image: conic-gradient(var(--sq-dark) 0 25%, transparent 0 50%, var(--sq-dark) 0 75%, transparent 0);
-  background-size: 25% 25%;
-}
-cg-board square.last-move { background-color: rgba(205, 210, 106, 0.55); }
-cg-board square.selected { background-color: rgba(20, 85, 30, 0.45); }
-cg-board square.move-dest { background: radial-gradient(rgba(20, 85, 30, 0.45) 19%, rgba(0, 0, 0, 0) 20%); }
-cg-board square.oc.move-dest { background: radial-gradient(transparent 0%, transparent 79%, rgba(20, 85, 30, 0.35) 80%); }
-cg-board square.check { background: radial-gradient(ellipse at center, rgba(255, 0, 0, 1) 0%, rgba(231, 0, 0, 1) 25%, rgba(169, 0, 0, 0) 89%, rgba(158, 0, 0, 0) 100%); }
-.cg-wrap coords { font-size: 10px; font-weight: 600; }
-.cg-wrap coords coord { color: #4b4537; }
-/* Letras de columna dentro de su casilla (abajo a la derecha), sin desplazamiento fijo en píxeles */
-.cg-wrap coords.files { left: 0; bottom: 0; height: auto; text-transform: none; }
-.cg-wrap coords.files coord { flex: 1 1 0; text-align: right; padding-right: 3px; }
-
-/* Avisos de la PWA */
-.toast {
-  position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%);
-  display: flex; align-items: center; gap: 10px; z-index: 50;
-  width: max-content; max-width: calc(100vw - 32px);
-  background: var(--surface); color: var(--text); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 8px 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Casillas resaltadas en explicaciones */
-cg-board square.hint { background: radial-gradient(rgba(47, 111, 79, 0.55) 22%, rgba(47, 111, 79, 0.18) 24%, transparent 60%); }
-
-/* Selector de coronación */
-.board-frame { position: relative; }
-.promotion {
-  position: absolute; inset: 0; z-index: 20; display: grid; place-content: center; gap: 10px; text-align: center;
-  background: rgba(0, 0, 0, 0.45); border-radius: 4px; color: #fff;
-}
-.promotion p { margin: 0; font-weight: 600; }
-.promotion-options { display: flex; gap: 8px; }
-.promotion-options button { width: 64px; height: 64px; padding: 4px; background: var(--surface); }
-.promo-piece { position: relative; display: block; width: 100%; height: 100%; }
-.promo-piece piece { width: 100% !important; height: 100% !important; position: static; display: block; }
-button.link { background: none; border: none; color: #fff; text-decoration: underline; min-height: 0; }
-
-/* Lecciones */
-.lesson-progress { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-.dot { width: 14px; height: 14px; min-height: 0; padding: 0; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); }
-.dot.done { background: var(--accent); border-color: var(--accent); }
-.dot.current { outline: 2px solid var(--accent); outline-offset: 2px; }
-.lesson-nav { margin-top: 16px; align-items: center; }
-.lesson-end { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.lesson-text-only { max-width: 680px; margin-top: 12px; }
-.prose p { margin: 0 0 0.6em; }
-.prose p:last-child { margin-bottom: 0; }
-.prose ul { margin: 0 0 0.6em; padding-left: 1.2em; }
-.quiz-options { display: grid; gap: 8px; }
-.quiz-option { text-align: left; }
-.quiz-option.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, var(--surface)); }
-.quiz-option.wrong { border-color: var(--mistake); background: color-mix(in srgb, var(--mistake) 12%, var(--surface)); }
-.quiz-option:disabled { opacity: 1; }
-.lesson-nav {
-  position: sticky; bottom: 0; z-index: 10; padding: 10px 0 max(10px, env(safe-area-inset-bottom));
-  background: linear-gradient(to bottom, transparent, var(--bg) 25%);
-}
-
-/* Selector de variantes en el recorrido de una apertura */
-.branch-picker { margin: 10px 0; padding: 10px 12px; border: 1px dashed var(--border); border-radius: 10px; }
-.branch-picker p { margin: 0 0 6px; }
-.branch-options { display: flex; flex-wrap: wrap; gap: 6px; }
-.branch-options .chip { cursor: pointer; text-align: left; }
-
-/* Repaso espaciado */
-.badge { display: inline-block; min-width: 1.4em; margin-left: 4px; padding: 0 5px; border-radius: 99px; background: var(--accent); color: var(--accent-text); font-size: 0.75rem; line-height: 1.4em; text-align: center; }
-.review-banner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border: 1px solid var(--accent); border-radius: 10px; }
-.review-list { padding-left: 1.2em; }
-.review-list li { margin: 4px 0; }
-
-/* Progreso y ajustes */
-.progress-tools section { margin-bottom: 28px; }
-.setting { display: block; margin: 10px 0; }
-.site-footer { max-width: 960px; margin: 0 auto; padding: 16px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); }
-.site-header nav { flex-wrap: wrap; row-gap: 4px; }

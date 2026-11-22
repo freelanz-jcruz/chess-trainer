@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 import type { Curriculum as CurriculumData, Lesson } from '@/lib/content/schemas';
 import { useProgress, type Progress } from '@/lib/progress/store';
 import { lessonHref } from '@/lib/content/links';
@@ -35,21 +36,26 @@ export default function Curriculum({
 }) {
   const { progress } = useProgress();
   return (
-    <ol className="blocks">
+    <ol className="my-4 grid gap-3">
       {curriculum.blocks.map((b) => (
-        <li key={b.id} className="block">
+        <li key={b.id} className="rounded-lg border border-border bg-card px-4 py-3.5">
           <h2>
-            <span className="block-num">{b.id}</span> {b.title}
+            <span className="mr-1 inline-grid size-[1.6em] place-items-center rounded-full bg-primary text-[0.85em] text-primary-foreground">
+              {b.id}
+            </span> {b.title}
           </h2>
-          <p className="muted small">{b.description}</p>
-          <ul className="lessons">
+          <p className="my-3.5 text-sm text-muted-foreground">{b.description}</p>
+          <ul className="mt-2">
             {b.lessons.map((l) => {
               const href = lessonHref(l);
               const prog = lessonProgress(l, progress, puzzleIds);
               return (
-                <li key={l.id} className={href ? 'lesson' : 'lesson soon'}>
+                <li
+                  key={l.id}
+                  className={`flex items-center justify-between gap-2 border-t border-border py-1.5 ${href ? '' : 'text-muted-foreground'}`}
+                >
                   {href ? <Link href={href}>{l.title}</Link> : <span>{l.title}</span>}
-                  {href ? prog && <span className="badge">{prog}</span> : <span className="badge muted">próximamente</span>}
+                  {href ? prog && <Badge>{prog}</Badge> : <Badge variant="muted">próximamente</Badge>}
                 </li>
               );
             })}

@@ -1,5 +1,9 @@
 'use client';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronRight, Lightbulb } from 'lucide-react';
+import Callout from './Callout';
+import { Controls, Note, Panel, Trainer } from './Trainer';
+import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
 import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
@@ -73,24 +77,24 @@ export default function PuzzleTrainer({
 
   if (finished)
     return (
-      <p className="feedback verdict-correct">
+      <Callout tone="correct" className="mt-3">
         {dueCount > 0
           ? `Has saltado ${dueCount === 1 ? 'el problema que quedaba' : `los ${dueCount} problemas que quedaban`}: seguirán pendientes.`
           : 'No quedan problemas por repasar hoy. ¡Bien hecho!'}
-      </p>
+      </Callout>
     );
-  if (!puzzle) return <p>{mounted && !ordered.length ? 'No hay ejercicios.' : 'Cargando ejercicios…'}</p>;
+  if (!puzzle) return <p className="my-3">{mounted && !ordered.length ? 'No hay ejercicios.' : 'Cargando ejercicios…'}</p>;
   return (
     <PuzzleBoard
       key={puzzle.id}
       puzzle={puzzle}
       header={
-        <p className="muted small">
+        <Note>
           {mode === 'review'
             ? `${title} · quedan ${dueCount} hoy`
             : `${title} · resueltos ${solvedCount}/${ordered.length}`}{' '}
           · dificultad {puzzle.rating}
-        </p>
+        </Note>
       }
       onNext={() => goTo(pickNext(puzzle.id))}
       onResult={(r) =>
@@ -245,7 +249,7 @@ function PuzzleBoard({
   };
 
   return (
-    <div className="trainer">
+    <Trainer>
       <Board
         fen={fen}
         orientation={myColor}
@@ -255,25 +259,31 @@ function PuzzleBoard({
         coordinates={coordinates}
         onMove={onMove}
       />
-      <div className="panel">
+      <Panel>
         {header}
         <Feedback state={feedback} />
-        <div className="controls">
-          <button type="button" onClick={showHint} disabled={phase !== 'user'}>
-            💡 Pista
-          </button>
-          <button type="button" className={phase === 'solved' ? 'primary' : ''} onClick={next}>
-            {phase === 'solved' ? 'Siguiente ▶' : 'Saltar'}
-          </button>
-        </div>
-        <p className="muted small">
+        <Controls>
+          <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
+            <Lightbulb /> Pista
+          </Button>
+          <Button variant={phase === 'solved' ? 'default' : 'outline'} onClick={next}>
+            {phase === 'solved' ? (
+              <>
+                Siguiente <ChevronRight />
+              </>
+            ) : (
+              'Saltar'
+            )}
+          </Button>
+        </Controls>
+        <Note>
           Problema{' '}
           <a href={`https://lichess.org/training/${puzzle.id}`} target="_blank" rel="noreferrer">
             #{puzzle.id}
           </a>{' '}
           de la base de datos de Lichess (CC0).
-        </p>
-      </div>
-    </div>
+        </Note>
+      </Panel>
+    </Trainer>
   );
 }

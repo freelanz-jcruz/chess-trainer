@@ -1,11 +1,16 @@
 import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
 import Link from 'next/link';
-import { NavReviewLink } from '@/components/ReviewLinks';
 import ServiceWorker from '@/components/ServiceWorker';
+import { DesktopNav, MobileTabBar } from '@/components/SiteNav';
+import { ThemeToggle } from '@/components/Theme';
+import ThemeScript from '@/components/ThemeScript';
+import { Toaster } from '@/components/ui/sonner';
 import { withBase } from '@/lib/base-path';
-import '@lichess-org/chessground/assets/chessground.base.css';
-import '@lichess-org/chessground/assets/chessground.cburnett.css';
 import './globals.css';
+
+// Se descarga al compilar y se sirve desde la app (entra en la caché sin conexión).
+const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'Chess Trainer',
@@ -21,32 +26,39 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f6f3ee' },
-    { media: '(prefers-color-scheme: dark)', color: '#1d1b19' },
-  ],
+  // Tema oscuro por defecto; ThemeScript / ThemeToggle lo cambian si se elige el claro.
+  themeColor: '#1d1b19',
+  // Permite usar env(safe-area-inset-*) para que la barra de pestañas no quede bajo el indicador de inicio.
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body>
-        <header className="site-header">
-          <Link href="/" className="brand">
-            ♞ Chess Trainer
-          </Link>
-          <nav>
-            <Link href="/">Temario</Link>
-            <NavReviewLink />
-            <Link href="/ejercicios/todos/">Ejercicios</Link>
-            <Link href="/progreso/">Progreso</Link>
-          </nav>
+    // suppressHydrationWarning: ThemeScript puede añadir data-theme antes de hidratar.
+    <html lang="es" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="pb-[var(--tabbar-h)]">
+        <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">
+          <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 px-4">
+            <Link href="/" className="font-bold tracking-tight text-foreground no-underline">
+              ♞ Chess Trainer
+            </Link>
+            <DesktopNav />
+            <div className="ml-auto">
+              <ThemeToggle />
+            </div>
+          </div>
         </header>
-        <main>{children}</main>
-        <footer className="site-footer">
+        <main className="mx-auto max-w-[960px] px-4 pt-2 pb-12">{children}</main>
+        <footer className="mx-auto max-w-[960px] border-t border-border p-4 text-[0.85rem] text-muted-foreground">
           <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3)
         </footer>
+        <MobileTabBar />
         <ServiceWorker />
+        {/* Arriba: en móvil abajo están la barra de pestañas y los controles del entrenador. */}
+        <Toaster position="top-center" offset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} mobileOffset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} />
       </body>
     </html>
   );

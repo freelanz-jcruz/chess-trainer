@@ -1,7 +1,10 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Callout from './Callout';
 import PuzzleTrainer from './PuzzleTrainer';
+import { Note } from './Trainer';
+import { Button } from '@/components/ui/button';
 import type { Puzzle } from '@/lib/content/schemas';
 import { dueItems, INTERVALS, MAX_BOX, nextDueDay } from '@/lib/progress/review';
 import { today, useProgress } from '@/lib/progress/store';
@@ -20,7 +23,7 @@ export default function ReviewPage({ openings, puzzles }: { openings: OpeningMet
   const [session, setSession] = useState<Puzzle[] | null>(null);
 
   const day = today();
-  if (!mounted) return <p>Cargando…</p>;
+  if (!mounted) return <p className="my-4">Cargando…</p>;
 
   const dueOpenings = dueItems(progress.reviews, day, 'opening').flatMap((d) => {
     const o = openings.find((x) => x.id === d.id);
@@ -32,8 +35,8 @@ export default function ReviewPage({ openings, puzzles }: { openings: OpeningMet
   const next = nextDueDay(progress.reviews, day);
 
   return (
-    <div className="review">
-      <p className="muted">
+    <div>
+      <p className="my-4 text-muted-foreground">
         Repasar lo aprendido a intervalos cada vez más largos ayuda a no olvidarlo. Las aperturas entran en el repaso al
         practicarlas y los problemas, al fallarlos. Si aciertas sin errores ni pistas, vuelven más tarde (1, 3, 7, 14 y{' '}
         {INTERVALS[MAX_BOX]} días); si fallas, mañana.
@@ -41,42 +44,40 @@ export default function ReviewPage({ openings, puzzles }: { openings: OpeningMet
 
       <h2>Aperturas</h2>
       {dueOpenings.length ? (
-        <ul className="review-list">
+        <ul className="my-3.5 list-disc pl-5">
           {dueOpenings.map((o) => (
-            <li key={o.id}>
+            <li key={o.id} className="my-1">
               <Link href={`/aperturas/${o.id}/practica/`}>{o.name}</Link>{' '}
-              <span className="muted small">
+              <span className="text-sm text-muted-foreground">
                 · {o.side === 'white' ? 'blancas' : 'negras'} · caja {o.box} de {MAX_BOX}
               </span>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="muted small">Ninguna apertura pendiente hoy.</p>
+        <Note className="my-3.5">Ninguna apertura pendiente hoy.</Note>
       )}
 
       <h2>Problemas</h2>
       {session ? (
         <PuzzleTrainer puzzles={session} title="Repaso" mode="review" />
       ) : duePuzzles.length ? (
-        <p>
+        <p className="my-3.5 flex flex-wrap items-center gap-2.5">
           Tienes {duePuzzles.length} problema{duePuzzles.length === 1 ? '' : 's'} para repasar.{' '}
-          <button type="button" className="button primary" onClick={() => setSession(duePuzzles)}>
-            Empezar
-          </button>
+          <Button onClick={() => setSession(duePuzzles)}>Empezar</Button>
         </p>
       ) : (
-        <p className="muted small">Ningún problema pendiente hoy.</p>
+        <Note className="my-3.5">Ningún problema pendiente hoy.</Note>
       )}
 
       {!dueOpenings.length && !duePuzzles.length && (
-        <p className="feedback verdict-correct">
+        <Callout tone="correct" className="my-4">
           {tracked === 0
             ? 'Todavía no hay nada que repasar. Practica una apertura o resuelve problemas y aparecerán aquí.'
             : `¡Todo al día!${next ? ` El próximo repaso es el ${formatDay(next)}.` : ''}`}
-        </p>
+        </Callout>
       )}
-      <p className="muted small">
+      <Note className="my-3.5">
         Elementos en el repaso: {tracked}.{' '}
         {tracked > 0 && (
           <>
@@ -84,7 +85,7 @@ export default function ReviewPage({ openings, puzzles }: { openings: OpeningMet
             {Object.keys(progress.reviews).filter((k) => k.startsWith('puzzle:')).length}.
           </>
         )}
-      </p>
+      </Note>
     </div>
   );
 }

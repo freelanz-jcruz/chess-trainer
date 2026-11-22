@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { Note } from '@/components/Trainer';
 import LessonPlayer from '@/components/lesson/LessonPlayer';
 import { getLesson, lessons, nextLessonAfter } from '@/lib/content/load';
 
@@ -19,9 +20,9 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
   return (
     <>
       <h1>{lesson.title}</h1>
-      <p className="muted small">
+      <Note className="my-3.5">
         Bloque {lesson.block} · {lesson.summary}
-      </p>
+      </Note>
       <LessonPlayer lesson={lesson} next={nextLessonAfter(lesson.id)} />
     </>
   );

@@ -1,9 +1,13 @@
 'use client';
 import Link from 'next/link';
+import { Lightbulb, RotateCcw } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
 import MoveList from './MoveList';
+import PanelExtras from './PanelExtras';
+import { Controls, Note, Panel, Trainer } from './Trainer';
+import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen, type LinePly } from '@/lib/chess/opening-line';
 import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
@@ -186,7 +190,7 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
   const runs = progress.openings[opening.id];
 
   return (
-    <div className="trainer">
+    <Trainer>
       <Board
         fen={fen}
         orientation={myColor}
@@ -196,32 +200,32 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
         coordinates={progress.settings.showCoordinates}
         onMove={onMove}
       />
-      <div className="panel">
+      <Panel>
         <Feedback state={feedback} />
-        <div className="controls">
-          <button type="button" onClick={showHint} disabled={!myTurn || locked}>
-            💡 Pista
-          </button>
-          <button type="button" onClick={restart}>
-            ↺ Empezar de nuevo
-          </button>
-        </div>
-        <MoveList sans={sans} current={sans.length - 1} />
-        {done && <p className="small muted">Línea: {branchNames(line).join(' › ') || 'principal'}</p>}
+        <Controls>
+          <Button variant="outline" onClick={showHint} disabled={!myTurn || locked}>
+            <Lightbulb /> Pista
+          </Button>
+          <Button variant="outline" onClick={restart}>
+            <RotateCcw /> Empezar de nuevo
+          </Button>
+        </Controls>
+        <PanelExtras title="Jugadas" label={`Jugadas · ${sans.length}`}>
+          <MoveList sans={sans} current={sans.length - 1} />
+          {runs && runs.practiceRuns > 0 && (
+            <Note>
+              Prácticas completadas: {runs.practiceRuns} · sin fallos: {runs.cleanRuns}
+            </Note>
+          )}
+        </PanelExtras>
+        {done && <Note>Línea: {branchNames(line).join(' › ') || 'principal'}</Note>}
         {done && (
-          <p className="cta">
-            <button type="button" className="button primary" onClick={restart}>
-              Otra vez
-            </button>{' '}
+          <p className="flex flex-wrap items-center gap-2.5">
+            <Button onClick={restart}>Otra vez</Button>
             <Link href={`/aperturas/${opening.id}/`}>Repasar el recorrido</Link>
           </p>
         )}
-        {runs && runs.practiceRuns > 0 && (
-          <p className="muted small">
-            Prácticas completadas: {runs.practiceRuns} · sin fallos: {runs.cleanRuns}
-          </p>
-        )}
-      </div>
-    </div>
+      </Panel>
+    </Trainer>
   );
 }

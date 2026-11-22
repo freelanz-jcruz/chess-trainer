@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { withBase } from '@/lib/base-path';
 
 /**
- * Registra el service worker (solo en producción) y avisa cuando hay una versión nueva esperando.
+ * Registra el service worker (solo en producción) y avisa (con Sonner) cuando hay una versión nueva esperando.
  * La versión nueva no se activa sola: así no cambia el código a mitad de un ejercicio.
  */
 export default function ServiceWorker() {
@@ -32,7 +33,6 @@ export default function ServiceWorker() {
               setWaiting(sw); // actualización: hay una versión anterior activa
             } else {
               setOfflineReady(true); // primera instalación
-              window.setTimeout(() => setOfflineReady(false), 5000);
             }
           });
         });
@@ -43,28 +43,23 @@ export default function ServiceWorker() {
     return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
 
-  const update = () => {
+  useEffect(() => {
     if (!waiting) return;
-    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload(), { once: true });
-    waiting.postMessage({ type: 'SKIP_WAITING' });
-  };
+    const update = () => {
+      navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload(), { once: true });
+      waiting.postMessage({ type: 'SKIP_WAITING' });
+    };
+    // Se queda hasta que se pulse: así no se pierde el aviso.
+    toast('Hay una versión nueva', {
+      id: 'sw-update',
+      duration: Infinity,
+      action: { label: 'Actualizar', onClick: update },
+    });
+  }, [waiting]);
 
-  if (waiting) {
-    return (
-      <div className="toast" role="status">
-        Hay una versión nueva.{' '}
-        <button type="button" className="primary" onClick={update}>
-          Actualizar
-        </button>
-      </div>
-    );
-  }
-  if (offlineReady) {
-    return (
-      <div className="toast" role="status">
-        Lista para usar sin conexión.
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (offlineReady) toast.success('Lista para usar sin conexión', { id: 'sw-offline' });
+  }, [offlineReady]);
+
   return null;
 }

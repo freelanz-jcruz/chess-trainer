@@ -1,8 +1,12 @@
 'use client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import type { LessonFile, LessonPage } from '@/lib/content/schemas';
 import { updateLesson, useProgress } from '@/lib/progress/store';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Note } from '../Trainer';
 import { QuizPageView, TextPageView } from './StaticPages';
 import MovePageView from './MovePageView';
 import DrillPageView from './DrillPageView';
@@ -77,22 +81,26 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
   };
 
   return (
-    <div className="lesson-player">
-      <div className="lesson-progress" aria-label={`Página ${index + 1} de ${lesson.pages.length}`}>
+    <div>
+      <div className="mt-2 flex flex-wrap gap-1.5" aria-label={`Página ${index + 1} de ${lesson.pages.length}`}>
         {lesson.pages.map((p, i) => (
           <button
             key={i}
             type="button"
-            className={`dot ${i === index ? 'current' : ''} ${done.has(i) || saved?.completed ? 'done' : ''}`}
+            className={cn(
+              'size-3.5 rounded-full border-2 border-border bg-card disabled:cursor-default disabled:opacity-45',
+              (done.has(i) || saved?.completed) && 'border-primary bg-primary',
+              i === index && 'outline-2 outline-offset-2 outline-primary',
+            )}
             onClick={() => go(i)}
             disabled={i > index && !(saved?.completed || [...Array(i).keys()].every((j) => done.has(j) || autoComplete(lesson.pages[j])))}
             aria-label={`Página ${i + 1}: ${KIND_LABEL[p.kind]}`}
           />
         ))}
       </div>
-      <p className="muted small">
+      <Note className="my-3.5">
         {index + 1}/{lesson.pages.length} · {KIND_LABEL[page.kind]}
-      </p>
+      </Note>
 
       {/* key: cada página empieza con su estado limpio */}
       <div key={index}>
@@ -103,27 +111,22 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
         {page.kind === 'play' && <PlayPageView page={page} {...common} />}
       </div>
 
-      <div className="controls lesson-nav">
-        <button type="button" onClick={() => go(index - 1)} disabled={index === 0}>
-          ◀ Anterior
-        </button>
+      {/* Fija abajo, sobre la barra de pestañas en móvil, con un degradado para no cortar el contenido en seco. */}
+      <div className="sticky bottom-(--tabbar-h) z-10 mt-4 flex flex-wrap items-center gap-2 bg-linear-to-b from-transparent to-background to-25% py-2.5">
+        <Button variant="outline" onClick={() => go(index - 1)} disabled={index === 0}>
+          <ChevronLeft /> Anterior
+        </Button>
         {!isLast && (
-          <button type="button" className="primary" onClick={() => go(index + 1)} disabled={!pageDone}>
-            Siguiente ▶
-          </button>
+          <Button onClick={() => go(index + 1)} disabled={!pageDone}>
+            Siguiente <ChevronRight />
+          </Button>
         )}
         {isLast && pageDone && (
-          <span className="lesson-end">
-            <strong>¡Lección completada!</strong>{' '}
-            {next ? (
-              <Link className="button primary" href={next.href}>
-                Siguiente: {next.title}
-              </Link>
-            ) : (
-              <Link className="button primary" href="/">
-                Volver al temario
-              </Link>
-            )}
+          <span className="inline-flex flex-wrap items-center gap-2.5">
+            <strong>¡Lección completada!</strong>
+            <Button asChild>
+              {next ? <Link href={next.href}>Siguiente: {next.title}</Link> : <Link href="/">Volver al temario</Link>}
+            </Button>
           </span>
         )}
       </div>

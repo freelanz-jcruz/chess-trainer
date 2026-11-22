@@ -1,8 +1,14 @@
 'use client';
+import { ChevronLeft, ChevronRight, ChevronsLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import Board from './board/Board';
 import MoveList from './MoveList';
+import Callout from './Callout';
+import { chipClass } from './Chip';
+import PanelExtras from './PanelExtras';
+import { Controls, Note, Panel, Trainer } from './Trainer';
+import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen } from '@/lib/chess/opening-line';
 import { sanToEs } from '@/lib/chess/notation-es';
 import { uciToSquares } from '@/lib/chess/game';
@@ -52,7 +58,7 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
   };
 
   return (
-    <div className="trainer">
+    <Trainer>
       <Board
         fen={fen}
         orientation={opening.side}
@@ -60,8 +66,8 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
         lastMove={ply ? uciToSquares(ply.uci) : null}
         coordinates={progress.settings.showCoordinates}
       />
-      <div className="panel">
-        <div className="step-note" aria-live="polite">
+      <Panel>
+        <Callout aria-live="polite">
           {ply ? (
             <>
               <strong>
@@ -73,25 +79,25 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
           ) : (
             <>{opening.summary} Pulsa «Siguiente» para empezar.</>
           )}
-        </div>
-        <div className="controls">
-          <button type="button" onClick={() => setIndex(-1)} disabled={index < 0} aria-label="Al principio">
-            ⏮
-          </button>
-          <button type="button" onClick={() => setIndex(index - 1)} disabled={index < 0}>
-            ◀ Anterior
-          </button>
-          <button type="button" className="primary" onClick={() => setIndex(index + 1)} disabled={atEnd}>
-            Siguiente ▶
-          </button>
-        </div>
+        </Callout>
+        <Controls>
+          <Button variant="outline" size="icon" className="size-10" onClick={() => setIndex(-1)} disabled={index < 0} aria-label="Al principio">
+            <ChevronsLeft />
+          </Button>
+          <Button variant="outline" onClick={() => setIndex(index - 1)} disabled={index < 0}>
+            <ChevronLeft /> Anterior
+          </Button>
+          <Button onClick={() => setIndex(index + 1)} disabled={atEnd}>
+            Siguiente <ChevronRight />
+          </Button>
+        </Controls>
         {next?.choice && (
-          <div className="branch-picker">
-            <p className="small muted">Aquí la partida puede seguir de varias formas:</p>
-            <div className="branch-options">
+          <div className="rounded-lg border border-dashed border-border px-3 py-2.5">
+            <Note className="mb-1.5">Aquí la partida puede seguir de varias formas:</Note>
+            <div className="flex flex-wrap gap-1.5">
               <button
                 type="button"
-                className={next.choice.chosen === null ? 'chip active' : 'chip'}
+                className={chipClass(next.choice.chosen === null)}
                 aria-pressed={next.choice.chosen === null}
                 onClick={() => choose(next.ply, null)}
               >
@@ -102,7 +108,7 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
                 <button
                   key={b.id}
                   type="button"
-                  className={next.choice!.chosen === b.id ? 'chip active' : 'chip'}
+                  className={chipClass(next.choice!.chosen === b.id)}
                   aria-pressed={next.choice!.chosen === b.id}
                   onClick={() => choose(next.ply, b.id)}
                 >
@@ -112,17 +118,19 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
             </div>
           </div>
         )}
-        <p className="small muted">Línea: {names.length ? names.join(' › ') : 'principal'}</p>
-        <MoveList sans={line.map((p) => p.san)} current={index} onSelect={setIndex} />
+        <PanelExtras title="Jugadas de la línea" label={`Jugadas · ${index + 1}/${line.length}`} description="Toca una jugada para verla en el tablero.">
+          <Note>Línea: {names.length ? names.join(' › ') : 'principal'}</Note>
+          <MoveList sans={line.map((p) => p.san)} current={index} onSelect={setIndex} />
+        </PanelExtras>
         {atEnd && (
-          <p className="cta">
-            Has visto toda la línea.{' '}
-            <Link className="button primary" href={`/aperturas/${opening.id}/practica/`}>
-              Practicar ahora
-            </Link>
+          <p className="flex flex-wrap items-center gap-2.5">
+            Has visto toda la línea.
+            <Button asChild>
+              <Link href={`/aperturas/${opening.id}/practica/`}>Practicar ahora</Link>
+            </Button>
           </p>
         )}
-      </div>
-    </div>
+      </Panel>
+    </Trainer>
   );
 }

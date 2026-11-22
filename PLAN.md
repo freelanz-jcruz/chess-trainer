@@ -79,7 +79,7 @@ Fuera del prototipo: PWA, resto de bloques, repaso espaciado, partidas libres co
 | Reglas | **chess.js** | BSD-2 | Legalidad, SAN, FEN, detección de mate/ahogado. |
 | Motor | **Stockfish WASM, un solo hilo** (paquete npm `stockfish`, variante *lite-single*) | GPL-3 | Copiado a `public/engine/` por un script `postinstall`/`prebuild`. Se ejecuta en un **Web Worker**. Al ser de un hilo no necesita `SharedArrayBuffer`, así que **no hacen falta cabeceras COOP/COEP** (vale para GitHub Pages o cualquier hosting estático). |
 | Validación de datos | **zod** | MIT | Esquemas compartidos entre app y scripts. |
-| Estilos | CSS Modules (o Tailwind si se prefiere) | — | Diseño móvil primero. |
+| Estilos | **Tailwind CSS v4** (fijado en 4.3.3: las versiones ≥ 4.3.4 exigen Node ≥ 22.12) + **shadcn/ui** (componentes copiados en `components/ui/`, sobre Radix, `class-variance-authority`, `clsx`, `tailwind-merge`, iconos `lucide-react`, animaciones `tw-animate-css`) | MIT | Diseño móvil primero. Configuración solo en CSS (`app/globals.css`, sin `tailwind.config`); `components.json` para la CLI de shadcn; `cn()` en `lib/utils.ts`. |
 | Tests | **Vitest** | MIT | Lógica pura: valoración, traducción de notación, parser UCI, progreso. |
 | Scripts | **tsx** para ejecutar TypeScript en `tools/` | MIT | |
 | PWA (fase 2) | **Serwist** (`serwist` + `@serwist/build`) y **esbuild** | MIT | Ver sección 11. |
@@ -358,7 +358,7 @@ Clave única `chess-trainer:v1`, objeto versionado con migraciones:
     "opening:italiana-tranquila": { "box": 2, "due": "2026-11-25" },
     "puzzle:00sHx": { "box": 1, "due": "2026-11-23" }
   },
-  "settings": { "engineTimeMs": 1000, "showCoordinates": true }
+  "settings": { "engineTimeMs": 1000, "showCoordinates": true, "theme": "dark" }
 }
 ```
 
@@ -366,7 +366,17 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 
 **Repaso espaciado** (`lib/progress/review.ts`, cajas de Leitner): una apertura entra al terminar su primera práctica; un problema, cuando se falla (error, pista o rendirse; saltarlo sin jugar no cuenta). Acierto limpio → sube de caja y vuelve en 1, 3, 7, 14 o 30 días; fallo → caja 1, mañana. Un problema acertado en la última caja sale del repaso; las aperturas se quedan cada 30 días. Las fechas son días locales. La página `/repaso/` muestra las aperturas pendientes (enlace a su práctica) y una sesión con los problemas pendientes; el temario avisa y la cabecera muestra el número de repasos de hoy.
 
-**Exportar / importar** (`/progreso/`): descarga `chess-trainer-progreso-AAAA-MM-DD.json` (`{ app, exported, progress }`) e importa ese fichero tras validar el formato y pedir confirmación con un resumen de ambos progresos. La misma página permite cambiar los ajustes (coordenadas y tiempo de análisis).
+**Exportar / importar** (`/progreso/`): descarga `chess-trainer-progreso-AAAA-MM-DD.json` (`{ app, exported, progress }`) e importa ese fichero tras validar el formato y pedir confirmación con un resumen de ambos progresos. La misma página permite cambiar los ajustes (tema, coordenadas y tiempo de análisis) y **borrar todo el progreso** (lecciones, aperturas, problemas y repasos; los ajustes se mantienen), tras una confirmación que recuerda exportar antes.
+
+**Tema:** oscuro por defecto, con conmutador en la cabecera y en Ajustes. Se guarda en `settings.theme` (viaja al exportar). Un script en línea en `<head>` (`components/ThemeScript.tsx`) lo aplica antes de pintar, para evitar el destello del tema equivocado; el CSS define el oscuro en `:root` y el claro en `:root[data-theme="light"]`.
+
+**Estilos (Tailwind + shadcn):** la paleta usa los nombres de variables de shadcn (`--background`, `--foreground`, `--card`, `--primary`, `--muted-foreground`, `--border`, `--destructive`…) más las propias del ajedrez (`--sq-light`, `--sq-dark`, `--ok`, `--good`, `--inacc`, `--mistake`, `--blunder`); `@theme inline` las expone como utilidades (`bg-card`, `text-muted-foreground`, `border-l-blunder`…). La variante `dark:` se aplica cuando no hay `data-theme="light"`, y `trainer:` a partir de 820 px (tablero y panel en dos columnas). Capas de `app/globals.css`, de menor a mayor prioridad: `reset` (preflight de Tailwind, por debajo de Chessground, que necesita su propio `box-sizing` y `padding`) → `vendor` (CSS de Chessground) → `theme` → `base` (cuerpo, `h1`, `h2`, enlaces) → `components` (lo que no admite clases: colores del tablero y elementos que crea Chessground, y `.prose` para el texto de lecciones y créditos) → `utilities`. Todo lo demás se escribe con clases de Tailwind en los componentes; no queda CSS propio por pantallas. Piezas compartidas: `components/Trainer.tsx` (`Trainer`, `Panel`, `Controls`, `Note`), `components/Callout.tsx` (recuadro con borde de color según la valoración), `components/Chip.tsx` y `components/ui/badge.tsx`.
+
+**Navegación** (`components/SiteNav.tsx`): en escritorio (≥ 768 px), cabecera con la marca, los enlaces (Temario, Repaso con el número de pendientes, Ejercicios, Progreso; el activo resaltado) y el conmutador de tema. En móvil, la cabecera solo lleva la marca y el conmutador, y los enlaces pasan a una **barra de pestañas fija abajo** con iconos (lucide). Su alto está en `--tabbar-h` (0 en escritorio): el `body`, la barra inferior de las lecciones y el aviso de actualización dejan ese hueco. `viewport-fit=cover` + `env(safe-area-inset-bottom)` para el indicador de inicio del iPhone. Temario queda activo también en lecciones y aperturas.
+
+**Componentes shadcn** (`components/ui/`): Button, AlertDialog, Label, RadioGroup, Switch, Select y Sonner (Toaster), sobre `radix-ui` y `sonner`. En `/progreso/`, importar y borrar piden confirmación con AlertDialog (en vez de `window.confirm`) y los resultados se avisan con toasts; los ajustes usan RadioGroup (tema), Switch (coordenadas) y Select (tiempo de análisis). Los avisos de la PWA («Hay una versión nueva · Actualizar», «Lista para usar sin conexión») también son toasts de Sonner, **arriba**, para no tapar el tablero ni la barra de pestañas.
+
+**Hoja inferior en móvil** (`components/PanelExtras.tsx`, Drawer de shadcn sobre `vaul`): lo secundario del panel de un entrenador (lista de jugadas, línea elegida, estadísticas de práctica) se muestra tal cual con tablero y panel en dos columnas (≥ 820 px); por debajo queda tras un botón «Jugadas · n» que abre una hoja deslizable desde abajo, con un velo suave para que el tablero siga viéndose al tocar una jugada. Se usa en el recorrido y la práctica de aperturas; en problemas y lecciones el panel ya es corto y todo lo que muestra es necesario para jugar.
 
 ---
 

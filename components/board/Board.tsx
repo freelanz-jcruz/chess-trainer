@@ -106,21 +106,32 @@ export default function Board({
   };
 
   return (
-    <div className="board-frame">
-      <div ref={el} className="board" />
+    <div className="relative mx-auto aspect-square w-full max-w-[560px]">
+      <div ref={el} className="size-full" />
       {promo && (
-        <div className="promotion" role="dialog" aria-label="Elige la pieza de coronación">
-          <p>Coronar a…</p>
-          <div className="promotion-options">
+        <div
+          className="absolute inset-0 z-20 grid place-content-center gap-2.5 rounded-sm bg-black/45 text-center text-white"
+          role="dialog"
+          aria-label="Elige la pieza de coronación"
+        >
+          <p className="font-semibold">Coronar a…</p>
+          <div className="flex gap-2">
             {PROMOTION_PIECES.map((p) => (
-              <button key={p.letter} type="button" onClick={() => choose(p.letter)} aria-label={p.label} title={p.label}>
-                <span className={`cg-wrap promo-piece`}>
+              <button
+                key={p.letter}
+                type="button"
+                className="size-16 rounded-md border border-border bg-card p-1 hover:bg-accent"
+                onClick={() => choose(p.letter)}
+                aria-label={p.label}
+                title={p.label}
+              >
+                <span className="cg-wrap promo-piece relative block size-full">
                   <piece className={`${p.role} ${promo.color}`} />
                 </span>
               </button>
             ))}
           </div>
-          <button type="button" className="link" onClick={() => choose(null)}>
+          <button type="button" className="text-white underline" onClick={() => choose(null)}>
             Cancelar
           </button>
         </div>

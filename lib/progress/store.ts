@@ -2,7 +2,8 @@
 import { useCallback, useSyncExternalStore } from 'react';
 import { applySchedule, localDay, type ReviewKind, type Reviews } from './review';
 
-const KEY = 'chess-trainer:v1';
+import { KEY } from './key';
+export { KEY };
 
 export type OpeningProgress = {
   walkthroughDone: boolean;
@@ -21,7 +22,8 @@ export type PuzzleProgress = {
 
 export type LessonProgress = { completed: boolean; lastPage: number };
 
-export type Settings = { engineTimeMs: number; showCoordinates: boolean };
+export type Theme = 'dark' | 'light';
+export type Settings = { engineTimeMs: number; showCoordinates: boolean; theme: Theme };
 
 export type Progress = {
   version: 1;
@@ -33,7 +35,7 @@ export type Progress = {
   settings: Settings;
 };
 
-export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true };
+export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true, theme: 'dark' };
 
 function empty(): Progress {
   return { version: 1, openings: {}, puzzles: {}, lessons: {}, reviews: {}, settings: { ...DEFAULT_SETTINGS } };
@@ -103,6 +105,11 @@ export function useProgress() {
   );
   const update = useCallback((fn: (p: Progress) => Progress) => write(fn(read())), []);
   return { progress, update };
+}
+
+/** Progreso vacío que conserva los ajustes (tema, coordenadas, tiempo de análisis). */
+export function resetKeepingSettings(p: Progress): Progress {
+  return { ...empty(), settings: { ...p.settings } };
 }
 
 /** Sustituye todo el progreso (importación). */

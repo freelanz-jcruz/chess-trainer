@@ -1,5 +1,8 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
+import { Lightbulb, RotateCcw } from 'lucide-react';
+import { Controls, Note, Panel, Trainer } from '../Trainer';
+import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
 import RichText from './RichText';
@@ -165,7 +168,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   };
 
   return (
-    <div className="trainer">
+    <Trainer>
       <Board
         fen={fen}
         orientation={page.orientation ?? myColor}
@@ -175,21 +178,21 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         coordinates={coordinates}
         onMove={onMove}
       />
-      <div className="panel">
+      <Panel>
         <div className="prose">
           <RichText text={page.body} />
         </div>
         <Feedback state={feedback} />
-        <div className="controls">
-          <button type="button" onClick={showHint} disabled={phase !== 'user'}>
-            💡 Pista
-          </button>
-          <button type="button" onClick={restart}>
-            ↺ Empezar de nuevo
-          </button>
-        </div>
-        {page.hint && <p className="muted small">{page.hint}</p>}
-      </div>
-    </div>
+        <Controls>
+          <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
+            <Lightbulb /> Pista
+          </Button>
+          <Button variant="outline" onClick={restart}>
+            <RotateCcw /> Empezar de nuevo
+          </Button>
+        </Controls>
+        {page.hint && <Note>{page.hint}</Note>}
+      </Panel>
+    </Trainer>
   );
 }
