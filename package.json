@@ -13,6 +13,7 @@
     "test": "vitest run",
     "validate": "tsx tools/validate-content.ts",
     "puzzles": "tsx tools/filter-puzzles.ts",
+    "eco": "tsx tools/check-eco.ts",
     "postbuild": "node tools/build-sw.mjs"
   },
   "dependencies": {

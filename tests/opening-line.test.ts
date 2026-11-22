@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { allLines, buildLine } from '@/lib/chess/opening-line';
+import { allLines, branchNames, buildLine } from '@/lib/chess/opening-line';
+import { openings } from '@/lib/content/load';
 import { openingSchema } from '@/lib/content/schemas';
 import italiana from '@/content/openings/italiana-tranquila.json';
 
@@ -41,5 +42,30 @@ describe('buildLine', () => {
   it('detecta jugadas ilegales', () => {
     const op = openingSchema.parse({ id: 'mal', name: 'Mal', side: 'white', block: 5, summary: 'x', steps: [{ san: 'e5' }] });
     expect(() => buildLine(op)).toThrow(/ilegal/);
+  });
+});
+
+describe('puntos de elección', () => {
+  const e5 = openings.find((o) => o.id === 'e5-contra-e4')!;
+
+  it('marca dónde se puede elegir rama y cuál se ha seguido', () => {
+    const main = buildLine(e5);
+    expect(main[2].choice?.chosen).toBeNull();
+    expect(main[2].choice?.options.map((b) => b.id)).toContain('vienesa');
+    expect(branchNames(main)).toEqual([]);
+
+    const spanish = buildLine(e5, (_ply, step) => step.branches?.find((b) => b.id === 'espanola' || b.id === 'cambio') ?? null);
+    expect(spanish[4].san).toBe('Bb5');
+    expect(spanish[4].choice?.chosen).toBe('espanola');
+    expect(spanish[6].san).toBe('Bxc6');
+    expect(branchNames(spanish)).toEqual(['3.Ab5: Española', '4.Axc6: variante del cambio']);
+  });
+
+  it('todas las aperturas registradas construyen todas sus líneas', () => {
+    for (const op of openings) {
+      const lines = allLines(op);
+      expect(lines.length).toBeGreaterThan(0);
+      for (const { line } of lines) expect(line.length).toBeGreaterThan(0);
+    }
   });
 });

@@ -1,0 +1,92 @@
+{
+  "id": "principios-practica",
+  "title": "Aplica los principios",
+  "block": 4,
+  "level": "principiante",
+  "summary": "Posiciones de apertura en las que eliges la jugada que cumple los principios.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "En cada posición te diré qué principio aplicar. Puede haber más de una jugada correcta: cualquiera que cumpla el principio vale."
+    },
+    {
+      "kind": "move",
+      "body": "Las negras responden a 1.e4. **Ocupa tú también el centro** con un peón.",
+      "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["e5", "d5"],
+      "hint": "Los peones de d y de e de las negras pueden avanzar dos casillas.",
+      "success": "Tu peón también reclama el centro."
+    },
+    {
+      "kind": "move",
+      "body": "Las blancas atacan tu peón de e5. **Defiéndelo con una pieza**, no con un peón.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["Nc6"],
+      "hint": "El caballo de b8 llega a una casilla desde la que defiende e5.",
+      "success": "Defiendes y desarrollas con la misma jugada."
+    },
+    {
+      "kind": "move",
+      "body": "**Desarrolla una pieza menor** que todavía no haya salido.",
+      "fen": "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2",
+      "goal": "listed",
+      "accept": ["Nf3", "Nc3", "Bf4", "Bg5"],
+      "hint": "Un caballo hacia el centro, o el alfil de c1, que ya tiene la diagonal abierta.",
+      "success": "Una pieza más en juego."
+    },
+    {
+      "kind": "move",
+      "body": "El caballo ya ha salido. **Saca el alfil** a una casilla activa.",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "goal": "listed",
+      "accept": ["Bc4", "Bb5"],
+      "hint": "El alfil de f1 puede ir a c4, mirando a f7, o a b5, presionando el caballo.",
+      "success": "Alfil fuera y enroque corto preparado."
+    },
+    {
+      "kind": "quiz",
+      "body": "Las negras han sacado el alfil a c5. ¿Qué jugada de las blancas **no** sigue los principios?",
+      "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "options": ["0-0", "Cc3", "De2 y luego Dd3"],
+      "answer": 2,
+      "explain": "Pasear la dama pierde tiempo. Enrocar o sacar el otro caballo ponen más piezas en juego."
+    },
+    {
+      "kind": "move",
+      "body": "Caballo y alfil desarrollados en el flanco de rey. **Enroca**.",
+      "fen": "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+      "goal": "listed",
+      "accept": ["O-O"],
+      "hint": "No queda nada entre el rey y la torre de h1.",
+      "success": "Rey a salvo."
+    },
+    {
+      "kind": "move",
+      "body": "Ahora con negras, en el Gambito de Dama. **Pon el rey a salvo**.",
+      "fen": "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N1P3/PP3PPP/R2QKBNR b KQkq - 0 5",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["O-O"],
+      "hint": "Enroque corto de las negras: el rey va de e8 a g8.",
+      "success": "Rey a salvo y la torre se acerca al centro."
+    },
+    {
+      "kind": "move",
+      "body": "El caballo de g5 y el alfil de c4 atacan f7. Responde con un **peón central que corte la diagonal del alfil**.",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p1N1/2B1P3/8/PPPP1PPP/RNBQK2R b KQkq - 5 4",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["d5"],
+      "hint": "El peón de d7 puede avanzar dos casillas y tapar la diagonal del alfil.",
+      "success": "Defiendes f7 cortando la diagonal del alfil y luchando por el centro."
+    },
+    {
+      "kind": "text",
+      "body": "¡Bien hecho! Con estos principios puedes jugar una apertura razonable sin conocerla. En el bloque siguiente verás las aperturas de tu repertorio, que los siguen jugada a jugada."
+    }
+  ]
+}

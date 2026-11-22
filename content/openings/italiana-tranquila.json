@@ -14,7 +14,27 @@
     { "san": "Nf3", "note": "Se desarrolla una pieza y, de paso, se ataca el peón de e5." },
     { "san": "Nc6", "note": "Defender desarrollando: el caballo protege e5 y sale hacia el centro." },
     { "san": "Bc4", "note": "El alfil mira hacia f7, la casilla más delicada del rey negro al principio." },
-    { "san": "Bc5", "note": "Las negras colocan su alfil en la diagonal equivalente, apuntando a f2." },
+    {
+      "san": "Bc5",
+      "note": "Las negras colocan su alfil en la diagonal equivalente, apuntando a f2.",
+      "branches": [
+        {
+          "id": "dos-caballos",
+          "name": "3...Cf6: Dos Caballos",
+          "eco": "C55",
+          "steps": [
+            { "san": "Nf6", "note": "Las negras desarrollan el otro caballo y atacan e4." },
+            { "san": "d3", "note": "Defiendes e4 con calma. Cg5 es más agresivo (ver la trampa Fegatello), pero d3 es más sencillo." },
+            { "san": "Be7", "note": "Las negras desarrollan sin prisas." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "O-O", "note": "Las negras también enrocan." },
+            { "san": "Re1", "note": "La torre apoya e4." },
+            { "san": "d6", "note": "Las negras sostienen e5." },
+            { "san": "c3", "note": "Preparas d4 y das una casilla de retirada al alfil." }
+          ]
+        }
+      ]
+    },
     { "san": "c3", "note": "Preparar d4 más adelante y dar al alfil una casilla de retirada." },
     { "san": "Nf6", "note": "Otra pieza menor fuera, presionando el peón de e4." },
     { "san": "d3", "note": "Defender e4 con calma. Es la idea de la versión tranquila: primero, terminar el desarrollo." },

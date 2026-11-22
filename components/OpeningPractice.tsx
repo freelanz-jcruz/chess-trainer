@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
 import MoveList from './MoveList';
-import { buildLine, resolveStartFen, type LinePly } from '@/lib/chess/opening-line';
+import { branchNames, buildLine, resolveStartFen, type LinePly } from '@/lib/chess/opening-line';
 import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Opening } from '@/lib/content/schemas';
@@ -72,6 +72,7 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
     if (!done || finished) return;
     setFinished(true);
     const clean = stats.current.errors === 0 && stats.current.hints === 0;
+    const what = opening.kind === 'trap' ? 'Trampa' : 'Apertura';
     update((p) =>
       updateOpening(p, opening.id, (o) => ({
         ...o,
@@ -82,10 +83,10 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
     setFeedback({
       kind: 'done',
       text: clean
-        ? '¡Apertura completada sin fallos!'
-        : `Apertura completada con ${stats.current.errors} fallo(s) y ${stats.current.hints} pista(s).`,
+        ? `¡${what} completada sin fallos!`
+        : `${what} completada con ${stats.current.errors} fallo(s) y ${stats.current.hints} pista(s).`,
     });
-  }, [done, finished, opening.id, update]);
+  }, [done, finished, opening.id, opening.kind, update]);
 
   const onMove = useCallback(
     async (from: string, to: string, promotion?: string) => {
@@ -201,6 +202,7 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
           </button>
         </div>
         <MoveList sans={sans} current={sans.length - 1} />
+        {done && <p className="small muted">Línea: {branchNames(line).join(' › ') || 'principal'}</p>}
         {done && (
           <p className="cta">
             <button type="button" className="button primary" onClick={restart}>

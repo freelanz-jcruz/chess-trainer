@@ -1,0 +1,29 @@
+{
+  "id": "fegatello",
+  "name": "Trampa: ataque Fegatello",
+  "eco": "C57",
+  "side": "white",
+  "kind": "trap",
+  "block": 5,
+  "level": "principiante",
+  "summary": "Si en los Dos Caballos las negras recapturan en d5 con el caballo, un sacrificio en f7 saca a su rey al centro.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "e4", "note": "Peón al centro." },
+    { "san": "e5" },
+    { "san": "Nf3", "note": "Desarrollas atacando e5." },
+    { "san": "Nc6" },
+    { "san": "Bc4", "note": "El alfil apunta a f7." },
+    { "san": "Nf6", "note": "Las negras desarrollan el otro caballo y atacan e4: son los Dos Caballos." },
+    { "san": "Ng5", "note": "Dos piezas contra f7. Rompe el principio de no mover dos veces, pero crea una amenaza." },
+    { "san": "d5", "note": "Las negras cortan la diagonal del alfil." },
+    { "san": "exd5", "note": "Capturas: el alfil vuelve a ver f7." },
+    { "san": "Nxd5", "note": "El error. Lo bueno era ...Ca5, atacando al alfil." },
+    { "san": "Nxf7", "note": "Sacrificas el caballo para sacar al rey de su refugio." },
+    { "san": "Kxf7", "note": "El rey captura y queda expuesto." },
+    { "san": "Qf3+", "note": "Jaque y ataque doble al caballo de d5, que está clavado." },
+    { "san": "Ke6", "note": "El rey tiene que ir al centro para defender el caballo." },
+    { "san": "Nc3", "note": "Más presión sobre el caballo clavado. El rey negro, en el centro, sufrirá mucho." }
+  ],
+  "alternatives": {}
+}

@@ -1,6 +1,11 @@
 import curriculumJson from '@/content/curriculum.json';
 import puzzleJson from '@/content/puzzles/puzzles.json';
 import italiana from '@/content/openings/italiana-tranquila.json';
+import e5 from '@/content/openings/e5-contra-e4.json';
+import gdr from '@/content/openings/gambito-dama-rehusado.json';
+import esquemaGdr from '@/content/openings/esquema-gdr.json';
+import fegatello from '@/content/openings/fegatello.json';
+import legal from '@/content/openings/legal.json';
 import {
   curriculumSchema,
   lessonFileSchema,
@@ -16,7 +21,7 @@ import { LESSON_FILES } from '@/content/lessons';
 import { lessonHref } from './links';
 
 /** Registro de aperturas. Añadir una apertura = añadir su JSON aquí. */
-const OPENING_FILES: unknown[] = [italiana];
+const OPENING_FILES: unknown[] = [italiana, e5, gdr, esquemaGdr, fegatello, legal];
 
 export const curriculum: Curriculum = curriculumSchema.parse(curriculumJson);
 export const openings: Opening[] = OPENING_FILES.map((o) => openingSchema.parse(o));

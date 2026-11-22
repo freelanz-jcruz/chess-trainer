@@ -15,7 +15,14 @@ export type LinePly = {
   alternatives: string[];
   /** Ramas que parten de este paso (alternativas del rival u otras líneas). */
   branches: OpeningBranch[];
+  /**
+   * Si este medio movimiento es un punto de elección: la jugada de la línea principal, las ramas
+   * posibles y cuál se ha seguido (null = la principal).
+   */
+  choice?: BranchChoice;
 };
+
+export type BranchChoice = { mainSan: string; options: OpeningBranch[]; chosen: string | null };
 
 export function resolveStartFen(startFen: string): string {
   return startFen === 'startpos' ? START_FEN : startFen;
@@ -43,11 +50,14 @@ export function buildLine(opening: Opening, pick: BranchPicker = mainLineOnly): 
   let steps: OpeningStep[] = opening.steps;
   let i = 0;
   let justBranched = false;
+  let choice: BranchChoice | undefined;
   while (i < steps.length) {
     const step = steps[i];
     const ply = out.length;
     // El primer paso de una rama recién elegida no vuelve a ofrecer ramas en el mismo medio movimiento.
-    const branch = step.branches?.length && !justBranched ? pick(ply, step) : null;
+    const offered = !!step.branches?.length && !justBranched;
+    const branch = offered ? pick(ply, step) : null;
+    if (offered) choice = { mainSan: step.san, options: step.branches!, chosen: branch?.id ?? null };
     justBranched = false;
     if (branch) {
       steps = branch.steps;
@@ -72,7 +82,9 @@ export function buildLine(opening: Opening, pick: BranchPicker = mainLineOnly): 
       color: move.color,
       alternatives: steps === opening.steps ? (opening.alternatives[String(i)] ?? []) : [],
       branches: step.branches ?? [],
+      choice,
     });
+    choice = undefined;
     i++;
   }
   return out;
@@ -105,4 +117,13 @@ export function allLines(opening: Opening): { path: string; line: LinePly[] }[] 
   };
   explore(new Map(), 'Línea principal');
   return results;
+}
+
+/** Nombres de las ramas que sigue una línea (vacío = línea principal). */
+export function branchNames(line: LinePly[]): string[] {
+  return line.flatMap((p) => {
+    const chosen = p.choice?.chosen;
+    const b = chosen ? p.choice!.options.find((o) => o.id === chosen) : undefined;
+    return b ? [b.name] : [];
+  });
 }

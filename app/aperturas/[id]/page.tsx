@@ -21,7 +21,9 @@ export default async function OpeningPage({ params }: { params: Promise<{ id: st
     <>
       <h1>{opening.name}</h1>
       <p className="muted small">
-        Recorrido paso a paso · juegas con {opening.side === 'white' ? 'blancas' : 'negras'} ·{' '}
+        {opening.kind === 'trap' ? 'Trampa' : 'Recorrido paso a paso'} · juegas con{' '}
+        {opening.side === 'white' ? 'blancas' : 'negras'}
+        {opening.eco && <> · ECO {opening.eco}</>} ·{' '}
         <Link href={`/aperturas/${opening.id}/practica/`}>Ir a la práctica</Link>
       </p>
       <OpeningWalkthrough opening={opening} />

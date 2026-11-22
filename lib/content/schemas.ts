@@ -20,6 +20,8 @@ export type OpeningStep = {
 export type OpeningBranch = {
   id: string;
   name: string;
+  /** Código ECO de la rama (lo comprueba `npm run eco` contra el catálogo de Lichess). */
+  eco?: string;
   level?: z.infer<typeof levelSchema>;
   steps: OpeningStep[];
 };
@@ -36,6 +38,7 @@ export const openingBranchSchema: z.ZodType<OpeningBranch> = z.lazy(() =>
   z.object({
     id: z.string().min(1),
     name: z.string().min(1),
+    eco: z.string().regex(/^[A-E]\d\d$/).optional(),
     level: levelSchema.optional(),
     steps: z.array(openingStepSchema).min(1),
   }),

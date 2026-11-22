@@ -4,7 +4,9 @@
  * - Esquemas de todos los JSON de content/.
  * - Temario: referencias existentes, ids únicos, lecciones de ejercicios con problemas.
  * - Aperturas: todas las ramas, jugadas legales, notas breves y, con Stockfish, que ninguna jugada
- *   del libro sea un error (≥ 1 peón de pérdida). Las imprecisiones son avisos.
+ *   del bando del usuario sea un error (≥ 1 peón de pérdida); las imprecisiones son avisos y las
+ *   jugadas dudosas del rival solo se informan. Trampas: en cada línea el rival comete un error y
+ *   el usuario acaba con mate o con ventaja clara (TRAP_MIN_ADVANTAGE).
  * - Problemas: jugadas legales; con --deep, que la primera jugada de la solución sea la del motor.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -26,7 +28,13 @@ import {
 } from '../lib/content/schemas';
 import { lessons as registeredLessons, openings as registeredOpenings } from '../lib/content/load';
 import type { Analysis, Engine } from '../lib/engine/engine';
-import { assessMove, VERDICT_LABEL } from '../lib/engine/evaluate';
+import { assessMove, VERDICT_LABEL, type Verdict } from '../lib/engine/evaluate';
+
+/**
+ * Ventaja mínima (en peones) al final de una trampa. Algunas trampas clásicas (Fegatello) no ganan
+ * material a la fuerza, sino que dejan al rey rival expuesto: Stockfish les da unos +0,8.
+ */
+const TRAP_MIN_ADVANTAGE = 0.7;
 import { scoreForMover } from '../lib/engine/evaluate-move';
 import { createNodeEngine } from '../lib/engine/node';
 
@@ -112,33 +120,59 @@ async function validateOpening(op: Opening) {
   ok(`${lines.length} línea(s), todas las jugadas son legales`);
 
   const errorsBefore = errors;
-  const checked = new Set<string>();
+  const myColor = op.side === 'white' ? 'w' : 'b';
+  const verdicts = new Map<string, Verdict>(); // fenBefore+uci -> valoración
   for (const { path, line } of lines) {
     for (const ply of line) {
       const key = ply.fenBefore + ply.uci;
-      if (checked.has(key)) continue; // ramas que comparten el principio
-      checked.add(key);
+      if (verdicts.has(key)) continue; // ramas que comparten el principio
       const best = await analyze(ply.fenBefore);
-      if (best.bestMove === ply.uci) continue;
+      if (best.bestMove === ply.uci) {
+        verdicts.set(key, 'good');
+        continue;
+      }
       const after = await analyze(ply.fenAfter);
       const { verdict, loss, reason } = assessMove(best.score, scoreForMover(after));
+      verdicts.set(key, verdict);
+      if (verdict === 'good') continue;
       const label = `${path}: ${Math.floor(ply.ply / 2) + 1}${ply.color === 'w' ? '.' : '...'}${sanToEs(ply.san)}`;
       const bestSan = best.bestMove ? playUci(ply.fenBefore, best.bestMove)?.san : undefined;
       const lossText = loss === null ? (reason === 'allowsMate' ? 'permite mate' : 'mate de por medio') : `−${loss.toFixed(2)}`;
       const detail = `${VERDICT_LABEL[verdict]} (${lossText}; Stockfish prefiere ${bestSan ? sanToEs(bestSan) : '?'})`;
-      if (op.kind === 'trap') {
-        console.log(`  · ${label}: ${detail}`);
+      if (ply.color !== myColor) {
+        // Las jugadas del rival pueden ser dudosas: es lo que juega la gente (y en las trampas, el cebo).
+        console.log(`  · rival · ${label}: ${detail}`);
       } else if (verdict === 'mistake' || verdict === 'blunder') {
         error(`${label} es ${detail}`);
-      } else if (verdict === 'inaccuracy') {
+      } else {
         warn(`${label} es ${detail}`);
       }
     }
   }
-  if (op.kind === 'trap') warn('Validación específica de trampas pendiente (fase 4): solo se informa de las valoraciones');
-  else if (errors === errorsBefore) ok(`Stockfish (profundidad ${depth}) no considera error ninguna jugada del libro`);
-}
 
+  if (op.kind === 'trap') {
+    // Cada línea de una trampa: el rival comete al menos un error y el usuario acaba claramente mejor.
+    for (const { path, line } of lines) {
+      const baited = line.some((p) => p.color !== myColor && ['inaccuracy', 'mistake', 'blunder'].includes(verdicts.get(p.fenBefore + p.uci)!));
+      if (!baited) error(`${path}: el rival no comete ningún error, así que no es una trampa`);
+      const last = line[line.length - 1];
+      const final = playUci(last.fenBefore, last.uci);
+      if (final?.isCheckmate) {
+        if (last.color !== myColor) error(`${path}: la línea acaba con mate del rival`);
+        else ok(`${path}: el rival cae en la trampa y recibe mate`);
+        continue;
+      }
+      const a = await analyze(last.fenAfter);
+      // La puntuación es para el bando que mueve en la posición final.
+      const sign = (last.color === myColor ? -1 : 1);
+      const forMe = a.score.type === 'mate' ? sign * Math.sign(a.score.value) * 100 : (sign * a.score.value) / 100;
+      if (forMe < TRAP_MIN_ADVANTAGE)
+        error(`${path}: al final de la trampa la ventaja es de ${forMe.toFixed(2)} (mínimo ${TRAP_MIN_ADVANTAGE})`);
+      else ok(`${path}: el rival cae en la trampa y quedas ${a.score.type === 'mate' ? 'con mate' : `+${forMe.toFixed(2)}`}`);
+    }
+  }
+  if (errors === errorsBefore) ok(`Stockfish (profundidad ${depth}) no considera error ninguna jugada de tu bando`);
+}
 
 // ---------- Lecciones por páginas ----------
 const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';

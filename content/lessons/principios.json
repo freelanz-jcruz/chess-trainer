@@ -1,0 +1,105 @@
+{
+  "id": "principios",
+  "title": "Los cinco principios de la apertura",
+  "block": 4,
+  "level": "principiante",
+  "summary": "Cinco reglas sencillas para empezar bien cualquier partida, aunque no conozcas la apertura.",
+  "pages": [
+    {
+      "kind": "text",
+      "title": "Para qué sirven",
+      "body": "Al principio de la partida no hace falta memorizar jugadas: basta con seguir cinco principios.\n\n- **Controla el centro** con peones.\n- **Desarrolla** las piezas menores (caballos y alfiles).\n- **Enroca pronto** para poner el rey a salvo.\n- **No saques la dama demasiado pronto**.\n- **No muevas dos veces la misma pieza** sin un buen motivo.\n\nSi dudas en una apertura, elige la jugada que cumple más principios.",
+      "fen": "startpos"
+    },
+    {
+      "kind": "text",
+      "title": "1. El centro",
+      "body": "Las cuatro casillas del centro (**d4, e4, d5 y e5**) son las más valiosas: una pieza en el centro llega a más casillas y puede ir rápido a cualquier lado del tablero.\n\nPor eso las primeras jugadas suelen ser peones centrales que ocupan o vigilan esas casillas.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "highlight": ["d4", "e4", "d5", "e5"]
+    },
+    {
+      "kind": "move",
+      "body": "Empieza la partida con un **peón que ocupe el centro**.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "goal": "listed",
+      "accept": ["e4", "d4"],
+      "hint": "Los peones de d y de e pueden avanzar dos casillas hasta el centro.",
+      "success": "Ese peón ocupa el centro y abre camino a otras piezas."
+    },
+    {
+      "kind": "text",
+      "title": "2. El desarrollo",
+      "body": "**Desarrollar** es sacar las piezas de su casilla inicial para que participen en el juego. Primero van las piezas menores: caballos y alfiles.\n\nUn caballo en el centro ataca hasta ocho casillas; en el borde, como mucho cuatro. Por eso se dice que **el caballo en el borde es triste**.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "showMovesFrom": "f3"
+    },
+    {
+      "kind": "move",
+      "body": "Desarrolla un **caballo** hacia el centro.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "goal": "listed",
+      "accept": ["Nf3", "Nc3"],
+      "hint": "Desde f3 o c3 el caballo vigila las casillas centrales.",
+      "success": "Pieza desarrollada y mirando al centro."
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Cuál de estas jugadas desarrolla **mejor** el caballo de g1?",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "options": ["Ch3", "Cf3", "Ce2"],
+      "answer": 1,
+      "explain": "En f3 el caballo controla el centro y ataca e5. En h3 está en el borde, y en e2 tapa al alfil."
+    },
+    {
+      "kind": "text",
+      "title": "3. El enroque",
+      "body": "En el centro el rey corre peligro cuando se abren las columnas. **Enrocar pronto** lo pone a salvo detrás de sus peones y, de paso, saca la torre al juego.\n\nPara poder enrocar hay que apartar antes las piezas que hay entre el rey y la torre: otra razón para desarrollar rápido.",
+      "fen": "r1bqk2r/ppp2ppp/2np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+      "arrows": [["e1", "g1"]]
+    },
+    {
+      "kind": "move",
+      "body": "Ya tienes el caballo y el alfil fuera. **Pon el rey a salvo**.",
+      "fen": "r1bqk2r/ppp2ppp/2np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+      "goal": "listed",
+      "accept": ["O-O"],
+      "hint": "Enroque corto: el rey va de e1 a g1.",
+      "success": "Rey a salvo y torre lista para entrar en juego."
+    },
+    {
+      "kind": "text",
+      "title": "4. La dama, sin prisas",
+      "body": "La dama es la pieza más valiosa. Si sale muy pronto, el rival la ataca con piezas menores y **se desarrolla ganando tiempo** mientras ella huye.\n\nAquí las blancas sacaron la dama a h5 y luego tuvieron que moverla otra vez a f3. Las negras, en cambio, han sacado dos piezas.",
+      "fen": "r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5"
+    },
+    {
+      "kind": "move",
+      "body": "Las blancas sacan la dama muy pronto y atacan el peón de e5. **Defiéndelo desarrollando una pieza**.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["Nc6"],
+      "hint": "Un caballo puede defender e5 y salir al juego a la vez.",
+      "success": "Defiendes e5 y desarrollas. Vigila f7: la dama y un alfil pueden atacarlo."
+    },
+    {
+      "kind": "text",
+      "title": "5. Cada pieza, una vez",
+      "body": "En la apertura cada jugada cuenta. Mover dos veces la misma pieza sin motivo deja otras piezas en casa y regala tiempo al rival.\n\nHay buenos motivos para hacerlo: capturar, escapar de un ataque o aprovechar un error del rival. Si no hay ninguno, saca una pieza nueva."
+    },
+    {
+      "kind": "quiz",
+      "body": "Las blancas ya tienen el caballo en f3. ¿Qué jugada sigue los principios?",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "options": ["Cg5, otra vez el caballo", "Ac4, una pieza nueva", "h4, un peón del borde"],
+      "answer": 1,
+      "explain": "Ac4 desarrolla otra pieza y deja el enroque preparado."
+    },
+    {
+      "kind": "text",
+      "title": "Resumen",
+      "body": "- Peones al **centro**.\n- **Caballos y alfiles** fuera, mirando al centro.\n- **Enroca** pronto.\n- La **dama**, más tarde.\n- **Una pieza nueva** en cada jugada, salvo que haya un motivo.\n\nEn la siguiente lección los aplicarás en posiciones reales."
+    }
+  ]
+}

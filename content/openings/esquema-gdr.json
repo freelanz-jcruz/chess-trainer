@@ -1,0 +1,156 @@
+{
+  "id": "esquema-gdr",
+  "name": "Contra 1.Cf3 y 1.c4: esquema del Gambito de Dama",
+  "eco": "A14",
+  "side": "black",
+  "kind": "repertoire",
+  "block": 5,
+  "level": "principiante",
+  "summary": "Contra la Réti (1.Cf3) y la Inglesa (1.c4) usas las mismas piezas en las mismas casillas que en el Gambito de Dama rehusado: ...d5, ...e6, ...Cf6, ...Ae7 y enroque.",
+  "startFen": "startpos",
+  "steps": [
+    {
+      "san": "Nf3",
+      "note": "La Réti: las blancas desarrollan antes de mover un peón central.",
+      "branches": [
+        {
+          "id": "inglesa",
+          "name": "1.c4: Inglesa",
+          "eco": "D60",
+          "steps": [
+            { "san": "c4", "note": "La Inglesa: el peón de c vigila d5 desde un lado." },
+            { "san": "e6", "note": "Preparas ...d5 para que, si cambian en d5, recuperes con un peón." },
+            {
+              "san": "Nc3",
+              "note": "Las blancas desarrollan y vigilan d5.",
+              "branches": [
+                {
+                  "id": "inglesa-cf3",
+                  "name": "2.Cf3 y 3.g3",
+                  "eco": "A14",
+                  "steps": [
+                    { "san": "Nf3", "note": "Las blancas desarrollan el caballo de rey." },
+                    { "san": "d5", "note": "Ocupas el centro: tu esquema de siempre." },
+                    { "san": "g3", "note": "Las blancas preparan el alfil en g2." },
+                    { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+                    { "san": "Bg2", "note": "El alfil blanco presiona d5 desde lejos." },
+                    { "san": "Be7", "note": "Desarrollas y preparas el enroque." },
+                    { "san": "O-O", "note": "Las blancas enrocan." },
+                    { "san": "O-O", "note": "Rey a salvo." },
+                    { "san": "b3", "note": "Las blancas preparan el otro alfil en b2." },
+                    { "san": "c5", "note": "Ganas espacio y vigilas d4." },
+                    { "san": "Bb2", "note": "Los dos alfiles blancos miran al centro desde los lados." },
+                    { "san": "Nc6", "note": "Desarrollo completo de tus piezas menores." }
+                  ]
+                },
+                {
+                  "id": "inglesa-g3",
+                  "name": "2.g3",
+                  "eco": "A14",
+                  "steps": [
+                    { "san": "g3", "note": "Las blancas preparan el alfil en g2." },
+                    { "san": "d5", "note": "Ocupas el centro." },
+                    { "san": "Bg2", "note": "El alfil presiona d5." },
+                    { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+                    { "san": "Nf3", "note": "Otra pieza blanca fuera." },
+                    { "san": "Be7", "note": "Preparas el enroque." },
+                    { "san": "O-O", "note": "Las blancas enrocan." },
+                    { "san": "O-O", "note": "Rey a salvo." },
+                    { "san": "b3", "note": "Las blancas preparan el alfil en b2." },
+                    { "san": "c5", "note": "Ganas espacio en el centro." }
+                  ]
+                }
+              ]
+            },
+            { "san": "d5", "note": "Ocupas el centro, apoyado por el peón de e6." },
+            {
+              "san": "d4",
+              "note": "Las blancas también ocupan el centro: es un Gambito de Dama por otro orden.",
+              "branches": [
+                {
+                  "id": "inglesa-cambio",
+                  "name": "3.cxd5",
+                  "eco": "D35",
+                  "steps": [
+                    { "san": "cxd5", "note": "Las blancas cambian en el centro." },
+                    { "san": "exd5", "note": "Recuperas con el peón: por eso jugaste antes ...e6." },
+                    { "san": "d4", "note": "Las blancas ocupan el centro." },
+                    { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+                    { "san": "Bg5", "note": "El alfil clava tu caballo." },
+                    { "san": "Be7", "note": "Rompes la clavada desarrollando." },
+                    { "san": "e3", "note": "Las blancas abren paso a su otro alfil." },
+                    { "san": "c6", "note": "Refuerzas d5: es la variante del cambio del Gambito de Dama." }
+                  ]
+                }
+              ]
+            },
+            { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+            { "san": "Bg5", "note": "El alfil clava tu caballo." },
+            { "san": "Be7", "note": "Rompes la clavada y preparas el enroque." },
+            { "san": "e3", "note": "Las blancas abren paso a su alfil de f1." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "Nf3", "note": "Las blancas desarrollan el último caballo." },
+            { "san": "Nbd7", "note": "Ya estás en la línea principal del Gambito de Dama rehusado." }
+          ]
+        }
+      ]
+    },
+    { "san": "d5", "note": "Ocupas el centro con el peón de dama." },
+    {
+      "san": "c4",
+      "note": "Las blancas presionan tu peón de d5 desde un lado.",
+      "branches": [
+        {
+          "id": "ataque-indio",
+          "name": "2.g3: ataque indio de rey",
+          "eco": "A07",
+          "steps": [
+            { "san": "g3", "note": "Las blancas preparan el alfil en g2." },
+            { "san": "Nf6", "note": "Desarrollas y vigilas e4." },
+            { "san": "Bg2", "note": "El alfil blanco mira al centro." },
+            { "san": "e6", "note": "Tu esquema de siempre: abres paso al alfil de f8." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "Be7", "note": "Preparas el enroque." },
+            { "san": "d3", "note": "Las blancas preparan e4." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "Nbd2", "note": "El caballo apoya el avance e4." },
+            { "san": "c5", "note": "Ganas espacio en el flanco de dama." },
+            { "san": "e4", "note": "Las blancas atacan tu centro." },
+            { "san": "Nc6", "note": "Desarrollas y vigilas d4 y e5." }
+          ]
+        },
+        {
+          "id": "transpone-gdr",
+          "name": "2.d4 y 3.c4",
+          "eco": "D60",
+          "steps": [
+            { "san": "d4", "note": "Las blancas ocupan el centro." },
+            { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+            { "san": "c4", "note": "Ahora sí, el Gambito de Dama." },
+            { "san": "e6", "note": "Lo rehúsas como siempre." },
+            { "san": "Nc3", "note": "Más presión sobre d5." },
+            { "san": "Be7", "note": "Desarrollas y preparas el enroque." },
+            { "san": "Bg5", "note": "El alfil sale a g5." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "e3", "note": "Las blancas abren paso a su alfil." },
+            { "san": "Nbd7", "note": "Misma posición que en el Gambito de Dama rehusado." }
+          ]
+        }
+      ]
+    },
+    { "san": "e6", "note": "Sostienes d5 con un peón, igual que contra el Gambito de Dama." },
+    { "san": "g3", "note": "Las blancas preparan el alfil en g2." },
+    { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+    { "san": "Bg2", "note": "El alfil blanco presiona d5 desde lejos." },
+    { "san": "Be7", "note": "Preparas el enroque." },
+    { "san": "O-O", "note": "Las blancas enrocan." },
+    { "san": "O-O", "note": "Rey a salvo." },
+    { "san": "b3", "note": "Las blancas preparan el otro alfil en b2." },
+    { "san": "c5", "note": "Ganas espacio y vigilas d4." },
+    { "san": "Bb2", "note": "Los dos alfiles blancos miran al centro desde los lados." },
+    { "san": "Nc6", "note": "Desarrollas el último caballo." },
+    { "san": "e3", "note": "Las blancas refuerzan d4." },
+    { "san": "b6", "note": "Preparas tu alfil en b7 para contestar al de g2." }
+  ],
+  "alternatives": {}
+}

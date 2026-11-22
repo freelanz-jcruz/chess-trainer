@@ -1,0 +1,141 @@
+{
+  "id": "gambito-dama-rehusado",
+  "name": "Gambito de Dama rehusado",
+  "eco": "D67",
+  "side": "black",
+  "kind": "repertoire",
+  "block": 5,
+  "level": "principiante",
+  "summary": "Contra 1.d4, un esquema sólido que sirve casi siempre: ...d5, ...e6, ...Cf6, ...Ae7 y enroque. Las ramas muestran que el plan apenas cambia según lo que juegan las blancas.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "d4", "note": "Las blancas ocupan el centro con el peón de dama." },
+    { "san": "d5", "note": "Respuesta simétrica: tu peón frena el avance blanco y ocupa el centro." },
+    {
+      "san": "c4",
+      "note": "El Gambito de Dama: ofrecen un peón para desviar tu peón de d5.",
+      "branches": [
+        {
+          "id": "colle",
+          "name": "2.Cf3 y 3.e3: sistema Colle",
+          "eco": "D05",
+          "steps": [
+            { "san": "Nf3", "note": "Las blancas desarrollan sin jugar c4." },
+            { "san": "Nf6", "note": "Desarrollas y vigilas e4." },
+            { "san": "e3", "note": "Las blancas abren paso a su alfil de f1." },
+            { "san": "e6", "note": "Tú también: el mismo esquema de siempre." },
+            { "san": "Bd3", "note": "El alfil blanco apunta hacia tu enroque." },
+            { "san": "Be7", "note": "Desarrollas y preparas el enroque." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "Nbd2", "note": "Las blancas preparan e4." },
+            { "san": "c5", "note": "Golpeas el centro blanco desde un lado antes de que avancen e4." },
+            { "san": "c3", "note": "Las blancas sostienen d4." },
+            { "san": "Nc6", "note": "Desarrollas y aumentas la presión sobre d4." }
+          ]
+        },
+        {
+          "id": "londres",
+          "name": "2.Af4: sistema Londres",
+          "eco": "D00",
+          "steps": [
+            { "san": "Bf4", "note": "Las blancas sacan el alfil antes de cerrarlo con e3." },
+            { "san": "Nf6", "note": "Desarrollas y vigilas e4." },
+            { "san": "e3", "note": "Las blancas forman su cadena de peones." },
+            { "san": "e6", "note": "Tu esquema de siempre: abres paso al alfil de f8." },
+            { "san": "Nf3", "note": "Otra pieza blanca fuera." },
+            { "san": "Be7", "note": "Desarrollas y preparas el enroque." },
+            { "san": "Bd3", "note": "El alfil blanco apunta hacia tu enroque." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "O-O", "note": "Las blancas también enrocan." },
+            { "san": "c5", "note": "Atacas el centro blanco por el lado." },
+            { "san": "c3", "note": "Las blancas sostienen d4." },
+            { "san": "Nc6", "note": "Desarrollas y presionas d4." }
+          ]
+        }
+      ]
+    },
+    { "san": "e6", "note": "Rehúsas el gambito: sostienes d5 con un peón y abres paso al alfil de f8." },
+    {
+      "san": "Nc3",
+      "note": "Las blancas presionan d5 con otra pieza.",
+      "branches": [
+        {
+          "id": "catalana",
+          "name": "3.Cf3 y 4.g3: Catalana",
+          "eco": "E05",
+          "level": "intermedio",
+          "steps": [
+            { "san": "Nf3", "note": "Las blancas desarrollan el caballo de rey." },
+            { "san": "Nf6", "note": "Desarrollas y defiendes d5." },
+            { "san": "g3", "note": "Las blancas preparan el alfil en g2, apuntando al centro y al flanco de dama." },
+            { "san": "Be7", "note": "Desarrollas y preparas el enroque." },
+            { "san": "Bg2", "note": "El alfil blanco ya mira hacia d5 y b7." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "O-O", "note": "Las blancas también enrocan." },
+            { "san": "dxc4", "note": "Aquí sí tomas el peón: obligas a la dama blanca a perder tiempo para recuperarlo." },
+            { "san": "Qc2", "note": "La dama va a recuperar el peón de c4." },
+            { "san": "a6", "note": "Preparas ...b5 para defender el peón o ganar espacio." },
+            { "san": "a4", "note": "Las blancas impiden ...b5." },
+            { "san": "Bd7", "note": "Desarrollas el alfil; si toman en c4, irá a c6 contra el alfil de g2." }
+          ]
+        }
+      ]
+    },
+    { "san": "Nf6", "note": "Desarrollas y defiendes d5 otra vez." },
+    {
+      "san": "Bg5",
+      "note": "El alfil clava tu caballo contra la dama.",
+      "branches": [
+        {
+          "id": "cambio",
+          "name": "4.cxd5: variante del cambio",
+          "eco": "D36",
+          "steps": [
+            { "san": "cxd5", "note": "Las blancas cambian en el centro." },
+            { "san": "exd5", "note": "Recuperas con el peón de e: tu alfil de c8 queda libre." },
+            { "san": "Bg5", "note": "El alfil clava tu caballo." },
+            { "san": "Be7", "note": "Rompes la clavada desarrollando." },
+            { "san": "e3", "note": "Las blancas abren paso a su otro alfil." },
+            { "san": "c6", "note": "Refuerzas d5 y das a tu dama la diagonal hacia a5 y b6." },
+            { "san": "Qc2", "note": "La dama blanca vigila h7 y e4." },
+            { "san": "Nbd7", "note": "Desarrollas el otro caballo sin tapar el peón de c." },
+            { "san": "Bd3", "note": "El alfil blanco apunta a h7." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "Nf3", "note": "Las blancas desarrollan su último caballo." },
+            { "san": "Re8", "note": "La torre a la columna e, la que está semiabierta para ti." }
+          ]
+        },
+        {
+          "id": "af4",
+          "name": "4.Cf3 y 5.Af4",
+          "eco": "D37",
+          "steps": [
+            { "san": "Nf3", "note": "Las blancas desarrollan antes de decidir dónde va el alfil." },
+            { "san": "Be7", "note": "Tu esquema de siempre." },
+            { "san": "Bf4", "note": "El alfil va a f4 en lugar de g5." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "e3", "note": "Las blancas abren paso a su otro alfil." },
+            { "san": "c5", "note": "Golpeas el centro blanco por el lado." },
+            { "san": "dxc5", "note": "Las blancas capturan." },
+            { "san": "Bxc5", "note": "Recuperas el peón con el alfil activo." }
+          ]
+        }
+      ]
+    },
+    { "san": "Be7", "note": "Rompes la clavada y preparas el enroque." },
+    { "san": "e3", "note": "Las blancas abren paso a su alfil de f1." },
+    { "san": "O-O", "note": "Rey a salvo antes de liberar tu posición." },
+    { "san": "Nf3", "note": "Las blancas completan el desarrollo de los caballos." },
+    { "san": "Nbd7", "note": "El caballo se desarrolla sin tapar el peón de c, que avanzará luego." },
+    { "san": "Rc1", "note": "La torre blanca a la columna c, que podría abrirse." },
+    { "san": "c6", "note": "Refuerzas d5 y cierras la columna c." },
+    { "san": "Bd3", "note": "Las blancas desarrollan su último alfil." },
+    { "san": "dxc4", "note": "Cambias cuando el alfil ya se ha movido: tendrá que volver a moverse." },
+    { "san": "Bxc4", "note": "El alfil recupera el peón." },
+    { "san": "Nd5", "note": "Idea liberadora: ofreces cambiar piezas para ganar espacio." },
+    { "san": "Bxe7", "note": "Las blancas cambian alfiles." },
+    { "san": "Qxe7", "note": "Recuperas con la dama. Con menos piezas, tu posición respira." }
+  ],
+  "alternatives": {}
+}

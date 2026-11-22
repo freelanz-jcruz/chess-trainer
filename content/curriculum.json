@@ -139,7 +139,15 @@
           "id": "principios",
           "title": "Los cinco principios",
           "type": "lesson",
-          "status": "soon"
+          "status": "available",
+          "ref": "principios"
+        },
+        {
+          "id": "principios-practica",
+          "title": "Aplica los principios",
+          "type": "lesson",
+          "status": "available",
+          "ref": "principios-practica"
         }
       ]
     },
@@ -159,19 +167,36 @@
           "id": "e5-contra-e4",
           "title": "1...e5 contra 1.e4 (negras)",
           "type": "opening",
-          "status": "soon"
+          "status": "available",
+          "ref": "e5-contra-e4"
         },
         {
           "id": "gambito-dama-rehusado",
           "title": "Gambito de Dama rehusado (negras)",
           "type": "opening",
-          "status": "soon"
+          "status": "available",
+          "ref": "gambito-dama-rehusado"
         },
         {
-          "id": "trampas",
-          "title": "Trampas típicas: Fegatello y Légal",
+          "id": "esquema-gdr",
+          "title": "Contra 1.Cf3 y 1.c4 (negras)",
           "type": "opening",
-          "status": "soon"
+          "status": "available",
+          "ref": "esquema-gdr"
+        },
+        {
+          "id": "fegatello",
+          "title": "Trampa: ataque Fegatello",
+          "type": "opening",
+          "status": "available",
+          "ref": "fegatello"
+        },
+        {
+          "id": "legal",
+          "title": "Trampa: mate de Légal",
+          "type": "opening",
+          "status": "available",
+          "ref": "legal"
         }
       ]
     },

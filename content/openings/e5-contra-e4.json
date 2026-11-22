@@ -1,0 +1,235 @@
+{
+  "id": "e5-contra-e4",
+  "name": "1...e5 contra 1.e4",
+  "eco": "C54",
+  "side": "black",
+  "kind": "repertoire",
+  "block": 5,
+  "level": "principiante",
+  "summary": "Responder a 1.e4 con 1...e5 y desarrollar con naturalidad. La línea principal es la Italiana vista desde las negras; las ramas cubren lo que suelen jugar las blancas.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "e4", "note": "Las blancas ocupan el centro con el peón de rey." },
+    { "san": "e5", "note": "Respuesta simétrica: tu peón también reclama el centro y abre paso al alfil y a la dama." },
+    {
+      "san": "Nf3",
+      "note": "Las blancas desarrollan y atacan tu peón de e5.",
+      "branches": [
+        {
+          "id": "dama-h5",
+          "name": "2.Dh5: ataque precoz de dama",
+          "eco": "C20",
+          "steps": [
+            { "san": "Qh5", "note": "La dama sale pronto y ataca e5 y f7, buscando el mate del pastor." },
+            { "san": "Nc6", "note": "Defiendes e5 desarrollando un caballo." },
+            { "san": "Bc4", "note": "El alfil se suma al ataque contra f7: amenazan mate." },
+            { "san": "g6", "note": "Cierras el paso a la dama y la obligas a moverse otra vez." },
+            { "san": "Qf3", "note": "La dama sigue apuntando a f7." },
+            { "san": "Nf6", "note": "El caballo tapa la diagonal hacia f7 y se desarrolla. Ya no hay mate." },
+            { "san": "Ne2", "note": "Las blancas desarrollan, pero han perdido tiempo con la dama." },
+            { "san": "Bg7", "note": "El alfil sale por la casilla que abrió g6 y prepara el enroque." }
+          ]
+        },
+        {
+          "id": "vienesa",
+          "name": "2.Cc3: Vienesa",
+          "eco": "C49",
+          "steps": [
+            { "san": "Nc3", "note": "Las blancas desarrollan el caballo de dama y vigilan d5." },
+            { "san": "Nf6", "note": "Desarrollas y atacas el peón de e4." },
+            { "san": "Nf3", "note": "Otro caballo fuera, atacando e5." },
+            { "san": "Nc6", "note": "Defiendes e5 con el caballo. Es la posición de los Cuatro Caballos." },
+            { "san": "Bb5", "note": "El alfil presiona tu caballo de c6, que defiende e5." },
+            { "san": "Bb4", "note": "Copias la idea: tu alfil presiona el caballo de c3." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "O-O", "note": "Tú también: rey a salvo." },
+            { "san": "d3", "note": "Las blancas defienden e4 y abren la diagonal del alfil de c1." },
+            { "san": "d6", "note": "Lo mismo para ti: e5 queda firme y el alfil de c8 puede salir." }
+          ]
+        },
+        {
+          "id": "gambito-rey",
+          "name": "2.f4: Gambito de Rey",
+          "eco": "C36",
+          "steps": [
+            { "san": "f4", "note": "Las blancas ofrecen un peón para abrir la columna f y quitarte el centro." },
+            { "san": "d5", "note": "Contraataque en el centro en lugar de aceptar el peón de inmediato." },
+            { "san": "exd5", "note": "Las blancas capturan en el centro." },
+            { "san": "exf4", "note": "Ahora sí tomas en f4: el rey blanco queda más expuesto." },
+            { "san": "Nf3", "note": "Las blancas desarrollan y evitan ...Dh4+." },
+            { "san": "Nf6", "note": "Desarrollas y atacas el peón de d5." },
+            { "san": "Bc4", "note": "El alfil defiende d5 y apunta a f7." },
+            { "san": "Nxd5", "note": "Recuperas el peón con una pieza bien centrada." },
+            { "san": "O-O", "note": "Las blancas ponen el rey a salvo." },
+            { "san": "Be7", "note": "Desarrollas y preparas tu propio enroque." }
+          ]
+        },
+        {
+          "id": "centro",
+          "name": "2.d4: Apertura del Centro",
+          "eco": "C22",
+          "steps": [
+            { "san": "d4", "note": "Las blancas abren el centro de inmediato." },
+            { "san": "exd4", "note": "Capturas: no conviene dejar que el peón blanco te empuje." },
+            { "san": "Qxd4", "note": "La dama recupera el peón, pero queda expuesta en el centro." },
+            { "san": "Nc6", "note": "Desarrollas atacando a la dama: ganas un tiempo." },
+            { "san": "Qe3", "note": "La dama se aparta." },
+            { "san": "Nf6", "note": "Otra pieza fuera, atacando e4." },
+            { "san": "Nc3", "note": "Las blancas defienden e4 con el caballo." },
+            { "san": "Bb4", "note": "El alfil sale y presiona al defensor de e4." },
+            { "san": "Bd2", "note": "Las blancas rompen la clavada." },
+            { "san": "O-O", "note": "Enrocas: rey a salvo y tu torre irá a e8 contra e4." }
+          ]
+        }
+      ]
+    },
+    { "san": "Nc6", "note": "Defender desarrollando: el caballo protege e5 y mira al centro." },
+    {
+      "san": "Bc4",
+      "note": "Es la Italiana: el alfil apunta a f7.",
+      "branches": [
+        {
+          "id": "espanola",
+          "name": "3.Ab5: Española",
+          "eco": "C90",
+          "steps": [
+            { "san": "Bb5", "note": "El alfil ataca el caballo que defiende e5." },
+            { "san": "a6", "note": "Preguntas al alfil qué quiere hacer: retirarse o cambiarse." },
+            {
+              "san": "Ba4",
+              "note": "El alfil se retira, sin dejar de presionar al caballo.",
+              "branches": [
+                {
+                  "id": "cambio",
+                  "name": "4.Axc6: variante del cambio",
+                  "eco": "C69",
+                  "steps": [
+                    { "san": "Bxc6", "note": "Las blancas cambian el alfil por tu caballo." },
+                    { "san": "dxc6", "note": "Capturas hacia el centro y abres paso a tu alfil de c8 y a la dama." },
+                    { "san": "O-O", "note": "Las blancas enrocan; ahora sí amenazan ganar e5." },
+                    { "san": "f6", "note": "Defiendes e5 con un peón y mantienes tu estructura." },
+                    { "san": "d4", "note": "Las blancas abren el centro." },
+                    { "san": "exd4", "note": "Cambias en el centro." },
+                    { "san": "Nxd4", "note": "El caballo recupera el peón en una buena casilla." },
+                    { "san": "c5", "note": "Echas al caballo del centro ganando tiempo." }
+                  ]
+                }
+              ]
+            },
+            { "san": "Nf6", "note": "Desarrollas y atacas el peón de e4." },
+            { "san": "O-O", "note": "Las blancas enrocan y dejan e4 como cebo." },
+            { "san": "Be7", "note": "Desarrollo tranquilo para enrocar pronto." },
+            { "san": "Re1", "note": "La torre defiende e4 y amenaza de nuevo ganar e5." },
+            { "san": "b5", "note": "Echas al alfil para que deje de presionar a tu caballo." },
+            { "san": "Bb3", "note": "El alfil se coloca en la diagonal que mira a f7." },
+            { "san": "d6", "note": "Sostienes e5 y abres paso al alfil de c8." },
+            { "san": "c3", "note": "Las blancas preparan d4 y dan una casilla al alfil." },
+            { "san": "O-O", "note": "Enrocas: desarrollo completo y rey a salvo." }
+          ]
+        },
+        {
+          "id": "escocesa",
+          "name": "3.d4: Escocesa",
+          "eco": "C45",
+          "steps": [
+            { "san": "d4", "note": "Las blancas abren el centro de inmediato." },
+            { "san": "exd4", "note": "Capturas: así no te dejan sin espacio." },
+            { "san": "Nxd4", "note": "El caballo recupera el peón en el centro." },
+            { "san": "Nf6", "note": "Desarrollas y atacas el peón de e4." },
+            {
+              "san": "Nc3",
+              "note": "Las blancas defienden e4 con el caballo.",
+              "branches": [
+                {
+                  "id": "mieses",
+                  "name": "5.Cxc6: variante Mieses",
+                  "eco": "C45",
+                  "level": "intermedio",
+                  "steps": [
+                    { "san": "Nxc6", "note": "Las blancas cambian caballos antes de defender e4." },
+                    { "san": "bxc6", "note": "Capturas hacia el centro: el peón de c6 apoyará ...d5." },
+                    { "san": "e5", "note": "El peón echa a tu caballo de f6." },
+                    { "san": "Qe7", "note": "La dama ataca el peón de e5 y clava el peón contra el rey." },
+                    { "san": "Qe2", "note": "Las blancas defienden e5 y cubren su rey." },
+                    { "san": "Nd5", "note": "El caballo se instala en el centro." },
+                    { "san": "c4", "note": "Las blancas echan al caballo." },
+                    { "san": "Ba6", "note": "Clavas el peón de c4 contra la dama: el caballo puede quedarse." }
+                  ]
+                }
+              ]
+            },
+            { "san": "Bb4", "note": "El alfil presiona al caballo que defiende e4." },
+            { "san": "Nxc6", "note": "Las blancas cambian un caballo." },
+            { "san": "bxc6", "note": "Capturas hacia el centro." },
+            { "san": "Bd3", "note": "El alfil defiende e4." },
+            { "san": "d5", "note": "Golpeas el centro con un peón y liberas tu alfil de c8." },
+            { "san": "exd5", "note": "Las blancas cambian." },
+            { "san": "cxd5", "note": "Recuperas el peón con un centro sólido." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "O-O", "note": "Tú también: desarrollo casi completo." }
+          ]
+        },
+        {
+          "id": "cuatro-caballos",
+          "name": "3.Cc3: Cuatro Caballos",
+          "eco": "C49",
+          "steps": [
+            { "san": "Nc3", "note": "Las blancas desarrollan el otro caballo." },
+            { "san": "Nf6", "note": "Tú también: cuatro caballos en juego." },
+            { "san": "Bb5", "note": "El alfil presiona tu caballo de c6." },
+            { "san": "Bb4", "note": "Respondes con la misma idea." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "d3", "note": "Las blancas sostienen e4." },
+            { "san": "d6", "note": "Sostienes e5 y abres paso al alfil de c8." }
+          ]
+        }
+      ]
+    },
+    { "san": "Bc5", "note": "Tu alfil se coloca en la diagonal equivalente, apuntando a f2." },
+    {
+      "san": "c3",
+      "note": "Las blancas preparan d4 para quitarte el centro.",
+      "branches": [
+        {
+          "id": "d3",
+          "name": "4.d3",
+          "eco": "C54",
+          "steps": [
+            { "san": "d3", "note": "Las blancas defienden e4 con calma." },
+            { "san": "Nf6", "note": "Desarrollas y presionas e4." },
+            { "san": "c3", "note": "Las blancas preparan d4." },
+            { "san": "d6", "note": "Sostienes e5 y abres paso al alfil." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "O-O", "note": "Tú también: misma estructura que la línea principal." }
+          ]
+        },
+        {
+          "id": "enroque",
+          "name": "4.0-0",
+          "eco": "C54",
+          "steps": [
+            { "san": "O-O", "note": "Las blancas enrocan primero." },
+            { "san": "Nf6", "note": "Desarrollas y atacas e4." },
+            { "san": "d3", "note": "Las blancas defienden e4." },
+            { "san": "d6", "note": "Sostienes e5." },
+            { "san": "c3", "note": "Las blancas preparan d4." },
+            { "san": "O-O", "note": "Rey a salvo: se llega a la misma posición tranquila." }
+          ]
+        }
+      ]
+    },
+    { "san": "Nf6", "note": "Otra pieza fuera, presionando el peón de e4." },
+    { "san": "d3", "note": "Las blancas defienden e4: es la versión tranquila." },
+    { "san": "d6", "note": "Sostienes e5 y abres paso a tu alfil de c8." },
+    { "san": "O-O", "note": "Las blancas ponen el rey a salvo." },
+    { "san": "O-O", "note": "Tú también: rey a salvo y torre conectada." },
+    { "san": "Re1", "note": "La torre blanca se coloca detrás de e4." },
+    { "san": "a6", "note": "Das al alfil una casilla de retirada antes de que lo molesten con b4 o d4." },
+    { "san": "Bb3", "note": "El alfil blanco se aparta sin dejar de mirar a f7." },
+    { "san": "Ba7", "note": "Tu alfil se pone a salvo en la misma diagonal." },
+    { "san": "h3", "note": "Las blancas impiden ...Ag4 y dan aire a su rey." },
+    { "san": "h6", "note": "Haces lo mismo: evitas Ag5 y das aire a tu rey." }
+  ],
+  "alternatives": {}
+}

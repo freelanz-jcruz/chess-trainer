@@ -2,7 +2,7 @@
 
 Aplicación web personal para aprender ajedrez desde cero, pensada para ratos sueltos en el móvil. Libre (GPL-3), gratuita, sin cuentas ni servidor.
 
-> Estado: plan aprobado. **Fases 1, 2 y 3 completadas.**
+> Estado: plan aprobado. **Fases 1, 2, 3 y 4 completadas.**
 
 ---
 
@@ -174,7 +174,8 @@ chess-trainer/
 - `side`: bando que aprende el usuario; la app juega automáticamente el otro bando en la práctica.
 - `alternatives` (opcional): índice de paso (desde 0) → jugadas del libro también aceptadas como "correctas" (p. ej. `4.d3` en lugar de `4.c3`, que transpone). En el prototipo puede ir vacío.
 - (El `// ...` del ejemplo es solo ilustrativo; los ficheros reales son JSON puro.)
-- Las trampas (pastor, Fegatello, Légal) usarán el mismo formato con un campo `"kind": "trap"`.
+- Las trampas (Fegatello, Légal) usan el mismo formato con `"kind": "trap"`: la línea incluye el error del rival y cómo aprovecharlo. La defensa contra el mate del pastor está en la lección del bloque 3 y como rama de 1...e5 (2.Dh5).
+- `eco` (opcional) en la apertura y en cada rama; `npm run eco` lo comprueba contra el catálogo de Lichess.
 
 #### Variantes (preparado desde la fase 1)
 
@@ -191,7 +192,7 @@ Aperturas como la Española tienen muchas ramas según lo que juegue el rival. P
 ```
 
 - La línea principal sigue siendo `steps`; cada rama es otra lista de pasos, que a su vez puede tener ramas (un árbol).
-- En el recorrido, al llegar a un punto con ramas se puede elegir cuál seguir. En la práctica, la app elige una rama del rival al azar, o la que menos se ha practicado, para entrenar todas.
+- En el recorrido, al llegar a un punto con ramas aparece un selector («Aquí la partida puede seguir de varias formas») para elegir cuál seguir, también en ramas anidadas. En la práctica, cada vez que se empieza de nuevo la app elige al azar una rama en cada punto, para entrenarlas todas; al terminar muestra qué línea se ha jugado.
 - El validador recorre el árbol entero: legalidad y valoración en todas las ramas.
 - En la fase 1 la Italiana no lleva ramas, pero el código ya las admite, con un test que lo comprueba.
 
@@ -327,13 +328,15 @@ Botón **Pista** → flecha en el tablero (`drawable.autoShapes` de Chessground)
 2. **Temario:** cada lección `available` apunta a un fichero existente; ids únicos.
 3. **Aperturas:**
    - Cada jugada es **legal** desde la posición anterior.
-   - Para cada jugada del libro (de ambos bandos), Stockfish a profundidad alta (~18) calcula la pérdida respecto a la mejor jugada. **Falla** si alguna es *error* o *error grave* (≥ 1 peón); **avisa** si es *imprecisión*.
-   - Las trampas (`kind: "trap"`) se validan a la inversa: la jugada del bando que cae en la trampa *debe* ser un error, y la del bando que la aprovecha, correcta.
+   - Para cada jugada del bando que aprende el usuario, Stockfish (profundidad 16) calcula la pérdida respecto a la mejor jugada. **Falla** si alguna es *error* o *error grave* (≥ 1 peón); **avisa** si es *imprecisión*. Las jugadas dudosas del rival (2.Dh5, 2.f4…) solo se informan: es lo que juega la gente.
+   - Trampas (`kind: "trap"`): en cada línea el rival comete al menos una imprecisión, y el usuario acaba con mate o con al menos +0,7 (el Fegatello no gana material a la fuerza: deja al rey negro en el centro, unos +0,8).
    - Notas ≤ 140 caracteres.
 4. **Problemas:** esquema, jugadas legales, y (opcional, con `--deep`) que la primera jugada de la solución sea la mejor según Stockfish.
 5. Salida legible y código de salida ≠ 0 si hay errores (apto para CI más adelante).
 
-Las evaluaciones del validador se pueden cachear en un fichero para no recalcular en cada ejecución.
+Las evaluaciones del validador se cachean en `tools/.cache/` para no recalcular en cada ejecución.
+
+**Nombres y ECO (`npm run eco`, `tools/check-eco.ts`):** descarga una vez el catálogo `lichess-org/chess-openings` (CC0) en `tools/data/`, reconoce las posiciones de cada línea (también por transposición) y comprueba que el ECO declarado en la apertura y en cada rama coincide con la posición más profunda del catálogo.
 
 ---
 
@@ -366,7 +369,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 | **1** | Prototipo (sección 3). |
 | **2** ✅ | **PWA sin conexión con Serwist**: precache de toda la exportación estática (páginas, `.txt` de navegación de Next, JS/CSS, motor `.js` + `.wasm`, iconos), manifiesto e icono propio, aviso «Hay una versión nueva · Actualizar» (la versión nueva no se activa sola a mitad de un ejercicio) y página 404 de respaldo sin conexión. Como Next 16 compila con Turbopack y el plugin de `@serwist/next` es de webpack, el service worker (`sw/sw.ts`) se compila con esbuild y `@serwist/build` inyecta la lista de precache sobre `out/` en `postbuild` (`tools/build-sw.mjs`). Admite `BASE_PATH` para publicar en un subdirectorio. |
 | **3** ✅ | Bloques 1–3 con el tipo de lección `lesson` (páginas `text`, `quiz`, `move`, `drill` y `play`; sección 6.4): 13 lecciones de fundamentos, movimientos especiales y mates comunes, selector de coronación en el tablero, progreso por lección y validación de todo el contenido con Stockfish. |
-| **4** | Bloques 4–5: principios de apertura y repertorio completo (Italiana con más variantes del rival, 1...e5 contra las principales respuestas de las blancas, Gambito de Dama rehusado, trampas). Comprobación de nombres/ECO contra el catálogo `lichess-org/chess-openings` (CC0). |
+| **4** ✅ | Bloques 4–5: principios de apertura y repertorio completo (Italiana con más variantes del rival, 1...e5 contra las principales respuestas de las blancas, Gambito de Dama rehusado, trampas). Comprobación de nombres/ECO contra el catálogo `lichess-org/chess-openings` (CC0). Hecho: lecciones «Los cinco principios» y «Aplica los principios»; aperturas 1...e5 (12 líneas: Italiana, 2.Dh5, Vienesa, Gambito de Rey, Centro, Española con la variante del cambio, Escocesa, Cuatro Caballos…), Gambito de Dama rehusado (6 líneas: Colle, Londres, Catalana, cambio…), esquema del GDR contra 1.Cf3 y 1.c4 (7 líneas), rama de los Dos Caballos en la Italiana y trampas Fegatello y Légal; selector de variantes en el recorrido y `npm run eco`. |
 | **5** | Bloques 6–7: más temas tácticos (`pin`, `discoveredAttack`), finales de rey y peón y oposición (lecciones con páginas `drill`, `move` y `play`). |
 | **6** | Repaso espaciado de aperturas y problemas fallados, exportar/importar progreso, publicación en GitHub (repositorio público, GPL-3) y despliegue en GitHub Pages. |
 | **7+** | **Niveles superiores.** Cada lección y cada rama lleva un campo `level` (`principiante`, `intermedio`, `avanzado`), y la app muestra solo el nivel elegido y los anteriores. Repertorio ampliado como datos: **Española con blancas** y sus variantes principales (Cerrada, del Cambio, Berlinesa, Abierta, Marshall como defensa), más variantes de la Italiana (Evans, 4.d4) y del Gambito de Dama. Problemas de rating más alto y más temas tácticos con el mismo script de filtrado. |

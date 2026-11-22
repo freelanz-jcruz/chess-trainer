@@ -178,3 +178,9 @@ button.link { background: none; border: none; color: #fff; text-decoration: unde
   position: sticky; bottom: 0; z-index: 10; padding: 10px 0 max(10px, env(safe-area-inset-bottom));
   background: linear-gradient(to bottom, transparent, var(--bg) 25%);
 }
+
+/* Selector de variantes en el recorrido de una apertura */
+.branch-picker { margin: 10px 0; padding: 10px 12px; border: 1px dashed var(--border); border-radius: 10px; }
+.branch-picker p { margin: 0 0 6px; }
+.branch-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.branch-options .chip { cursor: pointer; text-align: left; }

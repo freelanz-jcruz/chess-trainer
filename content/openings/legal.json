@@ -1,0 +1,40 @@
+{
+  "id": "legal",
+  "name": "Trampa: mate de Légal",
+  "eco": "C41",
+  "side": "white",
+  "kind": "trap",
+  "block": 5,
+  "level": "principiante",
+  "summary": "Si las negras clavan tu caballo y se descuidan, puedes entregar la dama y dar mate con tres piezas menores.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "e4", "note": "Peón al centro." },
+    { "san": "e5" },
+    { "san": "Nf3", "note": "Desarrollas atacando e5." },
+    { "san": "d6", "note": "Las negras defienden e5 con un peón: es la Defensa Philidor." },
+    { "san": "Bc4", "note": "El alfil apunta a f7." },
+    { "san": "Bg4", "note": "El alfil negro clava tu caballo contra la dama." },
+    { "san": "Nc3", "note": "Desarrollas otra pieza: este caballo será clave para el mate." },
+    { "san": "g6", "note": "El error: las negras pierden un tiempo y no vigilan e5." },
+    { "san": "Nxe5", "note": "¡Rompes la clavada! Si te comen la dama, hay mate." },
+    {
+      "san": "Bxd1",
+      "note": "Las negras se llevan la dama…",
+      "branches": [
+        {
+          "id": "sin-dama",
+          "name": "5...dxe5: no comen la dama",
+          "steps": [
+            { "san": "dxe5", "note": "Las negras capturan el caballo en lugar de la dama." },
+            { "san": "Qxg4", "note": "Recuperas la pieza y quedas con un peón más y mejor posición." }
+          ]
+        }
+      ]
+    },
+    { "san": "Bxf7+", "note": "Jaque con el alfil: el rey solo puede ir a e7." },
+    { "san": "Ke7", "note": "Única casilla." },
+    { "san": "Nd5#", "note": "Mate: tres piezas menores contra la dama." }
+  ],
+  "alternatives": {}
+}
