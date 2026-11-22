@@ -38,6 +38,9 @@ export default function Credits() {
         <li>
           <a href="https://nextjs.org/">Next.js</a> y <a href="https://react.dev/">React</a> (MIT).
         </li>
+        <li>
+          <a href="https://serwist.pages.dev/">Serwist</a> (MIT) para el funcionamiento sin conexión.
+        </li>
       </ul>
       <p className="muted small">Este proyecto no está afiliado a Lichess ni a Stockfish.</p>
     </article>

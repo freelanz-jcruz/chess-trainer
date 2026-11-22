@@ -1,7 +1,8 @@
 'use client';
 import { Engine, type UciTransport } from './engine';
+import { withBase } from '@/lib/base-path';
 
-export const ENGINE_URL = '/engine/stockfish-19-lite-single.js';
+export const ENGINE_URL = withBase('/engine/stockfish-19-lite-single.js');
 
 let instance: Engine | null = null;
 

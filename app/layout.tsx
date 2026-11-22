@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
+import ServiceWorker from '@/components/ServiceWorker';
+import { withBase } from '@/lib/base-path';
 import '@lichess-org/chessground/assets/chessground.base.css';
 import '@lichess-org/chessground/assets/chessground.cburnett.css';
 import './globals.css';
@@ -7,6 +9,12 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Chess Trainer',
   description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
+  applicationName: 'Chess Trainer',
+  appleWebApp: { capable: true, title: 'Ajedrez', statusBarStyle: 'default' },
+  icons: {
+    icon: [{ url: withBase('/icons/icon-192.png'), sizes: '192x192', type: 'image/png' }],
+    apple: [{ url: withBase('/icons/icon-180.png'), sizes: '180x180' }],
+  },
 };
 
 export const viewport: Viewport = {
@@ -33,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
         </header>
         <main>{children}</main>
+        <ServiceWorker />
       </body>
     </html>
   );

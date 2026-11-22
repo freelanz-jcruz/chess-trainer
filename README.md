@@ -6,6 +6,7 @@ en tu navegador y el progreso se guarda solo en tu dispositivo.
 
 - **Aperturas paso a paso**: recorrido con una frase breve por jugada y práctica en la que Stockfish valora cada jugada.
 - **Ejercicios**: problemas de mate en 1, mate en 2, pieza colgada y ataque doble.
+- **Funciona sin conexión** (PWA): se puede instalar en el móvil y, tras la primera visita, todo (incluido el motor) está disponible sin red.
 - **Valoración** de cada jugada según la pérdida respecto a la mejor (correcta, buena alternativa, imprecisión, error, error grave) y **pista** con flecha.
 
 La app no explica en profundidad por qué una jugada es mejor que otra: indica si es correcta según el motor. El plan completo está en [PLAN.md](PLAN.md).
@@ -17,9 +18,14 @@ Requisitos: Node.js ≥ 20.9.
 ```bash
 npm install        # instala dependencias y copia Stockfish a public/engine
 npm run dev        # desarrollo en http://localhost:3000
-npm run build      # exportación estática en out/
+npm run build      # exportación estática en out/ (+ service worker out/sw.js)
 npm start          # sirve out/ en http://localhost:4321
 ```
+
+El service worker solo se registra en el build de producción (`npm run build` + `npm start`), no en `npm run dev`.
+Para publicar en un subdirectorio (p. ej. GitHub Pages en `/chess-trainer`), compila con `BASE_PATH=/chess-trainer npm run build`.
+
+Los iconos de `public/icons/` se generan desde `assets/icon.svg` con `tools/make-icons.sh` (macOS).
 
 Otros scripts:
 
@@ -54,6 +60,7 @@ Los textos de las lecciones son originales.
 - **Tablero**: [Chessground](https://github.com/lichess-org/chessground) (GPL-3), con las piezas *cburnett* de Colin M. L. Burnett (GPL/BSD/GFDL).
 - **Reglas**: [chess.js](https://github.com/jhlywa/chess.js) (BSD-2).
 - [Next.js](https://nextjs.org/) y [React](https://react.dev/) (MIT).
+- [Serwist](https://serwist.pages.dev/) (MIT) para el funcionamiento sin conexión.
 
 ## Licencia
 

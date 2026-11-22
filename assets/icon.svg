@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#2f6f4f"/>
+  <!-- Peón estilizado (diseño propio), dentro de la zona segura de iconos "maskable" -->
+  <g fill="#f6f3ee">
+    <circle cx="256" cy="168" r="52"/>
+    <path d="M206 236h100l-14 26c22 30 34 68 38 112H182c4-44 16-82 38-112z"/>
+    <rect x="160" y="384" width="192" height="36" rx="12"/>
+  </g>
+</svg>

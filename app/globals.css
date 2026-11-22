@@ -132,3 +132,12 @@ cg-board square.check { background: radial-gradient(ellipse at center, rgba(255,
 /* Letras de columna dentro de su casilla (abajo a la derecha), sin desplazamiento fijo en píxeles */
 .cg-wrap coords.files { left: 0; bottom: 0; height: auto; text-transform: none; }
 .cg-wrap coords.files coord { flex: 1 1 0; text-align: right; padding-right: 3px; }
+
+/* Avisos de la PWA */
+.toast {
+  position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px; z-index: 50;
+  width: max-content; max-width: calc(100vw - 32px);
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}

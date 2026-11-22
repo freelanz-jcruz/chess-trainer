@@ -2,7 +2,7 @@
 
 Aplicación web personal para aprender ajedrez desde cero, pensada para ratos sueltos en el móvil. Libre (GPL-3), gratuita, sin cuentas ni servidor.
 
-> Estado: **borrador para revisión**. No se escribe código hasta que el plan esté aprobado.
+> Estado: plan aprobado. **Fases 1 y 2 completadas.**
 
 ---
 
@@ -11,7 +11,7 @@ Aplicación web personal para aprender ajedrez desde cero, pensada para ratos su
 - **Para principiantes absolutos.** Sesiones cortas (2–10 min), una idea por pantalla.
 - **La app no explica en profundidad.** Indica si una jugada es correcta o recomendable según Stockfish y, como mucho, da una frase breve de principio general. El porqué detallado queda para la bibliografía.
 - **Todo el contenido es dato.** El motor de lecciones es genérico; añadir una apertura, un mate o un final significa añadir un JSON, no programar.
-- **Estático y local.** Sitio exportado (`output: 'export'`), motor de ajedrez en el navegador, progreso en `localStorage`. Más adelante, funcionamiento sin conexión (PWA).
+- **Estático y local.** Sitio exportado (`output: 'export'`), motor de ajedrez en el navegador, progreso en `localStorage` y funcionamiento sin conexión (PWA).
 - **Textos originales.** Nunca copiados de libros. Nombres de aperturas y datos de problemas procedentes de Lichess (CC0), sin usar su marca ni su diseño.
 - **Notación en español en pantalla** (R, D, T, A, C; 0-0, 0-0-0). Internamente se usa SAN inglesa (la que entiende `chess.js`) y se traduce solo al mostrar.
 
@@ -82,7 +82,7 @@ Fuera del prototipo: PWA, resto de bloques, repaso espaciado, partidas libres co
 | Estilos | CSS Modules (o Tailwind si se prefiere) | — | Diseño móvil primero. |
 | Tests | **Vitest** | MIT | Lógica pura: valoración, traducción de notación, parser UCI, progreso. |
 | Scripts | **tsx** para ejecutar TypeScript en `tools/` | MIT | |
-| PWA (fase 2) | **Serwist** | MIT | Ver sección 11. |
+| PWA (fase 2) | **Serwist** (`serwist` + `@serwist/build`) y **esbuild** | MIT | Ver sección 11. |
 
 ---
 
@@ -345,7 +345,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 |------|-----------|
 | **0** | Este plan. |
 | **1** | Prototipo (sección 3). |
-| **2** | **PWA sin conexión con Serwist**: precache de la exportación estática, del motor (`.js` + `.wasm`) y de los JSON de contenido; manifiesto e iconos; aviso de nueva versión. Con `output: 'export'` se usará la integración que funcione con exportación estática (inyección del manifiesto sobre `out/` si `@serwist/next` no lo cubre). |
+| **2** ✅ | **PWA sin conexión con Serwist**: precache de toda la exportación estática (páginas, `.txt` de navegación de Next, JS/CSS, motor `.js` + `.wasm`, iconos), manifiesto e icono propio, aviso «Hay una versión nueva · Actualizar» (la versión nueva no se activa sola a mitad de un ejercicio) y página 404 de respaldo sin conexión. Como Next 16 compila con Turbopack y el plugin de `@serwist/next` es de webpack, el service worker (`sw/sw.ts`) se compila con esbuild y `@serwist/build` inyecta la lista de precache sobre `out/` en `postbuild` (`tools/build-sw.mjs`). Admite `BASE_PATH` para publicar en un subdirectorio. |
 | **3** | Bloques 1–3: tipos de lección `explanation`, `task` y `vsEngine`; contenido de fundamentos, movimientos especiales y mates comunes. |
 | **4** | Bloques 4–5: principios de apertura y repertorio completo (Italiana con más variantes del rival, 1...e5 contra las principales respuestas de las blancas, Gambito de Dama rehusado, trampas). Comprobación de nombres/ECO contra el catálogo `lichess-org/chess-openings` (CC0). |
 | **5** | Bloques 6–7: más temas tácticos (`pin`, `discoveredAttack`), finales de rey y peón y oposición (`task` + `vsEngine`). |
