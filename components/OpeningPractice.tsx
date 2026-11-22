@@ -88,10 +88,10 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
   }, [done, finished, opening.id, update]);
 
   const onMove = useCallback(
-    async (from: string, to: string) => {
+    async (from: string, to: string, promotion?: string) => {
       if (!myTurn || locked) return;
       const fenBefore = fen;
-      const uci = toUci(fenBefore, from, to, expected.uci[4] ?? 'q');
+      const uci = toUci(fenBefore, from, to, promotion);
       const played = playUci(fenBefore, uci);
       if (!played) return;
       setArrows([]);

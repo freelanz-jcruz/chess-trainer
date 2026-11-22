@@ -1,0 +1,61 @@
+{
+  "id": "mate-pastor",
+  "title": "Mate del pastor y cómo evitarlo",
+  "block": 3,
+  "level": "principiante",
+  "summary": "El mate más rápido de los principiantes y su defensa.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "Es uno de los mates más rápidos: la **dama** y el **alfil** atacan juntos la casilla **f7**, que al principio solo defiende el rey.\n\n1.e4 e5 2.Ac4 Cc6 3.Dh5 Cf6?? 4.Dxf7#",
+      "title": "El mate del pastor",
+      "fen": "r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4",
+      "arrows": [
+        [
+          "c4",
+          "f7"
+        ]
+      ]
+    },
+    {
+      "kind": "text",
+      "body": "Tras 1.e4 e5 2.Ac4 Cc6 3.Dh5 las blancas amenazan **Dxf7 mate**. La dama también ataca el peón de e5.\n\nCon negras, lo primero es defender f7.",
+      "title": "La amenaza",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+      "orientation": "black",
+      "arrows": [
+        [
+          "h5",
+          "f7"
+        ],
+        [
+          "c4",
+          "f7"
+        ]
+      ]
+    },
+    {
+      "kind": "move",
+      "body": "Juegas con negras. Defiéndete de la amenaza de mate.",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+      "goal": "good",
+      "hint": "Puedes cortar el camino de la dama o defender f7 con otra pieza.",
+      "success": "¡Bien! f7 está a salvo."
+    },
+    {
+      "kind": "move",
+      "body": "Si juegas 3...g6, la dama vuelve a amenazar f7 con 4.Df3. ¿Cómo te defiendes ahora?",
+      "fen": "r1bqkbnr/pppp1p1p/2n3p1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR b KQkq - 1 4",
+      "goal": "good",
+      "hint": "Un caballo puede cerrar el camino de la dama y desarrollarse a la vez.",
+      "success": "¡Exacto! Defiendes y sacas una pieza."
+    },
+    {
+      "kind": "text",
+      "body": "Sacar la dama tan pronto suele ser mala idea: el rival la ataca **mientras desarrolla** sus piezas y gana tiempo.\n\nSi defiendes bien, el mate del pastor deja a las blancas peor que antes.",
+      "title": "La lección",
+      "fen": "r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5",
+      "orientation": "black"
+    }
+  ]
+}

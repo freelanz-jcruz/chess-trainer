@@ -1,0 +1,84 @@
+{
+  "id": "jaque-mate",
+  "title": "Jaque y jaque mate",
+  "block": 1,
+  "level": "principiante",
+  "summary": "Qué es el jaque, las tres formas de salir de él y qué es el jaque mate.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "Un rey está en **jaque** cuando una pieza rival lo ataca.\n\nEl jaque **hay que resolverlo enseguida**: no se puede hacer ninguna jugada que deje al propio rey atacado.",
+      "title": "El jaque",
+      "fen": "4k3/8/8/8/8/8/8/4R1K1 b - - 0 1",
+      "arrows": [
+        [
+          "e1",
+          "e8"
+        ]
+      ]
+    },
+    {
+      "kind": "text",
+      "body": "Hay tres formas de salir del jaque:\n\n- **Mover el rey** a una casilla segura.\n- **Capturar** la pieza que da jaque.\n- **Tapar** el jaque poniendo una pieza en medio.\n\nSi no hay ninguna de las tres, es **jaque mate** y la partida termina.",
+      "title": "Salir del jaque"
+    },
+    {
+      "kind": "move",
+      "body": "Estás en jaque. Sal del jaque **moviendo el rey**.",
+      "fen": "4r1k1/8/8/8/8/8/5PPP/4K3 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "Kd1",
+        "Kd2",
+        "Kf1"
+      ],
+      "hint": "La torre ataca toda la columna e: busca una casilla fuera de ella."
+    },
+    {
+      "kind": "move",
+      "body": "Ahora sal del jaque **capturando** la pieza que lo da.",
+      "fen": "4k3/8/8/8/1b6/P7/8/4K3 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "axb4"
+      ],
+      "hint": "Tu peón puede capturar en diagonal."
+    },
+    {
+      "kind": "move",
+      "body": "Ahora **tapa** el jaque con una pieza.",
+      "fen": "4r1k1/8/8/8/8/8/3P1PP1/4KB2 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "Be2"
+      ],
+      "hint": "Pon una pieza entre la torre y tu rey."
+    },
+    {
+      "kind": "text",
+      "body": "Esto es **jaque mate**: el rey negro está en jaque y no puede escapar a ninguna casilla, ni capturar la torre, ni tapar el jaque.\n\nDar jaque mate es el **objetivo** de la partida.",
+      "title": "Jaque mate",
+      "fen": "3R2k1/5ppp/8/8/8/8/8/6K1 b - - 0 1"
+    },
+    {
+      "kind": "move",
+      "body": "Da jaque mate en una jugada.",
+      "fen": "6k1/5ppp/8/8/8/8/8/3R2K1 w - - 0 1",
+      "goal": "mate",
+      "hint": "Los peones negros encierran a su propio rey."
+    },
+    {
+      "kind": "move",
+      "body": "Da jaque mate con la dama.",
+      "fen": "k7/8/1K6/8/8/8/8/6Q1 w - - 0 1",
+      "goal": "mate",
+      "hint": "Tu rey ya vigila las casillas a7 y b7."
+    },
+    {
+      "kind": "move",
+      "body": "Juegas con negras. Da jaque mate.",
+      "fen": "r5k1/8/8/8/8/8/5PPP/6K1 b - - 0 1",
+      "goal": "mate"
+    }
+  ]
+}

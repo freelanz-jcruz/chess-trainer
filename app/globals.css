@@ -141,3 +141,40 @@ cg-board square.check { background: radial-gradient(ellipse at center, rgba(255,
   background: var(--surface); color: var(--text); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 8px 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
+
+/* Casillas resaltadas en explicaciones */
+cg-board square.hint { background: radial-gradient(rgba(47, 111, 79, 0.55) 22%, rgba(47, 111, 79, 0.18) 24%, transparent 60%); }
+
+/* Selector de coronación */
+.board-frame { position: relative; }
+.promotion {
+  position: absolute; inset: 0; z-index: 20; display: grid; place-content: center; gap: 10px; text-align: center;
+  background: rgba(0, 0, 0, 0.45); border-radius: 4px; color: #fff;
+}
+.promotion p { margin: 0; font-weight: 600; }
+.promotion-options { display: flex; gap: 8px; }
+.promotion-options button { width: 64px; height: 64px; padding: 4px; background: var(--surface); }
+.promo-piece { position: relative; display: block; width: 100%; height: 100%; }
+.promo-piece piece { width: 100% !important; height: 100% !important; position: static; display: block; }
+button.link { background: none; border: none; color: #fff; text-decoration: underline; min-height: 0; }
+
+/* Lecciones */
+.lesson-progress { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.dot { width: 14px; height: 14px; min-height: 0; padding: 0; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); }
+.dot.done { background: var(--accent); border-color: var(--accent); }
+.dot.current { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lesson-nav { margin-top: 16px; align-items: center; }
+.lesson-end { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.lesson-text-only { max-width: 680px; margin-top: 12px; }
+.prose p { margin: 0 0 0.6em; }
+.prose p:last-child { margin-bottom: 0; }
+.prose ul { margin: 0 0 0.6em; padding-left: 1.2em; }
+.quiz-options { display: grid; gap: 8px; }
+.quiz-option { text-align: left; }
+.quiz-option.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, var(--surface)); }
+.quiz-option.wrong { border-color: var(--mistake); background: color-mix(in srgb, var(--mistake) 12%, var(--surface)); }
+.quiz-option:disabled { opacity: 1; }
+.lesson-nav {
+  position: sticky; bottom: 0; z-index: 10; padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, transparent, var(--bg) 25%);
+}

@@ -1,0 +1,91 @@
+{
+  "id": "captura-valor",
+  "title": "Capturar y el valor de las piezas",
+  "block": 1,
+  "level": "principiante",
+  "summary": "Qué es capturar, cuánto vale cada pieza y cómo detectar piezas sin defensa.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "**Capturar** es quitar una pieza rival del tablero ocupando su casilla. Todas las piezas capturan igual que se mueven, salvo el peón, que captura en diagonal.\n\nCapturar no es obligatorio: decides tú.",
+      "title": "Capturar",
+      "fen": "8/8/8/3p4/8/8/8/3R4 w - - 0 1",
+      "arrows": [
+        [
+          "d1",
+          "d5"
+        ]
+      ]
+    },
+    {
+      "kind": "text",
+      "body": "Para saber si un cambio te conviene, se usa este valor aproximado:\n\n- Peón: **1**\n- Caballo: **3**\n- Alfil: **3**\n- Torre: **5**\n- Dama: **9**\n- Rey: no tiene precio, porque perderlo es perder la partida\n\nEs una guía, no una regla: a veces la posición importa más que los puntos.",
+      "title": "¿Cuánto vale cada pieza?",
+      "fen": "startpos"
+    },
+    {
+      "kind": "quiz",
+      "body": "Puedes capturar un caballo, pero a cambio pierdes tu torre. ¿Te conviene?",
+      "options": [
+        "Sí, gano una pieza",
+        "No: doy 5 puntos y recibo 3",
+        "Da igual: valen lo mismo"
+      ],
+      "answer": 1,
+      "explain": "La torre (5) vale más que el caballo (3)."
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Qué vale más: dos alfiles o una torre?",
+      "options": [
+        "Dos alfiles",
+        "Una torre",
+        "Valen lo mismo"
+      ],
+      "answer": 0,
+      "explain": "Dos piezas menores suman 6 puntos; la torre, 5."
+    },
+    {
+      "kind": "text",
+      "body": "Una pieza está **colgada** cuando está atacada y nadie la defiende: el rival puede capturarla gratis.\n\nAntes de cada jugada, pregúntate: ¿hay alguna pieza rival sin defender? ¿Y alguna mía?",
+      "title": "Piezas colgadas"
+    },
+    {
+      "kind": "move",
+      "body": "Hay una pieza negra sin defensa. Captúrala.",
+      "fen": "4k3/8/8/3n4/8/8/8/3RK3 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "Rxd5"
+      ],
+      "success": "¡Bien! Un caballo gratis."
+    },
+    {
+      "kind": "move",
+      "body": "Puedes capturar un peón o una torre. Elige la mejor captura.",
+      "fen": "4k3/8/7p/r7/8/8/3Q4/4K3 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "Qxa5"
+      ],
+      "hint": "Compara lo que vale cada pieza."
+    },
+    {
+      "kind": "quiz",
+      "body": "El caballo blanco puede capturar el peón de d5. ¿Es buena idea?",
+      "options": [
+        "Sí: gano un peón",
+        "No: el peón está defendido y perdería el caballo"
+      ],
+      "answer": 1,
+      "fen": "4k3/8/4p3/3p4/8/2N5/8/4K3 w - - 0 1",
+      "arrows": [
+        [
+          "c3",
+          "d5"
+        ]
+      ],
+      "explain": "El peón de e6 defiende d5: darías 3 puntos por 1."
+    }
+  ]
+}

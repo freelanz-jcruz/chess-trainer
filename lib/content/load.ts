@@ -3,6 +3,8 @@ import puzzleJson from '@/content/puzzles/puzzles.json';
 import italiana from '@/content/openings/italiana-tranquila.json';
 import {
   curriculumSchema,
+  lessonFileSchema,
+  type LessonFile,
   openingSchema,
   puzzleFileSchema,
   type Curriculum,
@@ -10,12 +12,33 @@ import {
   type Puzzle,
 } from './schemas';
 
+import { LESSON_FILES } from '@/content/lessons';
+import { lessonHref } from './links';
+
 /** Registro de aperturas. Añadir una apertura = añadir su JSON aquí. */
 const OPENING_FILES: unknown[] = [italiana];
 
 export const curriculum: Curriculum = curriculumSchema.parse(curriculumJson);
 export const openings: Opening[] = OPENING_FILES.map((o) => openingSchema.parse(o));
 export const puzzles: Puzzle[] = puzzleFileSchema.parse(puzzleJson).puzzles;
+
+export const lessons: LessonFile[] = LESSON_FILES.map((l) => lessonFileSchema.parse(l));
+
+export function getLesson(id: string): LessonFile | undefined {
+  return lessons.find((l) => l.id === id);
+}
+
+/** Siguiente lección disponible del temario después de la lección `ref` (para encadenarlas). */
+export function nextLessonAfter(ref: string): { href: string; title: string } | undefined {
+  const all = curriculum.blocks.flatMap((b) => b.lessons);
+  const i = all.findIndex((l) => l.status === 'available' && 'ref' in l && l.ref === ref);
+  if (i < 0) return undefined;
+  for (const l of all.slice(i + 1)) {
+    const href = lessonHref(l);
+    if (href) return { href, title: l.title };
+  }
+  return undefined;
+}
 
 export function getOpening(id: string): Opening | undefined {
   return openings.find((o) => o.id === id);

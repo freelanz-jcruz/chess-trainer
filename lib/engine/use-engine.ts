@@ -31,11 +31,20 @@ export function useMoveEvaluator(movetime: number) {
     [movetime, preAnalyze],
   );
 
+  /** Análisis de una posición (reutiliza el que esté en marcha): para pistas con la mejor jugada. */
+  const analysis = useCallback(
+    (fen: string) => {
+      preAnalyze(fen);
+      return pending.current!.promise;
+    },
+    [preAnalyze],
+  );
+
   /** Descarta los análisis en curso (p. ej. cuando el usuario acierta y no hace falta valorar). */
   const cancel = useCallback(() => {
     pending.current = null;
     getEngine().cancelAll();
   }, []);
 
-  return { preAnalyze, evaluate, cancel };
+  return { preAnalyze, evaluate, analysis, cancel };
 }

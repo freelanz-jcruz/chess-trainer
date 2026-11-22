@@ -1,0 +1,74 @@
+{
+  "id": "tablero",
+  "title": "El tablero",
+  "block": 1,
+  "level": "principiante",
+  "summary": "Casillas, columnas, filas y la posición inicial.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "El tablero tiene **64 casillas**, claras y oscuras, en 8 filas y 8 columnas.\n\nLas **columnas** se nombran con letras, de la **a** a la **h**, y las **filas** con números, del **1** al **8**. Cada casilla se llama por su columna y su fila: la casilla marcada en el centro es **e4**.\n\nAl colocar el tablero, la casilla de la esquina inferior derecha debe ser **clara** (aquí, h1).",
+      "title": "Casillas, columnas y filas",
+      "fen": "8/8/8/8/8/8/8/8 w - - 0 1",
+      "highlight": [
+        "e4",
+        "h1"
+      ]
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Cómo se llama la casilla marcada?",
+      "options": [
+        "f3",
+        "c6",
+        "f6",
+        "e3"
+      ],
+      "answer": 0,
+      "fen": "8/8/8/8/8/8/8/8 w - - 0 1",
+      "highlight": [
+        "f3"
+      ],
+      "explain": "Columna f, fila 3."
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Y esta?",
+      "options": [
+        "c3",
+        "f6",
+        "c6",
+        "b6"
+      ],
+      "answer": 2,
+      "fen": "8/8/8/8/8/8/8/8 w - - 0 1",
+      "highlight": [
+        "c6"
+      ],
+      "explain": "Columna c, fila 6."
+    },
+    {
+      "kind": "text",
+      "body": "Cada bando empieza con **16 piezas**: 8 peones, 2 torres, 2 caballos, 2 alfiles, la dama y el rey.\n\nLas torres van en las esquinas; a su lado, los caballos, y después los alfiles. La **dama** ocupa la casilla de su color (la dama blanca, d1, que es clara) y el **rey** se coloca a su lado.\n\nEmpiezan siempre las **blancas** y después se juega por turnos: una jugada cada uno.",
+      "title": "La posición inicial",
+      "fen": "startpos",
+      "highlight": [
+        "d1",
+        "d8"
+      ]
+    },
+    {
+      "kind": "quiz",
+      "body": "En la posición inicial, ¿en qué casilla está el rey blanco?",
+      "options": [
+        "d1",
+        "e1",
+        "e8",
+        "f1"
+      ],
+      "answer": 1,
+      "fen": "startpos",
+      "explain": "El rey blanco empieza en e1, al lado de la dama."
+    }
+  ]
+}

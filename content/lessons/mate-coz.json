@@ -1,0 +1,35 @@
+{
+  "id": "mate-coz",
+  "title": "Mate de la coz",
+  "block": 3,
+  "level": "principiante",
+  "summary": "Un caballo da mate a un rey rodeado de sus propias piezas.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "En el **mate de la coz** (también llamado mate ahogado), el rey está rodeado por **sus propias piezas** y un caballo le da jaque. Como el caballo salta, no se puede tapar.",
+      "title": "El mate de la coz",
+      "fen": "6rk/5Npp/8/8/8/8/8/6K1 b - - 0 1"
+    },
+    {
+      "kind": "move",
+      "body": "Da mate con el caballo.",
+      "fen": "6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1",
+      "goal": "mate"
+    },
+    {
+      "kind": "play",
+      "body": "**Mate en 2.** Sacrifica la dama para que el rey quede encerrado y remata con el caballo.",
+      "fen": "5r1k/6pp/7N/3Q4/8/8/8/6K1 w - - 0 1",
+      "goal": "checkmate",
+      "maxMoves": 2,
+      "strict": true
+    },
+    {
+      "kind": "text",
+      "body": "Así acaba esa combinación: la torre negra tuvo que capturar la dama en g8 y el rey quedó sin casillas. Es una de las combinaciones más famosas del ajedrez.",
+      "title": "Rodeado",
+      "fen": "6rk/5Npp/8/8/8/8/8/6K1 b - - 0 1"
+    }
+  ]
+}

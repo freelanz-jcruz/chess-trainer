@@ -18,19 +18,22 @@ export type PuzzleProgress = {
   lastSeen?: string;
 };
 
+export type LessonProgress = { completed: boolean; lastPage: number };
+
 export type Settings = { engineTimeMs: number; showCoordinates: boolean };
 
 export type Progress = {
   version: 1;
   openings: Record<string, OpeningProgress>;
   puzzles: Record<string, PuzzleProgress>;
+  lessons: Record<string, LessonProgress>;
   settings: Settings;
 };
 
 export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true };
 
 function empty(): Progress {
-  return { version: 1, openings: {}, puzzles: {}, settings: { ...DEFAULT_SETTINGS } };
+  return { version: 1, openings: {}, puzzles: {}, lessons: {}, settings: { ...DEFAULT_SETTINGS } };
 }
 
 /** Lee y normaliza el progreso; tolera datos corruptos o almacenamiento bloqueado. */
@@ -43,6 +46,7 @@ export function parseProgress(raw: string | null): Progress {
       version: 1,
       openings: data.openings ?? {},
       puzzles: data.puzzles ?? {},
+      lessons: data.lessons ?? {},
       settings: { ...DEFAULT_SETTINGS, ...data.settings },
     };
   } catch {
@@ -100,4 +104,9 @@ export function updateOpening(p: Progress, id: string, fn: (o: OpeningProgress) 
 export function updatePuzzle(p: Progress, id: string, fn: (o: PuzzleProgress) => PuzzleProgress): Progress {
   const current = p.puzzles[id] ?? { solved: false, firstTry: false, attempts: 0, hintUsed: false };
   return { ...p, puzzles: { ...p.puzzles, [id]: { ...fn(current), lastSeen: today() } } };
+}
+
+export function updateLesson(p: Progress, id: string, fn: (o: LessonProgress) => LessonProgress): Progress {
+  const current = p.lessons[id] ?? { completed: false, lastPage: 0 };
+  return { ...p, lessons: { ...p.lessons, [id]: fn(current) } };
 }

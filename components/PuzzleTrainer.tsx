@@ -134,11 +134,11 @@ function PuzzleBoard({
   }, [phase, fen, preAnalyze, myColor]);
 
   const onMove = useCallback(
-    async (from: string, to: string) => {
+    async (from: string, to: string, promotion?: string) => {
       if (phase !== 'user') return;
       const expected = puzzle.solution[step];
       const fenBefore = fen;
-      const uci = toUci(fenBefore, from, to, expected.slice(0, 4) === from + to ? (expected[4] ?? 'q') : 'q');
+      const uci = toUci(fenBefore, from, to, promotion);
       const played = playUci(fenBefore, uci);
       if (!played) return;
       setArrows([]);

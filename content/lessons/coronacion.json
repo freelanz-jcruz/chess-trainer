@@ -1,0 +1,56 @@
+{
+  "id": "coronacion",
+  "title": "Coronación",
+  "block": 2,
+  "level": "principiante",
+  "summary": "Qué pasa cuando un peón llega al final.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "Cuando un peón llega a la **última fila** se **corona**: se cambia por una dama, una torre, un alfil o un caballo, a tu elección.\n\nCasi siempre se elige la **dama**, la pieza más fuerte. Por eso los peones avanzados son tan peligrosos.",
+      "title": "Coronar",
+      "fen": "4k3/1P6/8/8/8/8/8/4K3 w - - 0 1",
+      "arrows": [
+        [
+          "b7",
+          "b8"
+        ]
+      ]
+    },
+    {
+      "kind": "move",
+      "body": "Corona el peón y elige **dama**.",
+      "fen": "4k3/1P6/8/8/8/8/8/4K3 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "b8=Q+"
+      ]
+    },
+    {
+      "kind": "move",
+      "body": "Corona dando **jaque mate**.",
+      "fen": "k7/2P5/1K6/8/8/8/8/8 w - - 0 1",
+      "goal": "mate"
+    },
+    {
+      "kind": "move",
+      "body": "A veces conviene coronar a **caballo**. Corona dando jaque y atacando a la vez al rey y a la dama.",
+      "fen": "8/4P1k1/3q4/8/8/8/8/K7 w - - 0 1",
+      "goal": "listed",
+      "accept": [
+        "e8=N+"
+      ],
+      "hint": "El caballo ataca en forma de L.",
+      "success": "¡Ataque doble! Ganarás la dama."
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Puede un peón coronarse en rey?",
+      "options": [
+        "Sí",
+        "No: solo en dama, torre, alfil o caballo"
+      ],
+      "answer": 1
+    }
+  ]
+}

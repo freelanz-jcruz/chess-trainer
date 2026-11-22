@@ -1,0 +1,55 @@
+{
+  "id": "al-paso",
+  "title": "Captura al paso",
+  "block": 2,
+  "level": "principiante",
+  "summary": "Una captura especial de peón que solo existe un instante.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "Cuando un peón avanza **dos casillas** y queda **justo al lado** de un peón rival, ese peón rival puede capturarlo **como si hubiera avanzado solo una**.\n\nSolo se puede hacer en la **jugada inmediatamente siguiente**; después, se pierde la ocasión.",
+      "title": "Al paso",
+      "fen": "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+      "arrows": [
+        [
+          "e5",
+          "d6"
+        ]
+      ],
+      "highlight": [
+        "d5"
+      ]
+    },
+    {
+      "kind": "move",
+      "body": "Mira la jugada de las negras y captura **al paso**.",
+      "fen": "4k3/3p4/8/4P3/8/8/8/4K3 b - - 0 1",
+      "goal": "listed",
+      "opponentMove": "d7d5",
+      "accept": [
+        "exd6"
+      ],
+      "hint": "Tu peón de e5 va a d6 y el peón de d5 desaparece."
+    },
+    {
+      "kind": "move",
+      "body": "Ahora juegas con negras. Captura al paso.",
+      "fen": "4k3/8/8/8/5p2/8/4P3/4K3 w - - 0 1",
+      "goal": "listed",
+      "opponentMove": "e2e4",
+      "accept": [
+        "fxe3"
+      ],
+      "hint": "Tu peón de f4 va a e3."
+    },
+    {
+      "kind": "quiz",
+      "body": "Las blancas acaban de avanzar su peón de e3 a e4, **una** casilla. ¿Puede el peón negro de f4 capturarlo al paso?",
+      "options": [
+        "Sí",
+        "No: solo vale tras un avance de dos casillas"
+      ],
+      "answer": 1
+    }
+  ]
+}

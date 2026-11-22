@@ -1,0 +1,84 @@
+{
+  "id": "enroque",
+  "title": "El enroque",
+  "block": 2,
+  "level": "principiante",
+  "summary": "La jugada especial del rey y la torre, y cuándo está permitida.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "El **enroque** es la única jugada en la que se mueven dos piezas a la vez: el rey avanza **dos casillas** hacia una torre y esa torre salta al otro lado del rey.\n\n- **Enroque corto** (0-0): hacia la torre de h.\n- **Enroque largo** (0-0-0): hacia la torre de a.\n\nSirve para poner el rey a salvo y sacar la torre al juego.",
+      "title": "El enroque",
+      "fen": "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1",
+      "arrows": [
+        [
+          "e1",
+          "g1"
+        ],
+        [
+          "h1",
+          "f1"
+        ]
+      ]
+    },
+    {
+      "kind": "move",
+      "body": "Haz el **enroque corto**: mueve el rey dos casillas hacia la torre de h.",
+      "fen": "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1",
+      "goal": "listed",
+      "accept": [
+        "O-O"
+      ],
+      "hint": "Mueve el rey de e1 a g1; la torre se coloca sola."
+    },
+    {
+      "kind": "move",
+      "body": "Ahora el **enroque largo**.",
+      "fen": "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1",
+      "goal": "listed",
+      "accept": [
+        "O-O-O"
+      ],
+      "hint": "Mueve el rey de e1 a c1."
+    },
+    {
+      "kind": "text",
+      "body": "Solo se puede enrocar si:\n\n- Ni el rey ni esa torre **se han movido** antes.\n- **No hay piezas** entre el rey y la torre.\n- El rey **no está en jaque**.\n- El rey **no pasa ni termina** en una casilla atacada.\n\nLa torre, en cambio, sí puede estar atacada o pasar por una casilla atacada.",
+      "title": "Condiciones"
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Pueden las blancas enrocar corto?",
+      "options": [
+        "Sí",
+        "No: el rey pasaría por f1, que está atacada"
+      ],
+      "answer": 1,
+      "fen": "r3k2r/pppppppp/8/8/2b5/8/PPPP1PPP/R3K2R w KQkq - 0 1",
+      "arrows": [
+        [
+          "c4",
+          "f1"
+        ]
+      ],
+      "explain": "El alfil de c4 vigila f1."
+    },
+    {
+      "kind": "quiz",
+      "body": "El alfil negro ataca b1. ¿Pueden las blancas enrocar largo?",
+      "options": [
+        "Sí: el rey solo pasa por d1 y c1",
+        "No: b1 está atacada"
+      ],
+      "answer": 0,
+      "fen": "r3k2r/pppppppp/8/8/4b3/8/PP1PPPPP/R3K2R w KQkq - 0 1",
+      "arrows": [
+        [
+          "e4",
+          "b1"
+        ]
+      ],
+      "explain": "Solo importan las casillas del rey; por b1 pasa la torre."
+    }
+  ]
+}

@@ -89,6 +89,7 @@ const lessonBase = {
 
 export const lessonSchema = z.union([
   z.object({ ...lessonBase, type: z.literal('opening'), status: z.literal('available'), ref: z.string() }),
+  z.object({ ...lessonBase, type: z.literal('lesson'), status: z.literal('available'), ref: z.string() }),
   z.object({
     ...lessonBase,
     type: z.literal('puzzles'),
@@ -97,7 +98,7 @@ export const lessonSchema = z.union([
   }),
   z.object({
     ...lessonBase,
-    type: z.enum(['opening', 'puzzles', 'explanation', 'task', 'vsEngine']),
+    type: z.enum(['opening', 'puzzles', 'lesson']),
     status: z.literal('soon'),
   }),
 ]);
@@ -114,3 +115,100 @@ export const curriculumSchema = z.object({
   ),
 });
 export type Curriculum = z.infer<typeof curriculumSchema>;
+
+// ---------------------------------------------------------------------------
+// Lecciones por páginas (fase 3): explicación, test, jugada, ejercicio de movimiento y juego.
+// ---------------------------------------------------------------------------
+
+const square = z.string().regex(/^[a-h][1-8]$/);
+const color = z.enum(['white', 'black']);
+
+/** Lo que muestra el tablero en una página. Las posiciones de solo texto pueden no tener reyes. */
+const boardView = {
+  fen: z.string().min(1).optional(),
+  orientation: color.optional(),
+  arrows: z.array(z.tuple([square, square])).optional(),
+  highlight: z.array(square).optional(),
+  /** Resalta automáticamente las casillas a las que puede ir la pieza de esa casilla. */
+  showMovesFrom: square.optional(),
+};
+
+/** Texto breve con párrafos separados por línea en blanco y **negritas**. */
+const body = z.string().min(1);
+
+export const textPageSchema = z.object({ kind: z.literal('text'), title: z.string().optional(), body, ...boardView });
+
+export const quizPageSchema = z.object({
+  kind: z.literal('quiz'),
+  body,
+  ...boardView,
+  options: z.array(z.string().min(1)).min(2).max(4),
+  answer: z.number().int().min(0),
+  explain: z.string().optional(),
+});
+
+/** Una jugada: de una lista (`listed`), cualquiera que Stockfish dé por buena (`good`) o cualquier mate (`mate`). */
+export const movePageSchema = z.object({
+  kind: z.literal('move'),
+  body,
+  fen: z.string().min(1),
+  orientation: color.optional(),
+  /** Jugada del rival (UCI) que se anima antes de que mueva el usuario. */
+  opponentMove: uci.optional(),
+  goal: z.enum(['listed', 'good', 'mate']),
+  accept: z.array(z.string()).optional(),
+  hint: z.string().optional(),
+  success: z.string().optional(),
+});
+
+/** Ejercicio de movimiento: el rival no mueve. Sin reyes, para centrarse en la pieza. */
+export const drillPageSchema = z.object({
+  kind: z.literal('drill'),
+  body,
+  fen: z.string().min(1),
+  goal: z.discriminatedUnion('type', [
+    z.object({ type: z.literal('reach'), square }),
+    z.object({ type: z.literal('captureAll') }),
+  ]),
+  /** Número de jugadas para hacerlo "perfecto" (lo comprueba el validador: es el mínimo posible). */
+  par: z.number().int().min(1).optional(),
+});
+
+/** Partida contra Stockfish desde una posición hasta un objetivo. */
+export const playPageSchema = z.object({
+  kind: z.literal('play'),
+  body,
+  fen: z.string().min(1),
+  orientation: color.optional(),
+  opponentMove: uci.optional(),
+  goal: z.enum(['checkmate', 'promote']),
+  /** Máximo de jugadas del usuario. */
+  maxMoves: z.number().int().min(1).optional(),
+  /** Mate en N: cada jugada debe mantener un mate dentro del límite (si no, se deshace). */
+  strict: z.boolean().default(false),
+  hint: z.string().optional(),
+});
+
+export const lessonPageSchema = z.discriminatedUnion('kind', [
+  textPageSchema,
+  quizPageSchema,
+  movePageSchema,
+  drillPageSchema,
+  playPageSchema,
+]);
+export type LessonPage = z.infer<typeof lessonPageSchema>;
+export type TextPage = z.infer<typeof textPageSchema>;
+export type QuizPage = z.infer<typeof quizPageSchema>;
+export type MovePage = z.infer<typeof movePageSchema>;
+export type DrillPage = z.infer<typeof drillPageSchema>;
+export type PlayPage = z.infer<typeof playPageSchema>;
+
+export const lessonFileSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  title: z.string().min(1),
+  block: z.number().int().min(1).max(7),
+  level: levelSchema.default('principiante'),
+  summary: z.string().min(1),
+  pages: z.array(lessonPageSchema).min(1),
+});
+export type LessonFile = z.infer<typeof lessonFileSchema>;

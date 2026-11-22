@@ -2,13 +2,8 @@
 import Link from 'next/link';
 import type { Curriculum as CurriculumData, Lesson } from '@/lib/content/schemas';
 import { useProgress, type Progress } from '@/lib/progress/store';
+import { lessonHref } from '@/lib/content/links';
 
-function lessonHref(l: Lesson): string | null {
-  if (l.status !== 'available') return null;
-  if (l.type === 'opening') return `/aperturas/${l.ref}/`;
-  if (l.type === 'puzzles') return `/ejercicios/${l.id}/`;
-  return null;
-}
 
 function lessonProgress(l: Lesson, p: Progress, puzzleIds: Record<string, string[]>): string | null {
   if (l.status !== 'available') return null;
@@ -16,6 +11,11 @@ function lessonProgress(l: Lesson, p: Progress, puzzleIds: Record<string, string
     const o = p.openings[l.ref];
     if (!o) return null;
     return o.practiceRuns > 0 ? `practicada ${o.practiceRuns}×` : o.walkthroughDone ? 'vista' : null;
+  }
+  if (l.type === 'lesson') {
+    const o = p.lessons[l.ref];
+    if (!o) return null;
+    return o.completed ? 'completada ✓' : 'empezada';
   }
   if (l.type === 'puzzles') {
     const ids = puzzleIds[l.id] ?? [];

@@ -1,0 +1,47 @@
+{
+  "id": "mate-pasillo",
+  "title": "Mate del pasillo",
+  "block": 3,
+  "level": "principiante",
+  "summary": "El rey encerrado detrás de sus peones.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "El rey, detrás de sus propios peones, no tiene **casilla de escape**: una torre o una dama en la última fila le da mate.\n\nPara evitarlo, a veces conviene abrirle una **salida** al rey moviendo un peón (por ejemplo, h3 o h6).",
+      "title": "El mate del pasillo",
+      "fen": "3R2k1/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1"
+    },
+    {
+      "kind": "move",
+      "body": "Da mate del pasillo.",
+      "fen": "6k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+      "goal": "mate"
+    },
+    {
+      "kind": "move",
+      "body": "Juegas con negras. Da mate del pasillo.",
+      "fen": "6k1/5ppp/8/8/8/8/q4PPP/6K1 b - - 0 1",
+      "goal": "mate"
+    },
+    {
+      "kind": "play",
+      "body": "**Mate en 2.** La torre negra defiende la última fila, pero solo puede defenderla una vez.",
+      "fen": "2r3k1/5ppp/8/8/8/8/4RPPP/4R1K1 w - - 0 1",
+      "goal": "checkmate",
+      "maxMoves": 2,
+      "strict": true
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Qué jugada le da una salida al rey blanco?",
+      "options": [
+        "h3",
+        "a4",
+        "Kf1"
+      ],
+      "answer": 0,
+      "fen": "6k1/5ppp/8/8/8/8/5PPP/6K1 w - - 0 1",
+      "explain": "Tras h3, el rey puede escapar a h2."
+    }
+  ]
+}

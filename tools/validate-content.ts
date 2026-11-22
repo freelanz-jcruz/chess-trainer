@@ -10,17 +10,21 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { allLines, type LinePly } from '../lib/chess/opening-line';
-import { playUci } from '../lib/chess/game';
+import { Chess } from 'chess.js';
+import { makeChess, movesFrom, playUci, sanToUci } from '../lib/chess/game';
+import { shortestDrill } from '../lib/chess/drill';
 import { sanToEs } from '../lib/chess/notation-es';
 import {
   curriculumSchema,
+  lessonFileSchema,
+  type LessonFile,
   MAX_NOTE_LENGTH,
   openingSchema,
   puzzleFileSchema,
   type Opening,
   type OpeningStep,
 } from '../lib/content/schemas';
-import { openings as registeredOpenings } from '../lib/content/load';
+import { lessons as registeredLessons, openings as registeredOpenings } from '../lib/content/load';
 import type { Analysis, Engine } from '../lib/engine/engine';
 import { assessMove, VERDICT_LABEL } from '../lib/engine/evaluate';
 import { scoreForMover } from '../lib/engine/evaluate-move';
@@ -62,7 +66,7 @@ async function analyze(fen: string): Promise<Analysis> {
 }
 
 // ---------- Temario ----------
-function validateCurriculum(openingIds: Set<string>, puzzleThemes: Set<string>) {
+function validateCurriculum(openingIds: Set<string>, puzzleThemes: Set<string>, lessonIds: Set<string>) {
   console.log('\nTemario');
   const parsed = curriculumSchema.safeParse(readJson(join(CONTENT, 'curriculum.json')));
   if (!parsed.success) {
@@ -76,6 +80,7 @@ function validateCurriculum(openingIds: Set<string>, puzzleThemes: Set<string>) 
       seen.add(l.id);
       if (l.status !== 'available') continue;
       if (l.type === 'opening' && !openingIds.has(l.ref)) error(`La lección ${l.id} apunta a una apertura inexistente: ${l.ref}`);
+      if (l.type === 'lesson' && !lessonIds.has(l.ref)) error(`La lección ${l.id} apunta a un fichero de lección inexistente: ${l.ref}`);
       if (l.type === 'puzzles' && !l.themes.some((t) => puzzleThemes.has(t)))
         error(`La lección ${l.id} no tiene ningún problema de los temas ${l.themes.join(', ')}`);
     }
@@ -132,6 +137,117 @@ async function validateOpening(op: Opening) {
   }
   if (op.kind === 'trap') warn('Validación específica de trampas pendiente (fase 4): solo se informa de las valoraciones');
   else if (errors === errorsBefore) ok(`Stockfish (profundidad ${depth}) no considera error ninguna jugada del libro`);
+}
+
+
+// ---------- Lecciones por páginas ----------
+const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+/** FEN de partida real (con reyes y legal): lo exige el motor. */
+function strictFen(fen: string): string | null {
+  try {
+    new Chess(fen);
+    return null;
+  } catch (e) {
+    return (e as Error).message;
+  }
+}
+
+function looseFen(fen: string): string | null {
+  try {
+    makeChess(fen === 'startpos' ? START : fen);
+    return null;
+  } catch (e) {
+    return (e as Error).message;
+  }
+}
+
+async function validateLesson(l: LessonFile) {
+  console.log(`\nLección: ${l.title} (${l.id})`);
+  const before = errors;
+  for (const [i, page] of l.pages.entries()) {
+    const where = `página ${i + 1} (${page.kind})`;
+    if (!page.fen) {
+      if (page.kind === 'text' || page.kind === 'quiz') {
+        if (page.kind === 'quiz' && page.answer >= page.options.length) error(`${where}: la respuesta ${page.answer} no existe`);
+        continue;
+      }
+    }
+    const fen = page.fen === 'startpos' ? START : page.fen!;
+    const bad = looseFen(fen);
+    if (bad) {
+      error(`${where}: FEN no válido (${bad})`);
+      continue;
+    }
+
+    if (page.kind === 'text' || page.kind === 'quiz') {
+      if (page.kind === 'quiz' && page.answer >= page.options.length) error(`${where}: la respuesta ${page.answer} no existe`);
+      if (page.showMovesFrom && movesFrom(fen, page.showMovesFrom).length === 0)
+        error(`${where}: no hay ninguna pieza con jugadas en ${page.showMovesFrom}`);
+      continue;
+    }
+
+    if (page.kind === 'drill') {
+      if (/[kK]/.test(fen.split(' ')[0])) error(`${where}: los ejercicios de movimiento no llevan reyes`);
+      const path = shortestDrill(page, fen);
+      if (!path) error(`${where}: el objetivo es inalcanzable`);
+      else if (page.par && page.par < path.length) error(`${where}: par ${page.par} imposible; el mínimo es ${path.length}`);
+      else if (page.par && page.par > path.length) warn(`${where}: par ${page.par}, pero se puede en ${path.length}`);
+      else ok(`${where}: mínimo ${path.length} jugada(s)${page.par ? ' = par' : ''}`);
+      continue;
+    }
+
+    // move y play: posición de partida real
+    const needsStrict = page.kind === 'play' || page.goal !== 'listed';
+    if (needsStrict) {
+      const why = strictFen(fen);
+      if (why) {
+        error(`${where}: necesita una posición legal con reyes (${why})`);
+        continue;
+      }
+    }
+    let pos = fen;
+    if (page.opponentMove) {
+      const m = playUci(fen, page.opponentMove);
+      if (!m) {
+        error(`${where}: la jugada previa del rival ${page.opponentMove} es ilegal`);
+        continue;
+      }
+      pos = m.fenAfter;
+    }
+
+    if (page.kind === 'move') {
+      if (page.goal === 'listed') {
+        if (!page.accept?.length) error(`${where}: falta la lista de jugadas aceptadas`);
+        for (const san of page.accept ?? []) if (!sanToUci(pos, san)) error(`${where}: la jugada aceptada ${san} es ilegal`);
+      } else if (page.goal === 'mate') {
+        const mates = makeChess(pos)
+          .moves({ verbose: true })
+          .filter((m) => playUci(pos, m.from + m.to + (m.promotion ?? ''))?.isCheckmate);
+        if (!mates.length) error(`${where}: no hay ningún mate en una jugada`);
+      } else {
+        const a = await analyze(pos);
+        if (!a.bestMove) error(`${where}: la posición no tiene jugadas`);
+      }
+      continue;
+    }
+
+    // play
+    const a = await analyze(pos);
+    if (page.goal === 'checkmate') {
+      const mateIn = a.score.type === 'mate' && a.score.value > 0 ? a.score.value : null;
+      if (page.strict) {
+        if (!page.maxMoves) error(`${where}: un mate en N necesita maxMoves`);
+        else if (!mateIn || mateIn > page.maxMoves) error(`${where}: Stockfish no ve mate en ${page.maxMoves} (${JSON.stringify(a.score)})`);
+        else ok(`${where}: mate en ${mateIn}`);
+      } else if (!mateIn && !(a.score.type === 'cp' && a.score.value > 300)) {
+        error(`${where}: la posición no parece ganadora (${JSON.stringify(a.score)})`);
+      } else if (mateIn && page.maxMoves && mateIn > page.maxMoves) {
+        error(`${where}: el mate más rápido es en ${mateIn}, más que maxMoves (${page.maxMoves})`);
+      }
+    }
+  }
+  if (errors === before) ok(`${l.pages.length} páginas correctas`);
 }
 
 // ---------- Problemas ----------
@@ -192,9 +308,29 @@ async function main() {
   }
   ok(`${files.length} fichero(s)`);
 
+  // Lecciones: esquema y registro en content/lessons/index.ts.
+  const ldir = join(CONTENT, 'lessons');
+  const lessonIds = new Set<string>();
+  const validLessons: LessonFile[] = [];
+  console.log('\nFicheros de lecciones');
+  const lfiles = readdirSync(ldir).filter((f) => f.endsWith('.json'));
+  for (const f of lfiles) {
+    const parsed = lessonFileSchema.safeParse(readJson(join(ldir, f)));
+    if (!parsed.success) {
+      error(`${f}: ${parsed.error.message}`);
+      continue;
+    }
+    if (`${parsed.data.id}.json` !== f) error(`${f}: el id (${parsed.data.id}) no coincide con el nombre del fichero`);
+    if (!registeredLessons.some((l) => l.id === parsed.data.id)) error(`${f}: no está registrada en content/lessons/index.ts`);
+    lessonIds.add(parsed.data.id);
+    validLessons.push(parsed.data);
+  }
+  ok(`${lfiles.length} fichero(s)`);
+
   const themes = await validatePuzzles();
-  validateCurriculum(openingIds, themes);
+  validateCurriculum(openingIds, themes, lessonIds);
   for (const op of valid) await validateOpening(op);
+  for (const l of validLessons) await validateLesson(l);
 
   engine?.terminate();
   if (useCache) {

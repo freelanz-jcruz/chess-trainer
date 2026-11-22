@@ -1,0 +1,67 @@
+{
+  "id": "tablas",
+  "title": "Ahogado y tablas",
+  "block": 1,
+  "level": "principiante",
+  "summary": "Cuándo termina una partida sin ganador.",
+  "pages": [
+    {
+      "kind": "text",
+      "body": "Si al bando que le toca mover **no está en jaque** pero **no tiene ninguna jugada legal**, la partida termina en **tablas por ahogado**: nadie gana.\n\nCuidado cuando tengas mucha ventaja: ahogar al rival es regalarle el empate.",
+      "title": "El ahogado",
+      "fen": "7k/5Q2/6K1/8/8/8/8/8 b - - 0 1"
+    },
+    {
+      "kind": "quiz",
+      "body": "Juegan las negras. ¿Qué ha pasado?",
+      "options": [
+        "Jaque mate",
+        "Ahogado (tablas)",
+        "Solo jaque"
+      ],
+      "answer": 0,
+      "fen": "7k/6Q1/6K1/8/8/8/8/8 b - - 0 1",
+      "explain": "La dama da jaque, está protegida por el rey y el rey negro no tiene escapatoria."
+    },
+    {
+      "kind": "quiz",
+      "body": "Juegan las negras. ¿Y ahora?",
+      "options": [
+        "Jaque mate",
+        "Ahogado (tablas)",
+        "Solo jaque"
+      ],
+      "answer": 1,
+      "fen": "k7/2Q5/1K6/8/8/8/8/8 b - - 0 1",
+      "explain": "El rey negro no está en jaque, pero todas sus casillas están atacadas."
+    },
+    {
+      "kind": "quiz",
+      "body": "Juegan las negras. ¿Y en esta?",
+      "options": [
+        "Jaque mate",
+        "Ahogado (tablas)",
+        "Solo jaque"
+      ],
+      "answer": 2,
+      "fen": "k7/8/1K6/8/8/8/8/Q7 b - - 0 1",
+      "explain": "El rey está en jaque, pero puede escapar a b8."
+    },
+    {
+      "kind": "text",
+      "body": "La partida también termina en **tablas** cuando:\n\n- Se repite **tres veces** la misma posición.\n- No queda **material suficiente** para dar mate (rey contra rey, o rey y alfil o caballo contra rey).\n- Pasan **50 jugadas** de cada bando sin capturas ni movimientos de peón.\n- Los dos jugadores **acuerdan** el empate.",
+      "title": "Otras tablas",
+      "fen": "8/8/4k3/8/8/2K5/8/8 w - - 0 1"
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Se puede dar mate con rey y caballo contra el rey solo?",
+      "options": [
+        "Sí",
+        "No: es material insuficiente"
+      ],
+      "answer": 1,
+      "explain": "Con un solo caballo (o un solo alfil) no se puede forzar el mate."
+    }
+  ]
+}

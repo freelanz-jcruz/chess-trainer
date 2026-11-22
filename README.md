@@ -49,6 +49,7 @@ Todo el contenido son datos en `content/`:
 - `curriculum.json`: los 7 bloques del temario y sus lecciones.
 - `openings/*.json`: aperturas (formato en [PLAN.md](PLAN.md#61-apertura-contentopeningsidjson)). Para añadir una, crea el JSON, regístralo en `lib/content/load.ts`, enlázalo en el temario y pasa `npm run validate`.
 - `puzzles/puzzles.json`: generado por el script de filtrado.
+- `lessons/*.json`: lecciones guiadas (explicación, preguntas, ejercicios y juego contra Stockfish; formato en [PLAN.md](PLAN.md#64-lección-guiada-contentlessonsidjson)). Para añadir una, crea el JSON, impórtalo en `content/lessons/index.ts`, enlázalo en el temario con `"type": "lesson"` y pasa `npm run validate`.
 
 Los textos de las lecciones son originales.
 
