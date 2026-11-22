@@ -12,7 +12,7 @@ import type { DrillPage } from '@/lib/content/schemas';
 import type { PageProps } from './types';
 
 /** Ejercicio de movimiento: el rival no mueve; se cuenta el número de jugadas. */
-export default function DrillPageView({ page, onComplete, coordinates }: PageProps<DrillPage>) {
+export default function DrillPageView({ page, onComplete, coordinates, nav }: PageProps<DrillPage>) {
   const me = turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [moves, setMoves] = useState(0);
@@ -92,6 +92,7 @@ export default function DrillPageView({ page, onComplete, coordinates }: PagePro
             <RotateCcw /> Empezar de nuevo
           </Button>
         </Controls>
+        {nav}
       </Panel>
     </Trainer>
   );

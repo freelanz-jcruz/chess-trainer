@@ -378,6 +378,8 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 
 **Hoja inferior en móvil** (`components/PanelExtras.tsx`, Drawer de shadcn sobre `vaul`): lo secundario del panel de un entrenador (lista de jugadas, línea elegida, estadísticas de práctica) se muestra tal cual con tablero y panel en dos columnas (≥ 820 px); por debajo queda tras un botón «Jugadas · n» que abre una hoja deslizable desde abajo, con un velo suave para que el tablero siga viéndose al tocar una jugada. Se usa en el recorrido y la práctica de aperturas; en problemas y lecciones el panel ya es corto y todo lo que muestra es necesario para jugar.
 
+**Botones Anterior/Siguiente de las lecciones:** en móvil van fijos abajo (sobre la barra de pestañas); con tablero y panel en dos columnas van al final del panel, para no tapar la parte baja del tablero en pantallas poco altas. En las partidas contra Stockfish de las lecciones, el texto de la pista solo aparece al pulsar «Pista». En la práctica de aperturas, la primera vez se juega la línea principal y las siguientes, ramas al azar desde la primera práctica de cada visita.
+
 ---
 
 ## 11. Fases posteriores

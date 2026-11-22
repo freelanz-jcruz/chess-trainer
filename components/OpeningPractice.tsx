@@ -13,7 +13,9 @@ import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Opening } from '@/lib/content/schemas';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
-import { scheduleReview, updateOpening, useProgress } from '@/lib/progress/store';
+import { currentProgress, scheduleReview, updateOpening, useProgress } from '@/lib/progress/store';
+
+const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 const OPPONENT_DELAY = 550;
 const UNDO_DELAY = 1400;
@@ -44,6 +46,15 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
   const [finished, setFinished] = useState(false);
   const { preAnalyze, evaluate, cancel } = useMoveEvaluator(progress.settings.engineTimeMs);
   const timers = useRef<number[]>([]);
+
+  // La primera práctica sigue la línea principal (la que enseña el recorrido); las siguientes, ramas al azar.
+  // Se elige al montar, en el cliente (el azar no puede ir en el HTML generado al compilar), leyendo el
+  // progreso guardado directamente: en el primer render aún se ve el progreso por defecto.
+  useEffect(() => {
+    if (currentProgress().openings[opening.id]?.practiceRuns) setLine(randomLine(opening));
+    // Solo al entrar en la página.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const later = (fn: () => void, ms: number) => {
     timers.current.push(window.setTimeout(fn, ms));
@@ -93,7 +104,7 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
       kind: 'done',
       text: clean
         ? `¡${what} completada sin fallos!`
-        : `${what} completada con ${stats.current.errors} fallo(s) y ${stats.current.hints} pista(s).`,
+        : `${what} completada con ${count(stats.current.errors, 'fallo', 'fallos')} y ${count(stats.current.hints, 'pista', 'pistas')}.`,
     });
   }, [done, finished, opening.id, opening.kind, update]);
 

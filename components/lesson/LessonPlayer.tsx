@@ -73,7 +73,29 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navButtons = (
+    <>
+      <Button variant="outline" onClick={() => go(index - 1)} disabled={index === 0}>
+        <ChevronLeft /> Anterior
+      </Button>
+      {!isLast && (
+        <Button onClick={() => go(index + 1)} disabled={!pageDone}>
+          Siguiente <ChevronRight />
+        </Button>
+      )}
+      {isLast && pageDone && (
+        <span className="inline-flex flex-wrap items-center gap-2.5">
+          <strong>¡Lección completada!</strong>
+          <Button asChild>
+            {next ? <Link href={next.href}>Siguiente: {next.title}</Link> : <Link href="/">Volver al temario</Link>}
+          </Button>
+        </span>
+      )}
+    </>
+  );
+
   const common = {
+    nav: <div className="mt-1 hidden flex-wrap items-center gap-2 border-t border-border pt-3 trainer:flex">{navButtons}</div>,
     onComplete: complete,
     completed: pageDone,
     coordinates: progress.settings.showCoordinates,
@@ -111,24 +133,10 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
         {page.kind === 'play' && <PlayPageView page={page} {...common} />}
       </div>
 
-      {/* Fija abajo, sobre la barra de pestañas en móvil, con un degradado para no cortar el contenido en seco. */}
-      <div className="sticky bottom-(--tabbar-h) z-10 mt-4 flex flex-wrap items-center gap-2 bg-linear-to-b from-transparent to-background to-25% py-2.5">
-        <Button variant="outline" onClick={() => go(index - 1)} disabled={index === 0}>
-          <ChevronLeft /> Anterior
-        </Button>
-        {!isLast && (
-          <Button onClick={() => go(index + 1)} disabled={!pageDone}>
-            Siguiente <ChevronRight />
-          </Button>
-        )}
-        {isLast && pageDone && (
-          <span className="inline-flex flex-wrap items-center gap-2.5">
-            <strong>¡Lección completada!</strong>
-            <Button asChild>
-              {next ? <Link href={next.href}>Siguiente: {next.title}</Link> : <Link href="/">Volver al temario</Link>}
-            </Button>
-          </span>
-        )}
+      {/* Móvil: fija abajo, sobre la barra de pestañas, con un degradado para no cortar el contenido en seco.
+          En dos columnas va dentro del panel (ver `nav`), para no tapar la parte baja del tablero. */}
+      <div className="sticky bottom-(--tabbar-h) z-10 mt-4 flex flex-wrap items-center gap-2 bg-linear-to-b from-transparent to-background to-25% py-2.5 trainer:hidden">
+        {navButtons}
       </div>
     </div>
   );

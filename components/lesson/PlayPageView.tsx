@@ -29,7 +29,7 @@ function stillWinning(score: Score): boolean {
 type Phase = 'intro' | 'user' | 'checking' | 'opponent' | 'won' | 'lost';
 
 /** Jugar contra Stockfish desde una posición hasta dar mate (o coronar). */
-export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs }: PageProps<PlayPage>) {
+export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav }: PageProps<PlayPage>) {
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [lastMove, setLastMove] = useState<[string, string] | null>(null);
@@ -38,6 +38,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle' });
   const [round, setRound] = useState(0); // para reiniciar
+  const [hintShown, setHintShown] = useState(false); // el texto de la pista solo aparece al pedirla
   const { later, clear } = useTimers();
   const { preAnalyze, analysis, cancel } = useMoveEvaluator(engineTimeMs);
 
@@ -155,6 +156,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   );
 
   const showHint = async () => {
+    setHintShown(true);
     const a = await analysis(fen);
     if (!a.bestMove) return;
     const [f, t] = uciToSquares(a.bestMove);
@@ -164,6 +166,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   const restart = () => {
     clear();
     cancel();
+    setHintShown(false);
     setRound((r) => r + 1);
   };
 
@@ -191,7 +194,8 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
             <RotateCcw /> Empezar de nuevo
           </Button>
         </Controls>
-        {page.hint && <Note>{page.hint}</Note>}
+        {hintShown && page.hint && <Note>{page.hint}</Note>}
+        {nav}
       </Panel>
     </Trainer>
   );

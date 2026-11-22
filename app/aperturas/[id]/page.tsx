@@ -24,7 +24,13 @@ export default async function OpeningPage({ params }: { params: Promise<{ id: st
       <Note className="my-3.5">
         {opening.kind === 'trap' ? 'Trampa' : 'Recorrido paso a paso'} · juegas con{' '}
         {opening.side === 'white' ? 'blancas' : 'negras'}
-        {opening.eco && <> · ECO {opening.eco}</>} ·{' '}
+        {opening.eco && (
+          <>
+            {' '}· ECO {opening.eco}
+            {opening.steps.some((s) => s.branches?.length) && ' en la línea principal'}
+          </>
+        )}{' '}
+        ·{' '}
         <Link href={`/aperturas/${opening.id}/practica/`}>Ir a la práctica</Link>
       </Note>
       <OpeningWalkthrough opening={opening} />

@@ -25,19 +25,20 @@ export function StaticBoard({ view, coordinates }: { view: View; coordinates: bo
   );
 }
 
-export function TextPageView({ page, coordinates }: PageProps<TextPage>) {
+export function TextPageView({ page, coordinates, nav }: PageProps<TextPage>) {
   return (
     <Layout withBoard={!!page.fen}>
       {page.fen && <StaticBoard view={page} coordinates={coordinates} />}
       <Panel className="prose">
         {page.title && <h2>{page.title}</h2>}
         <RichText text={page.body} />
+        {nav}
       </Panel>
     </Layout>
   );
 }
 
-export function QuizPageView({ page, onComplete, completed, coordinates }: PageProps<QuizPage>) {
+export function QuizPageView({ page, onComplete, completed, coordinates, nav }: PageProps<QuizPage>) {
   const [chosen, setChosen] = useState<number | null>(completed ? page.answer : null);
   const right = chosen === page.answer;
   return (
@@ -81,6 +82,7 @@ export function QuizPageView({ page, onComplete, completed, coordinates }: PageP
             )}
           </Callout>
         )}
+        {nav}
       </Panel>
     </Layout>
   );

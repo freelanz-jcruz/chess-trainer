@@ -16,7 +16,7 @@ import type { PageProps } from './types';
 const stripSuffix = (san: string) => san.replace(/[+#]$/, '');
 
 /** Encontrar una jugada: de una lista, cualquier buena según Stockfish o cualquier mate. */
-export default function MovePageView({ page, onComplete, coordinates, engineTimeMs }: PageProps<MovePage>) {
+export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav }: PageProps<MovePage>) {
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [startFen, setStartFen] = useState(page.fen);
@@ -135,6 +135,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
             </Button>
           )}
         </Controls>
+        {nav}
       </Panel>
     </Trainer>
   );

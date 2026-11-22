@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="pb-[var(--tabbar-h)]">
         <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">
-          <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 px-4">
+          <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))]">
             <Link href="/" className="font-bold tracking-tight text-foreground no-underline">
               ♞ Chess Trainer
             </Link>
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </header>
-        <main className="mx-auto max-w-[960px] px-4 pt-2 pb-12">{children}</main>
+        <main className="mx-auto max-w-[960px] pt-2 pr-[max(1rem,env(safe-area-inset-right))] pb-12 pl-[max(1rem,env(safe-area-inset-left))]">{children}</main>
         <footer className="mx-auto max-w-[960px] border-t border-border p-4 text-[0.85rem] text-muted-foreground">
           <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3)
         </footer>
