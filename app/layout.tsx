@@ -13,9 +13,9 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Chess Trainer',
+  title: 'Ajedrez Tutor',
   description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
-  applicationName: 'Chess Trainer',
+  applicationName: 'Ajedrez Tutor',
   appleWebApp: { capable: true, title: 'Ajedrez', statusBarStyle: 'default' },
   icons: {
     icon: [{ url: withBase('/icons/icon-192.png'), sizes: '192x192', type: 'image/png' }],
@@ -42,8 +42,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="pb-[var(--tabbar-h)]">
         <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">
           <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))]">
-            <Link href="/" className="font-bold tracking-tight text-foreground no-underline">
-              ♞ Chess Trainer
+            <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-foreground no-underline">
+              {/* Marca como máscara: toma el color del texto y se adapta al tema (ver tools/make-icons.py). */}
+              <span
+                aria-hidden
+                className="h-7 w-[1.15rem] bg-current mask-(--brand) mask-contain mask-center mask-no-repeat"
+                style={{ '--brand': `url(${withBase('/brand-symbol.png')})` } as React.CSSProperties}
+              />
+              Ajedrez Tutor
             </Link>
             <DesktopNav />
             <div className="ml-auto">

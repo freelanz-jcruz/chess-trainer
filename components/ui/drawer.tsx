@@ -3,7 +3,7 @@ import type * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 import { cn } from '@/lib/utils';
 
-// shadcn/ui (MIT), solo la variante inferior (bottom sheet).
+// shadcn/ui (MIT): hoja inferior (bottom sheet) y panel lateral derecho (`side="right"`, con `direction="right"` en Drawer).
 function Drawer(props: React.ComponentProps<typeof DrawerPrimitive.Root>) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />;
 }
@@ -32,21 +32,25 @@ function DrawerOverlay({ className, ...props }: React.ComponentProps<typeof Draw
 function DrawerContent({
   className,
   overlayClassName,
+  side = 'bottom',
   children,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Content> & { overlayClassName?: string }) {
+}: React.ComponentProps<typeof DrawerPrimitive.Content> & { overlayClassName?: string; side?: 'bottom' | 'right' }) {
   return (
     <DrawerPrimitive.Portal data-slot="drawer-portal">
       <DrawerOverlay className={overlayClassName} />
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          'fixed inset-x-0 bottom-0 z-50 mt-24 flex max-h-[80vh] flex-col rounded-t-xl border-t border-border bg-popover pb-[env(safe-area-inset-bottom)] text-popover-foreground',
+          'fixed z-50 flex flex-col border-border bg-popover text-popover-foreground',
+          side === 'bottom' && 'inset-x-0 bottom-0 mt-24 max-h-[80vh] rounded-t-xl border-t pb-[env(safe-area-inset-bottom)]',
+          side === 'right' &&
+            'inset-y-0 right-0 w-[85vw] max-w-sm rounded-l-xl border-l pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)]',
           className,
         )}
         {...props}
       >
-        <div aria-hidden className="mx-auto mt-3 h-1.5 w-12 shrink-0 rounded-full bg-muted-foreground/40" />
+        {side === 'bottom' && <div aria-hidden className="mx-auto mt-3 h-1.5 w-12 shrink-0 rounded-full bg-muted-foreground/40" />}
         {children}
       </DrawerPrimitive.Content>
     </DrawerPrimitive.Portal>

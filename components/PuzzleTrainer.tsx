@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronRight, Lightbulb } from 'lucide-react';
 import Callout from './Callout';
-import { Controls, Note, Panel, Trainer } from './Trainer';
+import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
@@ -182,7 +182,7 @@ function PuzzleBoard({
     if (phase !== 'user') return;
     preAnalyze(fen);
     setFeedback((f) =>
-      f.kind === 'verdict' ? f : { kind: 'idle', text: `Juegan las ${myColor === 'white' ? 'blancas' : 'negras'}. Encuentra la mejor jugada.` },
+      f.kind === 'verdict' ? f : { kind: 'idle', text: 'Tu turno.' },
     );
   }, [phase, fen, preAnalyze, myColor]);
 
@@ -260,7 +260,13 @@ function PuzzleBoard({
         onMove={onMove}
       />
       <Panel>
-        {header}
+        <Statement className="grid gap-1">
+          {/* El enunciado, fijo: el resultado de cada jugada va abajo, junto a los botones. */}
+          <p className="font-medium">
+            Juegan las {myColor === 'white' ? 'blancas' : 'negras'}: encuentra la mejor jugada.
+          </p>
+          {header}
+        </Statement>
         <Feedback state={feedback} />
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>

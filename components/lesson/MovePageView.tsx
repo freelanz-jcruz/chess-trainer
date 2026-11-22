@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import { Lightbulb, RotateCcw } from 'lucide-react';
-import { Controls, Note, Panel, Trainer } from '../Trainer';
+import { Controls, Note, Panel, Statement, Trainer } from '../Trainer';
 import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
@@ -121,9 +121,9 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
         onMove={onMove}
       />
       <Panel>
-        <div className="prose">
+        <Statement className="prose">
           <RichText text={page.body} />
-        </div>
+        </Statement>
         <Feedback state={feedback} />
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>

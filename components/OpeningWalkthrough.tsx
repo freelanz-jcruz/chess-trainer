@@ -7,7 +7,7 @@ import MoveList from './MoveList';
 import Callout from './Callout';
 import { chipClass } from './Chip';
 import PanelExtras from './PanelExtras';
-import { Controls, Note, Panel, Trainer } from './Trainer';
+import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen } from '@/lib/chess/opening-line';
 import { sanToEs } from '@/lib/chess/notation-es';
@@ -67,19 +67,21 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
         coordinates={progress.settings.showCoordinates}
       />
       <Panel>
-        <Callout aria-live="polite">
-          {ply ? (
-            <>
-              <strong>
-                {moveNumber}
-                {sanToEs(ply.san)}
-              </strong>{' '}
-              {ply.note}
-            </>
-          ) : (
-            <>{opening.summary} Pulsa «Siguiente» para empezar.</>
-          )}
-        </Callout>
+        <Statement>
+          <Callout aria-live="polite">
+            {ply ? (
+              <>
+                <strong>
+                  {moveNumber}
+                  {sanToEs(ply.san)}
+                </strong>{' '}
+                {ply.note}
+              </>
+            ) : (
+              <>{opening.summary} Pulsa «Siguiente» para empezar.</>
+            )}
+          </Callout>
+        </Statement>
         <Controls>
           <Button variant="outline" size="icon" className="size-10" onClick={() => setIndex(-1)} disabled={index < 0} aria-label="Al principio">
             <ChevronsLeft />
@@ -91,8 +93,9 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
             Siguiente <ChevronRight />
           </Button>
         </Controls>
+        {/* El selector de variantes también va encima del tablero en móvil. */}
         {next?.choice && (
-          <div className="rounded-lg border border-dashed border-border px-3 py-2.5">
+          <Statement className="rounded-lg border border-dashed border-border px-3 py-2.5">
             <Note className="mb-1.5">Aquí la partida puede seguir de varias formas:</Note>
             <div className="flex flex-wrap gap-1.5">
               <button
@@ -116,7 +119,7 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
                 </button>
               ))}
             </div>
-          </div>
+          </Statement>
         )}
         <PanelExtras title="Jugadas de la línea" label={`Jugadas · ${index + 1}/${line.length}`} description="Toca una jugada para verla en el tablero.">
           <Note>Línea: {names.length ? names.join(' › ') : 'principal'}</Note>

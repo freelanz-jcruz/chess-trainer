@@ -1,7 +1,7 @@
 import ReviewPage from '@/components/ReviewPage';
 import { openings, puzzles } from '@/lib/content/load';
 
-export const metadata = { title: 'Repaso · Chess Trainer' };
+export const metadata = { title: 'Repaso · Ajedrez Tutor' };
 
 export default function Repaso() {
   return (

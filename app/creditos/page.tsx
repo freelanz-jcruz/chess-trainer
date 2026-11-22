@@ -1,11 +1,11 @@
-export const metadata = { title: 'Créditos · Chess Trainer' };
+export const metadata = { title: 'Créditos · Ajedrez Tutor' };
 
 export default function Credits() {
   return (
     <article className="prose">
       <h1>Créditos</h1>
       <p>
-        Chess Trainer es software libre bajo la licencia <strong>GNU GPL v3 o posterior</strong>. Es gratuito, no tiene
+        Ajedrez Tutor es software libre bajo la licencia <strong>GNU GPL v3 o posterior</strong>. Es gratuito, no tiene
         cuentas y tu progreso se guarda solo en este navegador.
       </p>
       <h2>Datos</h2>

@@ -11,7 +11,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ tema: string }> }) {
   const { tema } = await params;
-  return { title: `Ejercicios: ${puzzleSets.find((s) => s.id === tema)?.title ?? ''} · Chess Trainer` };
+  return { title: `Ejercicios: ${puzzleSets.find((s) => s.id === tema)?.title ?? ''} · Ajedrez Tutor` };
 }
 
 export default async function PuzzlesPage({ params }: { params: Promise<{ tema: string }> }) {

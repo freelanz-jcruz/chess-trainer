@@ -1,4 +1,4 @@
-# Chess Trainer
+# Ajedrez Tutor
 
 Aplicación web para aprender ajedrez desde cero, pensada para ratos sueltos en el móvil.
 Libre (GPL-3), gratuita, sin cuentas y sin servidor: es un sitio estático, el motor de ajedrez corre
@@ -29,7 +29,7 @@ npm start          # sirve out/ en http://localhost:4321
 El service worker solo se registra en el build de producción (`npm run build` + `npm start`), no en `npm run dev`.
 Para publicar en un subdirectorio (p. ej. GitHub Pages en `/chess-trainer`), compila con `BASE_PATH=/chess-trainer npm run build`.
 
-Los iconos de `public/icons/` se generan desde `assets/icon.svg` con `tools/make-icons.sh` (macOS).
+Los iconos de `public/icons/` se generan desde `assets/icon.png` con `python3 tools/make-icons.py` (requiere Pillow). Incluye la versión para iOS (`icon-180`, opaca) y la adaptable de Android (`icon-maskable-512`), además de la marca de la cabecera (`public/brand-symbol.png`, desde `assets/symbol.png`).
 
 Otros scripts:
 

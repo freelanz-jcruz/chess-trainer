@@ -1,6 +1,6 @@
 import ProgressTools from '@/components/ProgressTools';
 
-export const metadata = { title: 'Progreso · Chess Trainer' };
+export const metadata = { title: 'Progreso · Ajedrez Tutor' };
 
 export default function Progreso() {
   return (

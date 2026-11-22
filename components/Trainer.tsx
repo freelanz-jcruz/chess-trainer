@@ -11,9 +11,17 @@ export function Trainer({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-/** Columna de texto y controles junto al tablero. */
+/**
+ * Columna de texto y controles junto al tablero. En móvil se «disuelve» (display: contents) para que sus
+ * piezas se ordenen junto al tablero: el enunciado (`Statement`) arriba y el resto debajo.
+ */
 export function Panel({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('grid content-start gap-3', className)} {...props} />;
+  return <div className={cn('contents trainer:grid trainer:content-start trainer:gap-3', className)} {...props} />;
+}
+
+/** Enunciado o explicación: en móvil va encima del tablero, para leerlo antes de mirar la posición. */
+export function Statement({ className, ...props }: React.ComponentProps<'div'>) {
+  return <div className={cn('order-first trainer:order-none', className)} {...props} />;
 }
 
 /** Fila de botones. */

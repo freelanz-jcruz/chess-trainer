@@ -67,7 +67,7 @@ export default function ProgressTools() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `chess-trainer-progreso-${localDay()}.json`;
+    a.download = `ajedrez-tutor-progreso-${localDay()}.json`;
     a.click();
     URL.revokeObjectURL(url);
     toast.success('Progreso exportado', { description: 'Guarda el fichero donde quieras.' });
@@ -83,7 +83,7 @@ export default function ProgressTools() {
       parsed = null;
     }
     if (parsed) setPending(parsed);
-    else toast.error('Ese fichero no es un progreso de Chess Trainer.');
+    else toast.error('Ese fichero no es un progreso de Ajedrez Tutor.');
   };
 
   const confirmImport = () => {

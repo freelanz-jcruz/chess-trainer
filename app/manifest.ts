@@ -5,7 +5,7 @@ export const dynamic = 'force-static';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Chess Trainer',
+    name: 'Ajedrez Tutor',
     short_name: 'Ajedrez',
     description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
     lang: 'es',
@@ -18,7 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
     icons: [
       { src: withBase('/icons/icon-192.png'), sizes: '192x192', type: 'image/png', purpose: 'any' },
       { src: withBase('/icons/icon-512.png'), sizes: '512x512', type: 'image/png', purpose: 'any' },
-      { src: withBase('/icons/icon-512.png'), sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      { src: withBase('/icons/icon-maskable-512.png'), sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
   };
 }
