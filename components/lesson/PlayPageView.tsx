@@ -7,12 +7,21 @@ import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/g
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { PlayPage } from '@/lib/content/schemas';
 import { getEngine } from '@/lib/engine/browser';
+import type { Score } from '@/lib/engine/uci';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
 import { useTimers } from '@/lib/use-timers';
 import type { PageProps } from './types';
 
 const OPPONENT_TIME = 400;
 const UNDO_DELAY = 1600;
+/** Ventaja mínima (en peones) para considerar que la posición sigue ganada. */
+const WIN_THRESHOLD = 2;
+
+/** `score` es para el rival, que mueve después de nuestra jugada. */
+function stillWinning(score: Score): boolean {
+  if (score.type === 'mate') return score.value < 0;
+  return -score.value / 100 >= WIN_THRESHOLD;
+}
 
 type Phase = 'intro' | 'user' | 'checking' | 'opponent' | 'won' | 'lost';
 
@@ -27,7 +36,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle' });
   const [round, setRound] = useState(0); // para reiniciar
   const { later, clear } = useTimers();
-  const { preAnalyze, evaluate, analysis, cancel } = useMoveEvaluator(engineTimeMs);
+  const { preAnalyze, analysis, cancel } = useMoveEvaluator(engineTimeMs);
 
   const goalText = page.goal === 'checkmate' ? 'Da mate' : 'Corona un peón';
   const limitText = page.maxMoves ? ` en ${page.maxMoves} jugada${page.maxMoves === 1 ? '' : 's'} como mucho` : '';
@@ -110,9 +119,12 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
           return;
         }
       } else {
-        const r = await evaluate(before, played.fenAfter);
-        if (r.verdict === 'mistake' || r.verdict === 'blunder') {
-          setFeedback({ kind: 'verdict', verdict: r.verdict, san, loss: r.loss, reason: r.reason, text: 'Así se escapa la ventaja. Prueba otra vez.' });
+        // Solo importa no dejar escapar la victoria. No se compara con la mejor jugada: en los finales
+        // conocidos (rey y peón contra rey) Stockfish da cifras muy distintas a posiciones igual de ganadas.
+        cancel();
+        const after = await getEngine().analyze(played.fenAfter, { movetime: engineTimeMs });
+        if (!stillWinning(after.score)) {
+          setFeedback({ kind: 'verdict', verdict: 'blunder', san, text: 'Así se escapa la victoria. Prueba otra vez.' });
           undo(before, prevLast);
           return;
         }
@@ -136,7 +148,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
       setPhase('user');
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [phase, fen, lastMove, moves, page, engineTimeMs, cancel, evaluate, onComplete],
+    [phase, fen, lastMove, moves, page, engineTimeMs, cancel, onComplete],
   );
 
   const showHint = async () => {

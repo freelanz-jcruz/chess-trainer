@@ -14,5 +14,7 @@ import dama_rey from './dama-rey.json';
 import torre_rey from './torre-rey.json';
 import principios from './principios.json';
 import principios_practica from './principios-practica.json';
+import rey_peon from './rey-peon.json';
+import oposicion from './oposicion.json';
 
-export const LESSON_FILES: unknown[] = [tablero, piezas, captura_valor, jaque_mate, tablas, enroque, al_paso, coronacion, mate_pastor, mate_pasillo, mate_coz, dama_rey, torre_rey, principios, principios_practica];
+export const LESSON_FILES: unknown[] = [tablero, piezas, captura_valor, jaque_mate, tablas, enroque, al_paso, coronacion, mate_pastor, mate_pasillo, mate_coz, dama_rey, torre_rey, principios, principios_practica, rey_peon, oposicion];

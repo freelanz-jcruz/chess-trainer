@@ -2,7 +2,7 @@
 
 Aplicación web personal para aprender ajedrez desde cero, pensada para ratos sueltos en el móvil. Libre (GPL-3), gratuita, sin cuentas ni servidor.
 
-> Estado: plan aprobado. **Fases 1, 2, 3 y 4 completadas.**
+> Estado: plan aprobado. **Fases 1 a 5 completadas.**
 
 ---
 
@@ -264,7 +264,7 @@ Cada página tiene un `kind`:
 | `quiz` | Pregunta con 2–4 opciones (`answer` es el índice correcto) y explicación breve opcional. | Al acertar. |
 | `move` | Una jugada sobre una posición; opcionalmente el rival mueve antes (`opponentMove`, UCI). `goal`: `listed` (una de las jugadas de `accept`, en SAN), `good` (Stockfish la considera buena) o `mate` (debe dar mate). | Con una jugada válida; las incorrectas se deshacen. |
 | `drill` | Posición sin reyes: llevar una pieza a una casilla (`reach`) o capturarlo todo (`captureAll`). `par` es el mínimo de jugadas. | Al cumplir el objetivo. |
-| `play` | Partida contra Stockfish desde una posición hasta `checkmate` o `promote` en `maxMoves` jugadas. Con `strict`, cada jugada debe mantener un mate en las jugadas que quedan. | Al ganar. |
+| `play` | Partida contra Stockfish desde una posición hasta `checkmate` o `promote` en `maxMoves` jugadas. Con `strict`, cada jugada debe mantener un mate en las jugadas que quedan; sin `strict`, una jugada se deshace solo si deja escapar la victoria (después ya no hay mate a favor ni al menos +2). No se compara con la mejor jugada porque en los finales conocidos (rey y peón contra rey) Stockfish da cifras muy distintas a posiciones igual de ganadas. | Al ganar. |
 
 El progreso de cada lección (`completed`, `lastPage`) se guarda en `localStorage` y la lección se retoma donde se dejó. Para añadir una lección: crea el JSON, impórtalo en `content/lessons/index.ts`, enlázalo en `curriculum.json` (`"type": "lesson", "ref": "<id>"`) y pasa `npm run validate`, que comprueba FEN, legalidad de las jugadas, que exista el mate, que el `par` de los ejercicios sea el mínimo (búsqueda en anchura) y que las partidas contra el motor sean ganables (Stockfish).
 
@@ -311,8 +311,8 @@ Botón **Pista** → flecha en el tablero (`drawable.autoShapes` de Chessground)
   - `Rating` entre 400 y 1400.
   - `Popularity` ≥ 90 y `NbPlays` ≥ 500 (calidad contrastada).
   - `RatingDeviation` ≤ 100 (rating fiable).
-  - `Themes` contiene al menos uno de `mateIn1`, `mateIn2`, `hangingPiece`, `fork`.
-- **Muestreo equilibrado:** ~100 por tema (≈ 400 en total), repartidos por tramos de rating, con semilla fija para que sea reproducible.
+  - `Themes` contiene al menos uno de `mateIn1`, `mateIn2`, `hangingPiece`, `fork`, `pin`, `discoveredAttack` (cada problema se asigna al primero de esa lista que tenga; los temas nuevos van al final para que los problemas ya elegidos no cambien).
+- **Muestreo equilibrado:** ~100 por tema (≈ 600 en total), repartidos por tramos de rating, con semilla fija para que sea reproducible.
 - **Transformación:** `Moves` se separa en `opponentMove` + `solution`; se descartan `GameUrl` y `OpeningTags`.
 - **Comprobación:** cada jugada se reproduce con `chess.js`; si alguna es ilegal, se descarta el problema y se avisa.
 - **Salida:** `content/puzzles/puzzles.json` (se versiona; unos cientos de KB).
@@ -370,7 +370,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 | **2** ✅ | **PWA sin conexión con Serwist**: precache de toda la exportación estática (páginas, `.txt` de navegación de Next, JS/CSS, motor `.js` + `.wasm`, iconos), manifiesto e icono propio, aviso «Hay una versión nueva · Actualizar» (la versión nueva no se activa sola a mitad de un ejercicio) y página 404 de respaldo sin conexión. Como Next 16 compila con Turbopack y el plugin de `@serwist/next` es de webpack, el service worker (`sw/sw.ts`) se compila con esbuild y `@serwist/build` inyecta la lista de precache sobre `out/` en `postbuild` (`tools/build-sw.mjs`). Admite `BASE_PATH` para publicar en un subdirectorio. |
 | **3** ✅ | Bloques 1–3 con el tipo de lección `lesson` (páginas `text`, `quiz`, `move`, `drill` y `play`; sección 6.4): 13 lecciones de fundamentos, movimientos especiales y mates comunes, selector de coronación en el tablero, progreso por lección y validación de todo el contenido con Stockfish. |
 | **4** ✅ | Bloques 4–5: principios de apertura y repertorio completo (Italiana con más variantes del rival, 1...e5 contra las principales respuestas de las blancas, Gambito de Dama rehusado, trampas). Comprobación de nombres/ECO contra el catálogo `lichess-org/chess-openings` (CC0). Hecho: lecciones «Los cinco principios» y «Aplica los principios»; aperturas 1...e5 (12 líneas: Italiana, 2.Dh5, Vienesa, Gambito de Rey, Centro, Española con la variante del cambio, Escocesa, Cuatro Caballos…), Gambito de Dama rehusado (6 líneas: Colle, Londres, Catalana, cambio…), esquema del GDR contra 1.Cf3 y 1.c4 (7 líneas), rama de los Dos Caballos en la Italiana y trampas Fegatello y Légal; selector de variantes en el recorrido y `npm run eco`. |
-| **5** | Bloques 6–7: más temas tácticos (`pin`, `discoveredAttack`), finales de rey y peón y oposición (lecciones con páginas `drill`, `move` y `play`). |
+| **5** ✅ | Bloques 6–7: más temas tácticos (`pin`, `discoveredAttack`: 96 y 100 problemas nuevos; los 400 anteriores se mantienen), finales de rey y peón (regla del cuadrado, rey delante del peón, peón de torre) y oposición (tomarla, desbordar y defender), con partidas contra Stockfish hasta coronar. |
 | **6** | Repaso espaciado de aperturas y problemas fallados, exportar/importar progreso, publicación en GitHub (repositorio público, GPL-3) y despliegue en GitHub Pages. |
 | **7+** | **Niveles superiores.** Cada lección y cada rama lleva un campo `level` (`principiante`, `intermedio`, `avanzado`), y la app muestra solo el nivel elegido y los anteriores. Repertorio ampliado como datos: **Española con blancas** y sus variantes principales (Cerrada, del Cambio, Berlinesa, Abierta, Marshall como defensa), más variantes de la Italiana (Evans, 4.d4) y del Gambito de Dama. Problemas de rating más alto y más temas tácticos con el mismo script de filtrado. |
 

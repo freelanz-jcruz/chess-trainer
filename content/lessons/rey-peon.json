@@ -1,0 +1,74 @@
+{
+  "id": "rey-peon",
+  "title": "Rey y peón contra rey",
+  "block": 7,
+  "level": "principiante",
+  "summary": "Cuándo un peón corona solo, cuándo necesita a su rey y cómo acompañarlo.",
+  "pages": [
+    {
+      "kind": "text",
+      "title": "Un peón puede bastar",
+      "body": "Cuando quedan pocas piezas, un solo peón de ventaja puede decidir la partida: si corona, tendrás una dama contra un rey solo.\n\nHay dos preguntas que hacerse:\n\n- ¿Llega el peón solo, antes de que lo alcance el rey rival?\n- Si no llega, ¿cómo lo acompaña tu rey?",
+      "fen": "8/8/8/7k/1P6/8/8/K7 w - - 0 1"
+    },
+    {
+      "kind": "text",
+      "title": "La regla del cuadrado",
+      "body": "Imagina un cuadrado que va desde el peón hasta la casilla donde corona, con el mismo número de casillas hacia el lado del rey rival.\n\nSi el rey rival puede **entrar en el cuadrado** con su jugada, alcanza al peón. Si no puede, el peón corona sin ayuda.",
+      "fen": "8/8/8/7k/1P6/8/8/K7 b - - 0 1",
+      "highlight": ["b4", "c4", "d4", "e4", "f4", "f5", "f6", "f7", "f8", "e8", "d8", "c8", "b8", "b7", "b6", "b5"],
+      "arrows": [["b4", "b8"]]
+    },
+    {
+      "kind": "quiz",
+      "body": "Juegan las negras. ¿Alcanza el rey negro al peón?",
+      "fen": "8/8/8/7k/1P6/8/8/K7 b - - 0 1",
+      "options": ["Sí", "No"],
+      "answer": 1,
+      "explain": "El cuadrado llega hasta la columna f y el rey está en h5: con una jugada no puede entrar, así que el peón corona."
+    },
+    {
+      "kind": "quiz",
+      "body": "Ahora el rey negro está en g5. Juegan las negras. ¿Alcanza al peón?",
+      "fen": "8/8/8/6k1/1P6/8/8/K7 b - - 0 1",
+      "options": ["Sí", "No"],
+      "answer": 0,
+      "explain": "Desde g5 el rey entra en el cuadrado (f4, f5 o f6) y llegará a tiempo de capturar el peón."
+    },
+    {
+      "kind": "play",
+      "body": "El rey negro está fuera del cuadrado. **Corona el peón**.",
+      "fen": "8/8/8/7k/1P6/8/8/K7 w - - 0 1",
+      "goal": "promote",
+      "maxMoves": 5,
+      "hint": "Avanza el peón sin pararte."
+    },
+    {
+      "kind": "text",
+      "title": "El rey, delante del peón",
+      "body": "Si el rey rival alcanza al peón, tu rey tiene que acompañarlo. La regla de oro: **el rey va delante del peón**, abriéndole camino.\n\nSi tu rey consigue ponerse **dos casillas delante del peón**, la victoria está asegurada (salvo con un peón de torre).",
+      "fen": "8/8/3k4/8/3K4/8/3P4/8 w - - 0 1",
+      "highlight": ["d4"]
+    },
+    {
+      "kind": "play",
+      "body": "Tu rey ya está dos casillas delante del peón. **Corona** contra la defensa de Stockfish.",
+      "fen": "8/8/3k4/8/3K4/8/3P4/8 w - - 0 1",
+      "goal": "promote",
+      "maxMoves": 20,
+      "hint": "No empujes el peón todavía: avanza con el rey hacia un lado sin dejar que el rey negro se ponga delante."
+    },
+    {
+      "kind": "text",
+      "title": "Cuidado con el peón de torre",
+      "body": "El peón de la columna a o h es la excepción. Si el rey rival llega a la esquina, delante del peón, **es tablas**: tu rey no puede echarlo de allí sin ahogarlo.",
+      "fen": "k7/8/8/8/8/8/P7/1K6 w - - 0 1",
+      "highlight": ["a8"]
+    },
+    {
+      "kind": "text",
+      "title": "Resumen",
+      "body": "- Con la **regla del cuadrado** sabes al instante si el peón corona solo.\n- Si no, el **rey va delante** del peón.\n- **Dos casillas delante** del peón, la victoria es segura.\n- El **peón de torre** es tablas si el rey rival llega a la esquina.\n\nEn la siguiente lección verás la herramienta clave para ganar estos finales: la oposición."
+    }
+  ]
+}

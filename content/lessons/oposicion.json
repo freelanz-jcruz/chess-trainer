@@ -1,0 +1,88 @@
+{
+  "id": "oposicion",
+  "title": "La oposición",
+  "block": 7,
+  "level": "principiante",
+  "summary": "Cómo se enfrentan los reyes, quién tiene que ceder el paso y cómo usarlo para ganar o para hacer tablas.",
+  "pages": [
+    {
+      "kind": "text",
+      "title": "Reyes enfrentados",
+      "body": "Los reyes nunca pueden estar en casillas vecinas. Cuando están en la misma columna con **una casilla en medio**, ninguno puede avanzar.\n\nEl que tiene que mover está obligado a apartarse. Del otro se dice que **tiene la oposición**.",
+      "fen": "8/8/4k3/8/4K3/8/8/8 w - - 0 1",
+      "highlight": ["e5"]
+    },
+    {
+      "kind": "quiz",
+      "body": "Juegan las blancas. ¿Quién tiene la oposición?",
+      "fen": "8/8/4k3/8/4K3/8/8/8 w - - 0 1",
+      "options": ["Las blancas", "Las negras"],
+      "answer": 1,
+      "explain": "Las blancas tienen que mover y deben apartarse: la oposición la tienen las negras."
+    },
+    {
+      "kind": "move",
+      "body": "**Toma la oposición**: coloca tu rey enfrente del rey negro, con una casilla en medio.",
+      "fen": "8/8/4k3/8/8/4K3/4P3/8 w - - 0 1",
+      "goal": "listed",
+      "accept": ["Ke4"],
+      "hint": "Sube el rey por la columna e.",
+      "success": "Ahora son las negras las que tienen que apartarse."
+    },
+    {
+      "kind": "text",
+      "title": "Desbordar",
+      "body": "Con la oposición, el rey rival tiene que apartarse hacia un lado. Entonces tu rey **avanza por el otro lado** y se acerca a la casilla de coronación.",
+      "fen": "8/8/3k4/8/4K3/8/4P3/8 w - - 0 1",
+      "arrows": [["e4", "f5"]]
+    },
+    {
+      "kind": "move",
+      "body": "Las negras se apartan. **Avanza con tu rey por el otro lado**.",
+      "fen": "8/8/4k3/8/4K3/8/4P3/8 b - - 0 1",
+      "opponentMove": "e6d6",
+      "goal": "listed",
+      "accept": ["Kf5"],
+      "hint": "El rey negro se fue hacia la columna d: tu rey sube por la f.",
+      "success": "Tu rey gana terreno y el peón podrá avanzar con su escolta."
+    },
+    {
+      "kind": "play",
+      "body": "Ahora la posición completa. **Corona** contra la defensa de Stockfish: toma la oposición y desborda.",
+      "fen": "8/8/4k3/8/8/4K3/4P3/8 w - - 0 1",
+      "goal": "promote",
+      "maxMoves": 20,
+      "hint": "Primero Re4, con la oposición. Empuja el peón solo cuando tu rey vaya por delante."
+    },
+    {
+      "kind": "text",
+      "title": "La oposición también defiende",
+      "body": "Si te toca defender, la oposición es tu mejor arma: coloca tu rey **enfrente del rey rival** y lo más cerca posible del peón. Si lo consigues, la partida suele acabar en tablas."
+    },
+    {
+      "kind": "move",
+      "body": "Defiendes con negras. **Toma la oposición** para hacer tablas.",
+      "fen": "8/4k3/8/8/4K3/4P3/8/8 b - - 0 1",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["Ke6"],
+      "hint": "Ponte enfrente del rey blanco, en la misma columna.",
+      "success": "El rey blanco no puede avanzar: son tablas."
+    },
+    {
+      "kind": "move",
+      "body": "El rey blanco ha llegado más lejos. Solo una jugada hace tablas: ¿cuál?",
+      "fen": "4k3/8/8/4K3/4P3/8/8/8 b - - 0 1",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["Ke7"],
+      "hint": "Otra vez: enfrente del rey blanco, con una casilla en medio.",
+      "success": "Con la oposición, el rey blanco tiene que apartarse y tu rey vuelve a ponerse delante del peón."
+    },
+    {
+      "kind": "text",
+      "title": "Resumen",
+      "body": "- **Oposición**: reyes en la misma columna con una casilla en medio; el que no mueve la tiene.\n- **Para ganar**: toma la oposición y desborda por el otro lado.\n- **Para defender**: toma la oposición, enfrente del rey rival y delante del peón."
+    }
+  ]
+}

@@ -227,13 +227,19 @@
           "id": "clavada",
           "title": "Clavada",
           "type": "puzzles",
-          "status": "soon"
+          "status": "available",
+          "themes": [
+            "pin"
+          ]
         },
         {
           "id": "descubierta",
           "title": "Ataque a la descubierta",
           "type": "puzzles",
-          "status": "soon"
+          "status": "available",
+          "themes": [
+            "discoveredAttack"
+          ]
         }
       ]
     },
@@ -246,13 +252,15 @@
           "id": "rey-peon",
           "title": "Rey y peón contra rey",
           "type": "lesson",
-          "status": "soon"
+          "status": "available",
+          "ref": "rey-peon"
         },
         {
           "id": "oposicion",
           "title": "La oposición",
           "type": "lesson",
-          "status": "soon"
+          "status": "available",
+          "ref": "oposicion"
         }
       ]
     }

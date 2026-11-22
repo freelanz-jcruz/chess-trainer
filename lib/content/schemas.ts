@@ -60,7 +60,7 @@ export const openingSchema = z.object({
 });
 export type Opening = z.infer<typeof openingSchema>;
 
-export const PUZZLE_THEMES = ['mateIn1', 'mateIn2', 'hangingPiece', 'fork'] as const;
+export const PUZZLE_THEMES = ['mateIn1', 'mateIn2', 'hangingPiece', 'fork', 'pin', 'discoveredAttack'] as const;
 export type PuzzleTheme = (typeof PUZZLE_THEMES)[number];
 
 const uci = z.string().regex(/^[a-h][1-8][a-h][1-8][qrbn]?$/);

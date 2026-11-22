@@ -43,7 +43,8 @@ const bucketOf = (rating: number) =>
 const perBucket = Math.ceil(perTheme / BUCKETS);
 
 /** Prioridad para asignar cada problema a un único tema (evita duplicados). */
-const PRIORITY: PuzzleTheme[] = ['mateIn1', 'mateIn2', 'fork', 'hangingPiece'];
+// Los temas nuevos van al final para no cambiar los problemas ya elegidos de los anteriores.
+const PRIORITY: PuzzleTheme[] = ['mateIn1', 'mateIn2', 'fork', 'hangingPiece', 'pin', 'discoveredAttack'];
 
 /** Orden pseudoaleatorio estable: hash(semilla + id). Independiente del orden del fichero. */
 const rank = (id: string) => createHash('sha1').update(seed + id).digest().readUInt32BE(0);

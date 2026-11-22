@@ -4,8 +4,10 @@ Aplicación web para aprender ajedrez desde cero, pensada para ratos sueltos en 
 Libre (GPL-3), gratuita, sin cuentas y sin servidor: es un sitio estático, el motor de ajedrez corre
 en tu navegador y el progreso se guarda solo en tu dispositivo.
 
-- **Aperturas paso a paso**: recorrido con una frase breve por jugada y práctica en la que Stockfish valora cada jugada.
-- **Ejercicios**: problemas de mate en 1, mate en 2, pieza colgada y ataque doble.
+- **Temario en 7 bloques**: fundamentos, movimientos especiales, mates comunes, principios de apertura, repertorio, táctica y finales básicos.
+- **Lecciones guiadas**: explicaciones breves, preguntas, ejercicios sobre el tablero y partidas contra Stockfish (mates básicos, rey y peón, oposición).
+- **Aperturas paso a paso**: recorrido con una frase breve por jugada y selector de variantes, y práctica en la que Stockfish valora cada jugada. Repertorio: Italiana con blancas; 1...e5 y el Gambito de Dama rehusado con negras; trampas Fegatello y Légal.
+- **Ejercicios**: problemas de Lichess de mate en 1, mate en 2, pieza colgada, ataque doble, clavada y ataque a la descubierta.
 - **Funciona sin conexión** (PWA): se puede instalar en el móvil y, tras la primera visita, todo (incluido el motor) está disponible sin red.
 - **Valoración** de cada jugada según la pérdida respecto a la mejor (correcta, buena alternativa, imprecisión, error, error grave) y **pista** con flecha.
 
