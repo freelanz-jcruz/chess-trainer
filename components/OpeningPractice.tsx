@@ -9,7 +9,7 @@ import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Opening } from '@/lib/content/schemas';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
-import { updateOpening, useProgress } from '@/lib/progress/store';
+import { scheduleReview, updateOpening, useProgress } from '@/lib/progress/store';
 
 const OPPONENT_DELAY = 550;
 const UNDO_DELAY = 1400;
@@ -74,11 +74,16 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
     const clean = stats.current.errors === 0 && stats.current.hints === 0;
     const what = opening.kind === 'trap' ? 'Trampa' : 'Apertura';
     update((p) =>
-      updateOpening(p, opening.id, (o) => ({
-        ...o,
-        practiceRuns: o.practiceRuns + 1,
-        cleanRuns: o.cleanRuns + (clean ? 1 : 0),
-      })),
+      scheduleReview(
+        updateOpening(p, opening.id, (o) => ({
+          ...o,
+          practiceRuns: o.practiceRuns + 1,
+          cleanRuns: o.cleanRuns + (clean ? 1 : 0),
+        })),
+        'opening',
+        opening.id,
+        clean,
+      ),
     );
     setFeedback({
       kind: 'done',

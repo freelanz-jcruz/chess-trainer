@@ -2,7 +2,7 @@
 
 Aplicación web personal para aprender ajedrez desde cero, pensada para ratos sueltos en el móvil. Libre (GPL-3), gratuita, sin cuentas ni servidor.
 
-> Estado: plan aprobado. **Fases 1 a 5 completadas.**
+> Estado: plan aprobado. **Fases 1 a 6 completadas** (salvo la publicación, pospuesta: irá a un hosting propio con dominio).
 
 ---
 
@@ -353,11 +353,20 @@ Clave única `chess-trainer:v1`, objeto versionado con migraciones:
   "puzzles": {
     "00sHx": { "solved": true, "firstTry": false, "attempts": 2, "hintUsed": false, "lastSeen": "2026-11-21" }
   },
+  "lessons": { "tablero": { "completed": true, "lastPage": 4 } },
+  "reviews": {
+    "opening:italiana-tranquila": { "box": 2, "due": "2026-11-25" },
+    "puzzle:00sHx": { "box": 1, "due": "2026-11-23" }
+  },
   "settings": { "engineTimeMs": 1000, "showCoordinates": true }
 }
 ```
 
-Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado → la app funciona sin guardar). Más adelante: exportar/importar el progreso a un fichero JSON.
+Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado → la app funciona sin guardar). Los datos antiguos sin `reviews` se leen con un repaso vacío.
+
+**Repaso espaciado** (`lib/progress/review.ts`, cajas de Leitner): una apertura entra al terminar su primera práctica; un problema, cuando se falla (error, pista o rendirse; saltarlo sin jugar no cuenta). Acierto limpio → sube de caja y vuelve en 1, 3, 7, 14 o 30 días; fallo → caja 1, mañana. Un problema acertado en la última caja sale del repaso; las aperturas se quedan cada 30 días. Las fechas son días locales. La página `/repaso/` muestra las aperturas pendientes (enlace a su práctica) y una sesión con los problemas pendientes; el temario avisa y la cabecera muestra el número de repasos de hoy.
+
+**Exportar / importar** (`/progreso/`): descarga `chess-trainer-progreso-AAAA-MM-DD.json` (`{ app, exported, progress }`) e importa ese fichero tras validar el formato y pedir confirmación con un resumen de ambos progresos. La misma página permite cambiar los ajustes (coordenadas y tiempo de análisis).
 
 ---
 
@@ -371,7 +380,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 | **3** ✅ | Bloques 1–3 con el tipo de lección `lesson` (páginas `text`, `quiz`, `move`, `drill` y `play`; sección 6.4): 13 lecciones de fundamentos, movimientos especiales y mates comunes, selector de coronación en el tablero, progreso por lección y validación de todo el contenido con Stockfish. |
 | **4** ✅ | Bloques 4–5: principios de apertura y repertorio completo (Italiana con más variantes del rival, 1...e5 contra las principales respuestas de las blancas, Gambito de Dama rehusado, trampas). Comprobación de nombres/ECO contra el catálogo `lichess-org/chess-openings` (CC0). Hecho: lecciones «Los cinco principios» y «Aplica los principios»; aperturas 1...e5 (12 líneas: Italiana, 2.Dh5, Vienesa, Gambito de Rey, Centro, Española con la variante del cambio, Escocesa, Cuatro Caballos…), Gambito de Dama rehusado (6 líneas: Colle, Londres, Catalana, cambio…), esquema del GDR contra 1.Cf3 y 1.c4 (7 líneas), rama de los Dos Caballos en la Italiana y trampas Fegatello y Légal; selector de variantes en el recorrido y `npm run eco`. |
 | **5** ✅ | Bloques 6–7: más temas tácticos (`pin`, `discoveredAttack`: 96 y 100 problemas nuevos; los 400 anteriores se mantienen), finales de rey y peón (regla del cuadrado, rey delante del peón, peón de torre) y oposición (tomarla, desbordar y defender), con partidas contra Stockfish hasta coronar. |
-| **6** | Repaso espaciado de aperturas y problemas fallados, exportar/importar progreso, publicación en GitHub (repositorio público, GPL-3) y despliegue en GitHub Pages. |
+| **6** ✅ | Repaso espaciado de aperturas y problemas fallados y exportar/importar progreso (sección 10), con página de ajustes. Repositorio público en GitHub (GPL-3) hecho. **Pospuesto:** el despliegue; en lugar de GitHub Pages irá a un hosting propio con dominio (es un sitio estático: basta con subir `out/`, y `BASE_PATH` sirve si va en un subdirectorio). |
 | **7+** | **Niveles superiores.** Cada lección y cada rama lleva un campo `level` (`principiante`, `intermedio`, `avanzado`), y la app muestra solo el nivel elegido y los anteriores. Repertorio ampliado como datos: **Española con blancas** y sus variantes principales (Cerrada, del Cambio, Berlinesa, Abierta, Marshall como defensa), más variantes de la Italiana (Evans, 4.d4) y del Gambito de Dama. Problemas de rating más alto y más temas tácticos con el mismo script de filtrado. |
 
 ---

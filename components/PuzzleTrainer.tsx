@@ -6,26 +6,51 @@ import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/g
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Puzzle } from '@/lib/content/schemas';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
-import { updatePuzzle, useProgress } from '@/lib/progress/store';
+import { reviewKey } from '@/lib/progress/review';
+import { scheduleReview, today, updatePuzzle, useProgress } from '@/lib/progress/store';
 
 const OPPONENT_DELAY = 600;
 const UNDO_DELAY = 1400;
 
 type Phase = 'intro' | 'user' | 'opponent' | 'checking' | 'solved';
 
-/** Resuelve problemas en orden de dificultad, empezando por los que aún no se han resuelto. */
-export default function PuzzleTrainer({ puzzles, title }: { puzzles: Puzzle[]; title: string }) {
+/**
+ * Resuelve problemas en orden de dificultad. En modo «set», empezando por los que aún no se han
+ * resuelto; en modo «review», solo los que tocan hoy en el repaso espaciado.
+ */
+export default function PuzzleTrainer({
+  puzzles,
+  title,
+  mode = 'set',
+  onFinished,
+}: {
+  puzzles: Puzzle[];
+  title: string;
+  mode?: 'set' | 'review';
+  /** Modo repaso: no quedan problemas pendientes hoy. */
+  onFinished?: () => void;
+}) {
   const { progress, update } = useProgress();
   const ordered = useMemo(() => [...puzzles].sort((a, b) => a.rating - b.rating), [puzzles]);
   const solvedCount = ordered.filter((p) => progress.puzzles[p.id]?.solved).length;
+  const day = today();
+  const isDue = useCallback(
+    (id: string) => {
+      const r = progress.reviews[reviewKey('puzzle', id)];
+      return !!r && r.due <= day;
+    },
+    [progress.reviews, day],
+  );
+  const dueCount = ordered.filter((p) => isDue(p.id)).length;
 
   const pickNext = useCallback(
-    (afterId?: string) => {
+    (afterId?: string): Puzzle | null => {
       const start = afterId ? ordered.findIndex((p) => p.id === afterId) + 1 : 0;
       const rotated = [...ordered.slice(start), ...ordered.slice(0, start)];
+      if (mode === 'review') return rotated.find((p) => isDue(p.id) && p.id !== afterId) ?? null;
       return rotated.find((p) => !progress.puzzles[p.id]?.solved && p.id !== afterId) ?? rotated[0];
     },
-    [ordered, progress.puzzles],
+    [ordered, progress.puzzles, mode, isDue],
   );
 
   // El progreso de localStorage solo está disponible tras montar en el cliente:
@@ -33,30 +58,54 @@ export default function PuzzleTrainer({ puzzles, title }: { puzzles: Puzzle[]; t
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
+  const [finished, setFinished] = useState(false);
+  const goTo = (p: Puzzle | null) => {
+    if (p) setPuzzle(p);
+    else {
+      setFinished(true);
+      onFinished?.();
+    }
+  };
   useEffect(() => {
-    if (mounted && !puzzle && ordered.length) setPuzzle(pickNext());
-  }, [mounted, puzzle, ordered.length, pickNext]);
+    if (mounted && !puzzle && !finished && ordered.length) goTo(pickNext());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, puzzle, finished, ordered.length, pickNext]);
 
-  if (!puzzle) return <p>Cargando ejercicios…</p>;
+  if (finished)
+    return (
+      <p className="feedback verdict-correct">
+        {dueCount > 0
+          ? `Has saltado ${dueCount === 1 ? 'el problema que quedaba' : `los ${dueCount} problemas que quedaban`}: seguirán pendientes.`
+          : 'No quedan problemas por repasar hoy. ¡Bien hecho!'}
+      </p>
+    );
+  if (!puzzle) return <p>{mounted && !ordered.length ? 'No hay ejercicios.' : 'Cargando ejercicios…'}</p>;
   return (
     <PuzzleBoard
       key={puzzle.id}
       puzzle={puzzle}
       header={
         <p className="muted small">
-          {title} · resueltos {solvedCount}/{ordered.length} · dificultad {puzzle.rating}
+          {mode === 'review'
+            ? `${title} · quedan ${dueCount} hoy`
+            : `${title} · resueltos ${solvedCount}/${ordered.length}`}{' '}
+          · dificultad {puzzle.rating}
         </p>
       }
-      onNext={() => setPuzzle(pickNext(puzzle.id))}
+      onNext={() => goTo(pickNext(puzzle.id))}
       onResult={(r) =>
-        update((p) =>
-          updatePuzzle(p, puzzle.id, (o) => ({
+        update((p) => {
+          const next = updatePuzzle(p, puzzle.id, (o) => ({
             solved: o.solved || r.solved,
             firstTry: o.firstTry || (r.solved && r.errors === 0 && !r.hintUsed && o.attempts === 0),
             attempts: o.attempts + 1,
             hintUsed: o.hintUsed || r.hintUsed,
-          })),
-        )
+          }));
+          // Saltar sin haber jugado no cuenta para el repaso; fallar, usar pista o rendirse, sí.
+          const attempted = r.solved || r.errors > 0 || r.hintUsed;
+          const clean = r.solved && r.errors === 0 && !r.hintUsed;
+          return attempted ? scheduleReview(next, 'puzzle', puzzle.id, clean) : next;
+        })
       }
       engineTimeMs={progress.settings.engineTimeMs}
       coordinates={progress.settings.showCoordinates}

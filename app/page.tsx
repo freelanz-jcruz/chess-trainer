@@ -1,14 +1,13 @@
 import Curriculum from '@/components/Curriculum';
+import { ReviewBanner } from '@/components/ReviewLinks';
 import { curriculum, puzzleIdsByLesson } from '@/lib/content/load';
 
 export default function Home() {
   return (
     <>
       <h1>Temario</h1>
-      <p className="muted">
-        Aprende a tu ritmo. Cada bloque se irá completando poco a poco; los marcados como «próximamente» aún no están
-        disponibles.
-      </p>
+      <p className="muted">Aprende a tu ritmo: sigue los bloques en orden o salta a lo que te interese.</p>
+      <ReviewBanner />
       <Curriculum curriculum={curriculum} puzzleIds={puzzleIdsByLesson()} />
     </>
   );

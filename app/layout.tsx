@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
+import { NavReviewLink } from '@/components/ReviewLinks';
 import ServiceWorker from '@/components/ServiceWorker';
 import { withBase } from '@/lib/base-path';
 import '@lichess-org/chessground/assets/chessground.base.css';
@@ -36,11 +37,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Link>
           <nav>
             <Link href="/">Temario</Link>
+            <NavReviewLink />
             <Link href="/ejercicios/todos/">Ejercicios</Link>
-            <Link href="/creditos/">Créditos</Link>
+            <Link href="/progreso/">Progreso</Link>
           </nav>
         </header>
         <main>{children}</main>
+        <footer className="site-footer">
+          <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3)
+        </footer>
         <ServiceWorker />
       </body>
     </html>

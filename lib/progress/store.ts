@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useSyncExternalStore } from 'react';
+import { applySchedule, localDay, type ReviewKind, type Reviews } from './review';
 
 const KEY = 'chess-trainer:v1';
 
@@ -27,28 +28,38 @@ export type Progress = {
   openings: Record<string, OpeningProgress>;
   puzzles: Record<string, PuzzleProgress>;
   lessons: Record<string, LessonProgress>;
+  /** Repaso espaciado: `opening:<id>` / `puzzle:<id>` -> caja y fecha (ver review.ts). */
+  reviews: Reviews;
   settings: Settings;
 };
 
 export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true };
 
 function empty(): Progress {
-  return { version: 1, openings: {}, puzzles: {}, lessons: {}, settings: { ...DEFAULT_SETTINGS } };
+  return { version: 1, openings: {}, puzzles: {}, lessons: {}, reviews: {}, settings: { ...DEFAULT_SETTINGS } };
+}
+
+const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+
+/** Normaliza un objeto de progreso ya leído; null si no tiene el formato esperado. */
+export function normalizeProgress(data: unknown): Progress | null {
+  if (!isRecord(data) || data.version !== 1) return null;
+  const rec = <T,>(v: unknown) => (isRecord(v) ? (v as Record<string, T>) : {});
+  return {
+    version: 1,
+    openings: rec<OpeningProgress>(data.openings),
+    puzzles: rec<PuzzleProgress>(data.puzzles),
+    lessons: rec<LessonProgress>(data.lessons),
+    reviews: rec(data.reviews) as Reviews,
+    settings: { ...DEFAULT_SETTINGS, ...(isRecord(data.settings) ? (data.settings as Partial<Settings>) : {}) },
+  };
 }
 
 /** Lee y normaliza el progreso; tolera datos corruptos o almacenamiento bloqueado. */
 export function parseProgress(raw: string | null): Progress {
   if (!raw) return empty();
   try {
-    const data = JSON.parse(raw) as Partial<Progress>;
-    if (data.version !== 1) return empty();
-    return {
-      version: 1,
-      openings: data.openings ?? {},
-      puzzles: data.puzzles ?? {},
-      lessons: data.lessons ?? {},
-      settings: { ...DEFAULT_SETTINGS, ...data.settings },
-    };
+    return normalizeProgress(JSON.parse(raw)) ?? empty();
   } catch {
     return empty();
   }
@@ -94,7 +105,15 @@ export function useProgress() {
   return { progress, update };
 }
 
-export const today = () => new Date().toISOString().slice(0, 10);
+/** Sustituye todo el progreso (importación). */
+export function replaceProgress(next: Progress) {
+  write(next);
+}
+
+/** Progreso actual tal como está guardado (exportación). */
+export const currentProgress = () => read();
+
+export const today = () => localDay();
 
 export function updateOpening(p: Progress, id: string, fn: (o: OpeningProgress) => OpeningProgress): Progress {
   const current = p.openings[id] ?? { walkthroughDone: false, practiceRuns: 0, cleanRuns: 0 };
@@ -109,4 +128,9 @@ export function updatePuzzle(p: Progress, id: string, fn: (o: PuzzleProgress) =>
 export function updateLesson(p: Progress, id: string, fn: (o: LessonProgress) => LessonProgress): Progress {
   const current = p.lessons[id] ?? { completed: false, lastPage: 0 };
   return { ...p, lessons: { ...p.lessons, [id]: fn(current) } };
+}
+
+/** Registra un intento en el repaso espaciado (`clean` = sin errores ni pistas). */
+export function scheduleReview(p: Progress, kind: ReviewKind, id: string, clean: boolean): Progress {
+  return { ...p, reviews: applySchedule(p.reviews, kind, id, clean, today()) };
 }
