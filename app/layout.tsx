@@ -27,7 +27,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   // Tema oscuro por defecto; ThemeScript / ThemeToggle lo cambian si se elige el claro.
-  themeColor: '#1d1b19',
+  themeColor: '#152747',
   // Permite usar env(safe-area-inset-*) para que la barra de pestañas no quede bajo el indicador de inicio.
   viewportFit: 'cover',
 };

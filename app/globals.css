@@ -16,10 +16,15 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'tw-animate-css';
 
-/* `dark:` se aplica con el tema oscuro, que es el de defecto: todo salvo data-theme="light". */
+/* `dark:` se aplica con los temas oscuros (gris y azul): todo salvo data-theme="light". */
 @custom-variant dark (&:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *));
 
-/* Paleta con los nombres de shadcn/ui. Tema oscuro por defecto; el claro con data-theme="light" (ver ThemeScript). */
+/*
+ * Paleta con los nombres de shadcn/ui. Tres temas (ver ThemeScript y components/Theme.tsx):
+ *   :root                     → gris oscuro (base de los temas oscuros)
+ *   [data-theme='navy']       → azul marino, el de la marca (por defecto)
+ *   [data-theme='light']      → claro
+ */
 :root {
   color-scheme: dark;
   --radius: 10px;
@@ -49,6 +54,35 @@
   --inacc: #e6c04d;
   --mistake: #f0955a;
   --blunder: #f2776f;
+}
+/* Azul marino del icono. Las valoraciones van algo más claras que en el gris para mantener
+   un contraste de al menos 4,5:1 sobre las tarjetas azules. */
+:root[data-theme='navy'] {
+  --background: #152747;
+  --foreground: #eef3fb;
+  --card: #1f355d;
+  --card-foreground: #eef3fb;
+  --popover: #1f355d;
+  --popover-foreground: #eef3fb;
+  --primary: #a9c7f0;
+  --primary-foreground: #0f2244;
+  --secondary: #2a4372;
+  --secondary-foreground: #eef3fb;
+  --muted: #233b66;
+  --muted-foreground: #a3b6d4;
+  --accent: #2a4372;
+  --accent-foreground: #eef3fb;
+  --destructive: #ff8f87;
+  --border: #31507f;
+  --input: #31507f;
+  --ring: #a9c7f0;
+  --sq-light: #d6deea;
+  --sq-dark: #7189ad;
+  --ok: #7dd694;
+  --good: #b0da80;
+  --inacc: #ecc85a;
+  --mistake: #ffa36b;
+  --blunder: #ff8f87;
 }
 :root[data-theme='light'] {
   color-scheme: light;

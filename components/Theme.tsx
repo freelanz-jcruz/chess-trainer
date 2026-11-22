@@ -1,16 +1,17 @@
 'use client';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, MoonStar, Sun, type LucideIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { useProgress, type Theme } from '@/lib/progress/store';
+import { useProgress } from '@/lib/progress/store';
+import { THEME_COLOR, THEME_LABEL, THEMES, type Theme } from '@/lib/theme';
 
-/** Color de la barra del navegador / sistema para cada tema (igual que --bg). */
-export const THEME_COLOR: Record<Theme, string> = { dark: '#1d1b19', light: '#f6f3ee' };
+const THEME_ICON: Record<Theme, LucideIcon> = { navy: MoonStar, dark: Moon, light: Sun };
 
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
-  if (theme === 'light') root.dataset.theme = 'light';
-  else delete root.dataset.theme;
+  // El gris oscuro es la base del CSS (:root); los otros dos se activan con data-theme.
+  if (theme === 'dark') delete root.dataset.theme;
+  else root.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme]);
 }
 
@@ -21,23 +22,24 @@ export function useThemeSync() {
   useEffect(() => applyTheme(theme), [theme]);
 }
 
-/** Botón de la cabecera: cambia entre oscuro y claro. */
+/** Botón de la cabecera: pasa al siguiente tema (azul marino → gris oscuro → claro → azul marino). */
 export function ThemeToggle() {
   const { progress, update } = useProgress();
   useThemeSync();
   const theme = progress.settings.theme;
-  const next: Theme = theme === 'dark' ? 'light' : 'dark';
+  const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
+  // Se muestra el icono del tema al que se cambia.
+  const Icon = THEME_ICON[next];
   return (
     <Button
       variant="outline"
       size="icon"
       className="rounded-full bg-transparent shadow-none hover:border-primary hover:bg-transparent hover:text-primary"
       onClick={() => update((p) => ({ ...p, settings: { ...p.settings, theme: next } }))}
-      aria-label={next === 'light' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
-      title={next === 'light' ? 'Tema claro' : 'Tema oscuro'}
+      aria-label={`Cambiar a tema ${THEME_LABEL[next].toLowerCase()}`}
+      title={`Tema ${THEME_LABEL[next].toLowerCase()}`}
     >
-      {/* Se muestra el icono del tema al que se cambia. */}
-      {next === 'light' ? <Sun aria-hidden className="size-[18px]" strokeWidth={1.8} /> : <Moon aria-hidden className="size-[18px]" strokeWidth={1.8} />}
+      <Icon aria-hidden className="size-[18px]" strokeWidth={1.8} />
     </Button>
   );
 }

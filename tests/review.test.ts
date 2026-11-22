@@ -87,3 +87,14 @@ describe('borrar progreso', () => {
     expect(r.settings).toEqual(p.settings);
   });
 });
+
+describe('tema', () => {
+  it('conserva los temas conocidos y cambia uno desconocido por el de defecto', async () => {
+    const { normalizeProgress } = await import('@/lib/progress/store');
+    const base = { version: 1, openings: {}, puzzles: {}, lessons: {}, reviews: {} };
+    expect(normalizeProgress({ ...base, settings: { theme: 'dark' } })?.settings.theme).toBe('dark');
+    expect(normalizeProgress({ ...base, settings: { theme: 'light' } })?.settings.theme).toBe('light');
+    expect(normalizeProgress({ ...base, settings: { theme: 'sepia' } })?.settings.theme).toBe('navy');
+    expect(normalizeProgress({ ...base })?.settings.theme).toBe('navy');
+  });
+});

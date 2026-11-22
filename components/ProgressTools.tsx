@@ -28,8 +28,8 @@ import {
   useProgress,
   type Progress,
   type Settings,
-  type Theme,
 } from '@/lib/progress/store';
+import { THEME_LABEL, THEMES, type Theme } from '@/lib/theme';
 
 const APP = 'chess-trainer';
 
@@ -186,17 +186,17 @@ export default function ProgressTools() {
       <section className="grid gap-3">
         <h2>Ajustes</h2>
         <div className="divide-y divide-border rounded-lg border border-border bg-card">
-          <SettingRow title="Tema" description="Oscuro o claro; también desde el botón de la cabecera.">
+          <SettingRow title="Tema" description="Azul marino, gris oscuro o claro; también desde el botón de la cabecera.">
             <RadioGroup
               aria-label="Tema"
-              className="flex gap-4"
+              className="flex flex-wrap gap-x-4 gap-y-2"
               value={progress.settings.theme}
               onValueChange={(v) => setSetting('theme', v as Theme)}
             >
-              {(['dark', 'light'] as const).map((t) => (
+              {THEMES.map((t) => (
                 <Label key={t} className="cursor-pointer font-normal">
                   <RadioGroupItem value={t} />
-                  {t === 'dark' ? 'Oscuro' : 'Claro'}
+                  {THEME_LABEL[t]}
                 </Label>
               ))}
             </RadioGroup>

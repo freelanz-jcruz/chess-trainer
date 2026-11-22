@@ -8,7 +8,7 @@ function Toaster(props: ToasterProps) {
   const { progress } = useProgress();
   return (
     <Sonner
-      theme={progress.settings.theme}
+      theme={progress.settings.theme === 'light' ? 'light' : 'dark'}
       className="toaster group"
       style={
         {

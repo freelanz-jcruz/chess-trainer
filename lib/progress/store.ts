@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useSyncExternalStore } from 'react';
+import { DEFAULT_THEME, THEMES, type Theme } from '@/lib/theme';
 import { applySchedule, localDay, type ReviewKind, type Reviews } from './review';
 
 import { KEY } from './key';
@@ -22,7 +23,7 @@ export type PuzzleProgress = {
 
 export type LessonProgress = { completed: boolean; lastPage: number };
 
-export type Theme = 'dark' | 'light';
+export type { Theme } from '@/lib/theme';
 export type Settings = { engineTimeMs: number; showCoordinates: boolean; theme: Theme };
 
 export type Progress = {
@@ -35,7 +36,7 @@ export type Progress = {
   settings: Settings;
 };
 
-export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true, theme: 'dark' };
+export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true, theme: DEFAULT_THEME };
 
 function empty(): Progress {
   return { version: 1, openings: {}, puzzles: {}, lessons: {}, reviews: {}, settings: { ...DEFAULT_SETTINGS } };
@@ -53,8 +54,15 @@ export function normalizeProgress(data: unknown): Progress | null {
     puzzles: rec<PuzzleProgress>(data.puzzles),
     lessons: rec<LessonProgress>(data.lessons),
     reviews: rec(data.reviews) as Reviews,
-    settings: { ...DEFAULT_SETTINGS, ...(isRecord(data.settings) ? (data.settings as Partial<Settings>) : {}) },
+    settings: normalizeSettings(data.settings),
   };
+}
+
+function normalizeSettings(data: unknown): Settings {
+  const s = { ...DEFAULT_SETTINGS, ...(isRecord(data) ? (data as Partial<Settings>) : {}) };
+  // Un tema desconocido (p. ej. de una versión futura) vuelve al de defecto.
+  if (!THEMES.includes(s.theme)) s.theme = DEFAULT_SETTINGS.theme;
+  return s;
 }
 
 /** Lee y normaliza el progreso; tolera datos corruptos o almacenamiento bloqueado. */
