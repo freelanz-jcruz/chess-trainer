@@ -267,7 +267,10 @@ function PuzzleBoard({
           </p>
           {header}
         </Statement>
-        <Feedback state={feedback} />
+        {/* El mensaje de la jugada también va encima del tablero en móvil, bajo el enunciado. */}
+        <Statement>
+          <Feedback state={feedback} />
+        </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
             <Lightbulb /> Pista

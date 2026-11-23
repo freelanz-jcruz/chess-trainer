@@ -1,10 +1,11 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Lightbulb, RotateCcw } from 'lucide-react';
 import { Controls, Note, Panel, Statement, Trainer } from '../Trainer';
 import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
+import ResultDialog, { useRevealResult } from '../ResultDialog';
 import RichText from './RichText';
 import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
@@ -29,7 +30,7 @@ function stillWinning(score: Score): boolean {
 type Phase = 'intro' | 'user' | 'checking' | 'opponent' | 'won' | 'lost';
 
 /** Jugar contra Stockfish desde una posición hasta dar mate (o coronar). */
-export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav }: PageProps<PlayPage>) {
+export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext }: PageProps<PlayPage>) {
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [lastMove, setLastMove] = useState<[string, string] | null>(null);
@@ -39,6 +40,11 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle' });
   const [round, setRound] = useState(0); // para reiniciar
   const [hintShown, setHintShown] = useState(false); // el texto de la pista solo aparece al pedirla
+  // Al terminar (ganada o sin jugadas): ventana de resultado en móvil y el mensaje se desplaza a la vista (ver useRevealResult).
+  const [dialog, setDialog] = useState(false);
+  const closeDialog = useCallback(() => setDialog(false), []);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  useRevealResult(feedbackRef, phase === 'won' || phase === 'lost', dialog);
   const { later, clear } = useTimers();
   const { preAnalyze, analysis, cancel } = useMoveEvaluator(engineTimeMs);
 
@@ -95,6 +101,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         setMoves(n);
         setPhase('won');
         setFeedback({ kind: 'done', text: `¡Conseguido en ${n} jugada${n === 1 ? '' : 's'}!` });
+        setDialog(true);
         onComplete();
         return;
       }
@@ -138,6 +145,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
       if (page.maxMoves && n >= page.maxMoves) {
         setPhase('lost');
         setFeedback({ kind: 'verdict', verdict: 'mistake', san, text: 'Se acabaron las jugadas. ¡Inténtalo de nuevo!' });
+        setDialog(true);
         return;
       }
       // Responde Stockfish.
@@ -167,11 +175,34 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
     clear();
     cancel();
     setHintShown(false);
+    setDialog(false);
     setRound((r) => r + 1);
   };
 
   return (
     <Trainer>
+      {dialog && phase === 'won' && (
+        <ResultDialog
+          tone="correct"
+          title="¡Conseguido!"
+          primary={onNext ? { label: 'Siguiente', onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
+          secondary={onNext && { label: 'Cerrar', onClick: closeDialog }}
+          onDismiss={closeDialog}
+        >
+          {`${page.goal === 'checkmate' ? 'Mate' : 'Peón coronado'} en ${moves} jugada${moves === 1 ? '' : 's'}.`}
+        </ResultDialog>
+      )}
+      {dialog && phase === 'lost' && (
+        <ResultDialog
+          tone="mistake"
+          title="Se acabaron las jugadas"
+          primary={{ label: 'Empezar de nuevo', onClick: restart }}
+          secondary={{ label: 'Cerrar', onClick: closeDialog }}
+          onDismiss={closeDialog}
+        >
+          {`No lo has conseguido en ${page.maxMoves} jugada${page.maxMoves === 1 ? '' : 's'}. ¡Inténtalo de nuevo!`}
+        </ResultDialog>
+      )}
       <Board
         fen={fen}
         orientation={page.orientation ?? myColor}
@@ -185,7 +216,10 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         <Statement className="prose">
           <RichText text={page.body} />
         </Statement>
-        <Feedback state={feedback} />
+        {/* El mensaje de la jugada también va encima del tablero en móvil, bajo el enunciado. */}
+        <Statement>
+          <Feedback ref={feedbackRef} state={feedback} />
+        </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
             <Lightbulb /> Pista

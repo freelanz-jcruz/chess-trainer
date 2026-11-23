@@ -1,7 +1,7 @@
 'use client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { LessonFile, LessonPage } from '@/lib/content/schemas';
 import { updateLesson, useProgress } from '@/lib/progress/store';
 import { cn } from '@/lib/utils';
@@ -68,10 +68,19 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
     );
   }, [index, isLast, pageDone, lesson.id, restored, update]);
 
+  // Al cambiar de página con los botones, se vuelve arriba para leer el nuevo enunciado. Se hace tras pintar
+  // la página nueva y sin animación: un desplazamiento suave lanzado antes del cambio se interrumpe en
+  // algunos navegadores (Safari en iPhone) cuando cambia la altura del contenido.
+  const scrollPending = useRef(false);
   const go = (i: number) => {
+    scrollPending.current = true;
     setIndex(i);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  useLayoutEffect(() => {
+    if (!scrollPending.current) return;
+    scrollPending.current = false;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [index]);
 
   const navButtons = (
     <>
@@ -97,6 +106,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
   const common = {
     nav: <div className="mt-1 hidden flex-wrap items-center gap-2 border-t border-border pt-3 trainer:flex">{navButtons}</div>,
     onComplete: complete,
+    onNext: isLast ? undefined : () => go(index + 1),
     completed: pageDone,
     coordinates: progress.settings.showCoordinates,
     engineTimeMs: progress.settings.engineTimeMs,

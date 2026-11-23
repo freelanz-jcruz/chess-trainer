@@ -11,7 +11,7 @@ del texto (CSS mask), así se adapta al tema claro y al oscuro.
 """
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'assets' / 'icon.png'
@@ -34,7 +34,7 @@ def main() -> None:
     inner.resize((180, 180), Image.LANCZOS).convert('RGB').save(OUT / 'icon-180.png', optimize=True)
 
     # Maskable: de fondo, un degradado suave con los colores del propio icono (lejos de las esquinas
-    # redondeadas); encima, el interior reducido y con los bordes fundidos para que no se note la unión.
+    # redondeadas); encima, la figura blanca reducida para que quede dentro de la zona segura.
     size = 512
     # Color de cada esquina (una muestra pequeña, a salvo del redondeo), interpolado en todo el lienzo.
     w = inner.width
@@ -43,14 +43,18 @@ def main() -> None:
     for x, y, box in ((0, 0, (a, a, b, b)), (1, 0, (w - b, a, w - a, b)), (0, 1, (a, w - b, b, w - a)), (1, 1, (w - b, w - b, w - a, w - a))):
         corners.putpixel((x, y), inner.crop(box).resize((1, 1), Image.BOX).getpixel((0, 0)))
     canvas = corners.resize((size, size), Image.BILINEAR)
+    # Solo la figura (lo claro), recortada por luminosidad: así no hay costuras con el fondo. Los trazos oscuros
+    # del interior quedan huecos y dejan ver el degradado, del mismo tono que en el original.
     s = round(size * MASKABLE_SCALE)
     fg = inner.resize((s, s), Image.LANCZOS)
-    feather = round(s * 0.08)
-    mask = Image.new('L', (s, s), 0)
-    ImageDraw.Draw(mask).rounded_rectangle((feather, feather, s - feather, s - feather), radius=feather * 2, fill=255)
-    mask = mask.filter(ImageFilter.GaussianBlur(feather / 2))
+    lum = fg.convert('L')
+    alpha = lum.point(lambda v: max(0, min(255, round((v - 140) * 255 / 70))))
+    # Fuera las esquinas: ahí asoma el borde claro del cuadrado redondeado original.
+    keep = Image.new('L', (s, s), 0)
+    ImageDraw.Draw(keep).rounded_rectangle((0, 0, s - 1, s - 1), radius=round(s * 0.2), fill=255)
+    alpha = ImageChops.multiply(alpha, keep)
     off = (size - s) // 2
-    canvas.paste(fg, (off, off), mask)
+    canvas.paste(fg, (off, off), alpha)
     canvas.convert('RGB').save(OUT / 'icon-maskable-512.png', optimize=True)
     sym = Image.open(SYMBOL).convert('RGBA')
     sym = sym.crop(sym.getchannel('A').getbbox())

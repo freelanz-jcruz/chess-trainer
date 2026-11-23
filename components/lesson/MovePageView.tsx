@@ -1,10 +1,11 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Lightbulb, RotateCcw } from 'lucide-react';
 import { Controls, Note, Panel, Statement, Trainer } from '../Trainer';
 import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
+import ResultDialog, { useRevealResult } from '../ResultDialog';
 import RichText from './RichText';
 import { opposite, playUci, sanToUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
@@ -16,7 +17,7 @@ import type { PageProps } from './types';
 const stripSuffix = (san: string) => san.replace(/[+#]$/, '');
 
 /** Encontrar una jugada: de una lista, cualquier buena según Stockfish o cualquier mate. */
-export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav }: PageProps<MovePage>) {
+export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext }: PageProps<MovePage>) {
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [startFen, setStartFen] = useState(page.fen);
@@ -24,7 +25,15 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
   const [phase, setPhase] = useState<'intro' | 'user' | 'checking' | 'done'>(page.opponentMove ? 'intro' : 'user');
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [fails, setFails] = useState(0);
-  const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle' });
+  const [feedback, setFeedback] = useState<FeedbackState>({
+    kind: 'idle',
+    text: page.opponentMove ? 'Mira la jugada del rival…' : 'Tu turno.',
+  });
+  // Al acertar: ventana de resultado en móvil y el mensaje se desplaza a la vista (ver useRevealResult).
+  const [dialog, setDialog] = useState(false);
+  const closeDialog = useCallback(() => setDialog(false), []);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  useRevealResult(feedbackRef, phase === 'done', dialog);
   const { later } = useTimers();
   const { preAnalyze, evaluate, analysis, cancel } = useMoveEvaluator(engineTimeMs);
   const needsEngine = page.goal !== 'listed';
@@ -39,6 +48,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
       setStartFen(m.fenAfter);
       setLastMove(uciToSquares(page.opponentMove!));
       setPhase('user');
+      setFeedback({ kind: 'idle', text: 'Tu turno.' });
     }, 700);
   }, [page, later]);
 
@@ -76,6 +86,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
         cancel();
         setPhase('done');
         setFeedback({ kind: 'verdict', verdict: 'correct', san, text: page.success ?? '¡Bien hecho!' });
+        setDialog(true);
         onComplete();
         return;
       }
@@ -105,12 +116,24 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
     setFen(startFen);
     setLastMove(null);
     setArrows([]);
-    setFeedback({ kind: 'idle' });
+    setFeedback({ kind: 'idle', text: 'Tu turno.' });
     setPhase('user');
+    setDialog(false);
   };
 
   return (
     <Trainer>
+      {dialog && feedback.kind === 'verdict' && (
+        <ResultDialog
+          tone="correct"
+          title="¡Correcto!"
+          primary={onNext ? { label: 'Siguiente', onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
+          secondary={onNext && { label: 'Cerrar', onClick: closeDialog }}
+          onDismiss={closeDialog}
+        >
+          <strong>{feedback.san}</strong> · {feedback.text}
+        </ResultDialog>
+      )}
       <Board
         fen={fen}
         orientation={page.orientation ?? myColor}
@@ -124,7 +147,10 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
         <Statement className="prose">
           <RichText text={page.body} />
         </Statement>
-        <Feedback state={feedback} />
+        {/* El mensaje de la jugada también va encima del tablero en móvil, bajo el enunciado. */}
+        <Statement>
+          <Feedback ref={feedbackRef} state={feedback} />
+        </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
             <Lightbulb /> Pista

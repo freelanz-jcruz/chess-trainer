@@ -1,9 +1,9 @@
 'use client';
-import { CircleCheck, CircleX, ListChecks, X } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { ListChecks, X } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Board from '../board/Board';
 import Callout from '../Callout';
+import ResultDialog from '../ResultDialog';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { Panel, Statement, Trainer } from '../Trainer';
@@ -44,7 +44,7 @@ export function TextPageView({ page, coordinates, nav }: PageProps<TextPage>) {
   );
 }
 
-export function QuizPageView({ page, onComplete, completed, coordinates, nav }: PageProps<QuizPage>) {
+export function QuizPageView({ page, onComplete, completed, coordinates, nav, onNext }: PageProps<QuizPage>) {
   const [chosen, setChosen] = useState<number | null>(completed ? page.answer : null);
   // En móvil (con tablero) las opciones están en un panel lateral y el resultado sale en una ventana
   // centrada en la pantalla; al cerrarla, el acierto queda en el texto.
@@ -107,9 +107,20 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav }: 
   return (
     <Layout withBoard={!!page.fen}>
       {page.fen && <StaticBoard view={page} coordinates={coordinates} />}
-      {popup && chosen !== null && (
-        <ResultPopup right={right} explain={right ? page.explain : undefined} onClose={right ? closePopup : retry} />
-      )}
+      {popup && chosen !== null &&
+        (right ? (
+          <ResultDialog
+            tone="correct"
+            title="¡Correcto!"
+            primary={onNext ? { label: 'Siguiente', onClick: onNext } : { label: 'Entendido', onClick: closePopup }}
+            secondary={onNext ? { label: 'Cerrar', onClick: closePopup } : undefined}
+            onDismiss={closePopup}
+          >
+            {page.explain}
+          </ResultDialog>
+        ) : (
+          <ResultDialog tone="mistake" title="No es esa" primary={{ label: 'Probar otra vez', onClick: retry }} onDismiss={retry} />
+        ))}
       <Panel>
         <Statement className="prose">
           <RichText text={page.body} />
@@ -159,54 +170,6 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav }: 
         {nav}
       </Panel>
     </Layout>
-  );
-}
-
-/**
- * Resultado de una pregunta en una ventana modal centrada en la pantalla, para verlo sin buscarlo.
- * Solo en móvil: en dos columnas el resultado ya está a la vista en el panel.
- */
-function ResultPopup({ right, explain, onClose }: { right: boolean; explain?: string; onClose: () => void }) {
-  const button = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (window.matchMedia('(min-width: 51.25rem)').matches) return;
-    button.current?.focus({ preventScroll: true });
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    window.addEventListener('keydown', onKey);
-    // Sin desplazar la página mientras está abierta.
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = overflow;
-    };
-  }, [onClose]);
-  const Icon = right ? CircleCheck : CircleX;
-  return createPortal(
-    <div
-      className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-[max(1rem,env(safe-area-inset-left))] backdrop-blur-sm animate-in fade-in trainer:hidden"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <div
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="quiz-result-title"
-        className={cn(
-          'grid max-h-[85dvh] w-full max-w-sm gap-4 overflow-y-auto rounded-xl border border-t-4 border-border bg-card p-5 text-card-foreground shadow-2xl dark:bg-secondary animate-in zoom-in-95',
-          right ? 'border-t-ok' : 'border-t-mistake',
-        )}
-      >
-        <h2 id="quiz-result-title" className="m-0 flex items-center gap-2 text-lg">
-          <Icon aria-hidden className={right ? 'text-ok' : 'text-mistake'} />
-          {right ? '¡Correcto!' : 'No es esa'}
-        </h2>
-        {explain && <p className="m-0">{explain}</p>}
-        <Button ref={button} className="w-full" onClick={onClose}>
-          {right ? 'Entendido' : 'Probar otra vez'}
-        </Button>
-      </div>
-    </div>,
-    document.body,
   );
 }
 

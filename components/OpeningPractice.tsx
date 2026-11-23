@@ -6,7 +6,7 @@ import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
 import MoveList from './MoveList';
 import PanelExtras from './PanelExtras';
-import { Controls, Note, Panel, Trainer } from './Trainer';
+import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen, type LinePly } from '@/lib/chess/opening-line';
 import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
@@ -212,7 +212,10 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
         onMove={onMove}
       />
       <Panel>
-        <Feedback state={feedback} />
+        {/* El mensaje de la jugada también va encima del tablero en móvil, bajo el enunciado. */}
+        <Statement>
+          <Feedback state={feedback} />
+        </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={!myTurn || locked}>
             <Lightbulb /> Pista
