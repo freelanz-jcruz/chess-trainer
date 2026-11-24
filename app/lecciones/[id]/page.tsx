@@ -20,7 +20,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
   return (
     <>
       <h1>{lesson.title}</h1>
-      <Note className="my-3.5">
+      <Note className="mb-3">
         Bloque {lesson.block} · {lesson.summary}
       </Note>
       <LessonPlayer lesson={lesson} next={nextLessonAfter(lesson.id)} />

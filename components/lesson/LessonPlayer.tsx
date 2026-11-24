@@ -84,11 +84,11 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
 
   const navButtons = (
     <>
-      <Button variant="outline" onClick={() => go(index - 1)} disabled={index === 0}>
+      <Button className="text-base" variant="outline" onClick={() => go(index - 1)} disabled={index === 0}>
         <ChevronLeft /> Anterior
       </Button>
       {!isLast && (
-        <Button onClick={() => go(index + 1)} disabled={!pageDone}>
+        <Button className="text-base" onClick={() => go(index + 1)} disabled={!pageDone}>
           Siguiente <ChevronRight />
         </Button>
       )}
@@ -114,15 +114,15 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
 
   return (
     <div>
-      <div className="mt-2 flex flex-wrap gap-1.5" aria-label={`Página ${index + 1} de ${lesson.pages.length}`}>
+      <div className="mt-6 flex mb-2 flex-wrap gap-1.5" aria-label={`Página ${index + 1} de ${lesson.pages.length}`}>
         {lesson.pages.map((p, i) => (
           <button
             key={i}
             type="button"
             className={cn(
               'size-3.5 rounded-full border-2 border-border bg-card disabled:cursor-default disabled:opacity-45',
-              (done.has(i) || saved?.completed) && 'border-primary bg-primary',
-              i === index && 'outline-2 outline-offset-2 outline-primary',
+              (done.has(i) || saved?.completed) && 'border-primary bg-primary mr-1.5',
+              i === index && 'outline-2 outline-offset-2 outline-primary mr-1.5',
             )}
             onClick={() => go(i)}
             disabled={i > index && !(saved?.completed || [...Array(i).keys()].every((j) => done.has(j) || autoComplete(lesson.pages[j])))}
@@ -130,7 +130,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
           />
         ))}
       </div>
-      <Note className="my-3.5">
+      <Note className="mt-0 text-base font-medium">
         {index + 1}/{lesson.pages.length} · {KIND_LABEL[page.kind]}
       </Note>
 
@@ -145,7 +145,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
 
       {/* Móvil: fija abajo, sobre la barra de pestañas, con un degradado para no cortar el contenido en seco.
           En dos columnas va dentro del panel (ver `nav`), para no tapar la parte baja del tablero. */}
-      <div className="sticky bottom-(--tabbar-h) z-10 mt-4 flex flex-wrap items-center gap-2 bg-linear-to-b from-transparent to-background to-25% py-2.5 trainer:hidden">
+      <div className="sticky bottom-(--tabbar-h) z-10 mt-4 flex flex-wrap items-center gap-2 bg-background py-2.5 trainer:hidden">
         {navButtons}
       </div>
     </div>

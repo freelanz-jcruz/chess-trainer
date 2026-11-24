@@ -16,7 +16,7 @@ export default function RichText({ text }: { text: string }) {
             </ul>
           );
         }
-        return <p key={i}>{inline(block.replace(/\n/g, ' '))}</p>;
+        return <p className="mb-0 text-xl font-light" key={i}>{inline(block.replace(/\n/g, ' '))}</p>;
       })}
     </>
   );

@@ -5,9 +5,10 @@ export default function Credits() {
     <article className="prose">
       <h1>Créditos</h1>
       <p>
-        Ajedrez Tutor es software libre bajo la licencia <strong>GNU GPL v3 o posterior</strong>. Es gratuito, no tiene
+        Ajedrez Tutor es software libre bajo la licencia <a target="_blank" href="https://www.gnu.org/licenses/gpl-3.0.html"><strong>GNU GPL v3 o posterior</strong></a>. Es gratuito, no tiene
         cuentas y tu progreso se guarda solo en este navegador.
       </p>
+      <p>Idea y diseño de webapp por <a target="_blank" href="https://freelanz.es">freelanz.es</a>, desarrollado con el apoyo de inteligencia artificial (<a target="_blank" href="https://claude.ai">Claude</a> by Anthropic).</p>
       <h2>Datos</h2>
       <ul>
         <li>

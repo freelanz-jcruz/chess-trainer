@@ -45,7 +45,7 @@ function DrawerContent({
           'fixed z-50 flex flex-col border-border bg-popover text-popover-foreground',
           side === 'bottom' && 'inset-x-0 bottom-0 mt-24 max-h-[80vh] rounded-t-xl border-t pb-[env(safe-area-inset-bottom)]',
           side === 'right' &&
-            'inset-y-0 right-0 w-[85vw] max-w-sm rounded-l-xl border-l pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)]',
+            'inset-y-0 right-0 w-[85vw] max-w-sm rounded-none border-l pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)]',
           className,
         )}
         {...props}

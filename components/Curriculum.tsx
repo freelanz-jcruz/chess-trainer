@@ -36,9 +36,9 @@ export default function Curriculum({
 }) {
   const { progress } = useProgress();
   return (
-    <ol className="my-4 grid gap-3">
+    <ol className="my-4 grid gap-6">
       {curriculum.blocks.map((b) => (
-        <li key={b.id} className="rounded-lg border border-border bg-card px-4 py-3.5">
+        <li key={b.id} className="rounded-lg border-2 border-border bg-card px-4 py-3.5">
           <h2>
             <span className="mr-1 inline-grid size-[1.6em] place-items-center rounded-full bg-primary text-[0.85em] text-primary-foreground">
               {b.id}
@@ -54,7 +54,7 @@ export default function Curriculum({
                   key={l.id}
                   className={`flex items-center justify-between gap-2 border-t border-border py-1.5 ${href ? '' : 'text-muted-foreground'}`}
                 >
-                  {href ? <Link href={href}>{l.title}</Link> : <span>{l.title}</span>}
+                  {href ? <Link className="no-underline font-medium text-[1.0rem] hover:text-(--hover) py-2" href={href}>{l.title}</Link> : <span>{l.title}</span>}
                   {href ? prog && <Badge>{prog}</Badge> : <Badge variant="muted">próximamente</Badge>}
                 </li>
               );

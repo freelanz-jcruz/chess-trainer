@@ -2,11 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import ServiceWorker from '@/components/ServiceWorker';
+import Splash from '@/components/Splash';
 import { DesktopNav, MobileTabBar } from '@/components/SiteNav';
 import { ThemeToggle } from '@/components/Theme';
 import ThemeScript from '@/components/ThemeScript';
 import { Toaster } from '@/components/ui/sonner';
 import { withBase } from '@/lib/base-path';
+import { VERSION_LABEL } from '@/lib/version';
 import './globals.css';
 
 // Se descarga al compilar y se sirve desde la app (entra en la caché sin conexión).
@@ -42,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="pb-[var(--tabbar-h)]">
         <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">
           <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))]">
-            <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-foreground no-underline">
+            <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-foreground no-underline mr-3">
               {/* Marca como máscara: toma el color del texto y se adapta al tema (ver tools/make-icons.py). */}
               <span
                 aria-hidden
@@ -59,10 +61,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main className="mx-auto max-w-[960px] pt-2 pr-[max(1rem,env(safe-area-inset-right))] pb-12 pl-[max(1rem,env(safe-area-inset-left))]">{children}</main>
         <footer className="mx-auto max-w-[960px] border-t border-border p-4 text-[0.85rem] text-muted-foreground">
-          <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3)
+          <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3) ·{' '}
+          {/* Versión y commit con el que se compiló (ver next.config.ts): útil para saber qué versión se está viendo. */}
+          <span className="tabular-nums" title="Versión de la app y commit con el que se compiló">
+            {VERSION_LABEL}
+          </span> · <a target="_blank" href="https://freelanz.es">freelanz.es</a>
         </footer>
         <MobileTabBar />
         <ServiceWorker />
+        <Splash />
         {/* Arriba: en móvil abajo están la barra de pestañas y los controles del entrenador. */}
         <Toaster position="top-center" offset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} mobileOffset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} />
       </body>

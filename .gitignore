@@ -8,3 +8,5 @@ public/engine/
 tools/data/
 tools/.cache/
 .claude/
+# Espacio de trabajo de VS Code (configuración local del editor)
+*.code-workspace

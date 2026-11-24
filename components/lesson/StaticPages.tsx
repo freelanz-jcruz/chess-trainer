@@ -35,7 +35,7 @@ export function TextPageView({ page, coordinates, nav }: PageProps<TextPage>) {
       {page.fen && <StaticBoard view={page} coordinates={coordinates} />}
       <Panel>
         <Statement className="prose">
-          {page.title && <h2>{page.title}</h2>}
+          {page.title && <h2 className="text-2xl mb-4">{page.title}</h2>}
           <RichText text={page.body} />
         </Statement>
         {nav}
@@ -135,13 +135,13 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav, on
               open={sheet}
               onOpenChange={setSheet}
             >
-              <Button variant={right ? 'outline' : 'default'} className="w-full" onClick={() => setSheet(true)}>
+              <Button variant={right ? 'outline' : 'default'} className="w-full mb-2 text-base" onClick={() => setSheet(true)}>
                 <ListChecks /> {right ? 'Ver las respuestas' : 'Ver respuestas'}
               </Button>
               <DrawerContent side="right" overlayClassName="bg-black/30">
                 <DrawerHeader className="flex-row items-start justify-between gap-2 pt-4">
                   <div className="grid gap-1">
-                    <DrawerTitle>Respuestas</DrawerTitle>
+                    <DrawerTitle className="mb-5">Respuestas</DrawerTitle>
                     <DrawerDescription asChild>
                       <div className="prose text-sm">
                         <RichText text={page.body} />

@@ -54,6 +54,7 @@
   --inacc: #e6c04d;
   --mistake: #f0955a;
   --blunder: #f2776f;
+  --hover: #FFF;
 }
 /* Azul marino del icono. Las valoraciones van algo más claras que en el gris para mantener
    un contraste de al menos 4,5:1 sobre las tarjetas azules. */
@@ -83,6 +84,7 @@
   --inacc: #ecc85a;
   --mistake: #ffa36b;
   --blunder: #ff8f87;
+  --hover: #fff;
 }
 :root[data-theme='light'] {
   color-scheme: light;
@@ -111,6 +113,7 @@
   --inacc: #b58a00;
   --mistake: #c4621a;
   --blunder: #b3261e;
+  --hover: #000;
 }
 
 /* Las variables anteriores como utilidades de Tailwind: bg-card, text-muted-foreground, border-border, text-blunder… */
