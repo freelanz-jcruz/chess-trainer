@@ -1,0 +1,32 @@
+# Configuración para servidores Apache (hosting compartido). Next la copia tal cual a out/.
+# En nginx u otros servidores se ignora: ver README («Despliegue») para el equivalente.
+
+# Tipos que algunos Apache antiguos no conocen: sin el de .wasm, el motor no arranca.
+AddType application/wasm .wasm
+AddType application/manifest+json .webmanifest
+
+# Página propia para direcciones que no existen.
+ErrorDocument 404 /404.html
+
+# Forzar HTTPS: el service worker (uso sin conexión) y la instalación de la app lo necesitan.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+<IfModule mod_headers.c>
+  # El service worker y las páginas, siempre revalidados: así los móviles reciben pronto la versión nueva.
+  <FilesMatch "^(sw\.js|.*\.html|.*\.txt|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Los ficheros de _next/static llevan un hash en el nombre: nunca cambian, se pueden guardar un año.
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json application/manifest+json application/wasm image/svg+xml
+</IfModule>

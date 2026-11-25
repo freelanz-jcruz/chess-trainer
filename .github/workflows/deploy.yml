@@ -1,0 +1,89 @@
+# Compila la app en cada push a main y sube out/ al hosting por SFTP (o FTPS/FTP) con lftp.
+# Configuración (GitHub → Settings → Secrets and variables → Actions): ver README, «Despliegue».
+# Mientras no estén los secrets, el workflow compila y pasa los tests, pero no sube nada.
+name: Despliegue
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # botón «Run workflow» en la pestaña Actions
+
+# Un despliegue cada vez; si llega otro push, el que está en curso termina antes.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Comprobar tipos y tests
+        run: |
+          npm run lint
+          npm test
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Subir al hosting
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          LFTP_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          REMOTE_PATH: ${{ secrets.DEPLOY_PATH }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          PROTOCOL: ${{ vars.DEPLOY_PROTOCOL || 'sftp' }}
+          PORT: ${{ vars.DEPLOY_PORT }}
+          DELETE: ${{ vars.DEPLOY_DELETE }}
+        run: |
+          if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$LFTP_PASSWORD" ] || [ -z "$REMOTE_PATH" ]; then
+            echo "::notice::Faltan los secrets DEPLOY_HOST, DEPLOY_USER, DEPLOY_PASSWORD o DEPLOY_PATH: no se sube nada."
+            exit 0
+          fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+          case "$PROTOCOL" in
+            sftp)
+              if [ -n "$KNOWN_HOSTS" ]; then
+                mkdir -p ~/.ssh && printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+                SETTINGS="set sftp:auto-confirm no;"
+              else
+                echo "::warning::Sin DEPLOY_KNOWN_HOSTS se acepta la huella del servidor sin comprobarla."
+                SETTINGS="set sftp:auto-confirm yes;"
+              fi ;;
+            ftps) SETTINGS="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes;" ;;
+            ftp)
+              echo "::warning::FTP sin cifrar: la contraseña viaja en claro. Usa sftp o ftps si el hosting lo permite."
+              SETTINGS="set ftp:ssl-allow no;" ;;
+            *) echo "::error::DEPLOY_PROTOCOL debe ser sftp, ftps o ftp (es «$PROTOCOL»)."; exit 1 ;;
+          esac
+
+          # Borrar en el servidor lo que ya no existe en out/ solo si se pide (DEPLOY_DELETE=true):
+          # si DEPLOY_PATH no fuera una carpeta solo para la app, se borraría lo demás. .well-known
+          # (certificados) nunca se toca.
+          MIRROR_DELETE=""
+          [ "$DELETE" = "true" ] && MIRROR_DELETE="--delete"
+
+          # sw.js va el último: si un móvil lo recibe a mitad de la subida, todo lo que precachea ya está.
+          lftp --env-password -u "$USER" "$PROTOCOL://$HOST${PORT:+:$PORT}" -e "
+            $SETTINGS
+            set net:max-retries 3; set net:timeout 30;
+            mirror --reverse --verbose=1 --parallel=4 $MIRROR_DELETE \
+              --exclude-glob sw.js --exclude ^\.well-known/ \
+              out/ '$REMOTE_PATH';
+            put out/sw.js -o '$REMOTE_PATH/sw.js';
+            bye
+          "

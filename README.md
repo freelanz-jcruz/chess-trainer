@@ -47,6 +47,31 @@ Otros scripts:
 2. Ten instalado `zstd` (`brew install zstd` o `apt install zstd`).
 3. `npm run puzzles -- --per-theme 100` (filtros por defecto: rating 400–1400, popularidad ≥ 90, ≥ 500 partidas, desviación ≤ 100).
 
+## Despliegue
+
+Cada push a `main` lanza el workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml): instala, comprueba tipos y tests, compila y sube `out/` al hosting con `lftp` (SFTP por defecto; también FTPS o FTP). También se puede lanzar a mano desde la pestaña **Actions → Despliegue → Run workflow**. Mientras falten los secrets, compila y pasa los tests pero no sube nada.
+
+En GitHub → **Settings → Secrets and variables → Actions**:
+
+| Tipo | Nombre | Valor |
+|------|--------|-------|
+| Secret | `DEPLOY_HOST` | Servidor, p. ej. `ftp.tudominio.es` |
+| Secret | `DEPLOY_USER` | Usuario de SFTP/FTP |
+| Secret | `DEPLOY_PASSWORD` | Contraseña |
+| Secret | `DEPLOY_PATH` | Carpeta de la web en el servidor, p. ej. `/public_html` o `/www` |
+| Secret (opcional) | `DEPLOY_KNOWN_HOSTS` | Huella del servidor SFTP: la salida de `ssh-keyscan -p PUERTO SERVIDOR`. Sin ella se acepta sin comprobar |
+| Variable (opcional) | `DEPLOY_PROTOCOL` | `sftp` (por defecto), `ftps` o `ftp` (sin cifrar, solo si no hay otra) |
+| Variable (opcional) | `DEPLOY_PORT` | Puerto, si no es el habitual (22 SFTP, 21 FTP) |
+| Variable (opcional) | `DEPLOY_DELETE` | `true` para borrar en el servidor lo que ya no existe en `out/`. Solo si `DEPLOY_PATH` es una carpeta exclusiva de la app |
+
+`sw.js` se sube el último, para que un móvil que lo reciba a mitad de la subida ya tenga en el servidor todo lo que precachea. La versión del pie muestra el commit desplegado.
+
+Requisitos del servidor:
+
+- **HTTPS**: sin él no funcionan el service worker (uso sin conexión) ni la instalación en el móvil.
+- **Apache**: [`public/.htaccess`](public/.htaccess) se copia a `out/` y ya fuerza HTTPS, declara el tipo `application/wasm` (sin él no arranca el motor), sirve `sw.js` y las páginas con `Cache-Control: no-cache` (las versiones nuevas llegan pronto), guarda un año `_next/static/` (lleva hash en el nombre) y usa `404.html`. Supone la app en la raíz del dominio.
+- **nginx u otro**: hay que configurar lo mismo en el servidor (tipo `.wasm`, `no-cache` para `sw.js`, HTML y `.txt`, y `404.html`).
+
 ## Contenido
 
 Todo el contenido son datos en `content/`:
