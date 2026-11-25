@@ -62,9 +62,10 @@ En GitHub → **Settings → Secrets and variables → Actions**:
 | Secret (opcional) | `DEPLOY_KNOWN_HOSTS` | Huella del servidor SFTP: la salida de `ssh-keyscan -p PUERTO SERVIDOR`. Sin ella se acepta sin comprobar |
 | Variable (opcional) | `DEPLOY_PROTOCOL` | `sftp` (por defecto), `ftps` (FTP con TLS explícito, puerto 21) o `ftp` (sin cifrar, solo si no hay otra) |
 | Variable (opcional) | `DEPLOY_PORT` | Puerto, si no es el habitual (22 SFTP, 21 FTP) |
+| Variable (opcional) | `DEPLOY_IP` | IP del servidor, cuando el hosting da una IP y su certificado FTPS lleva un nombre. Entonces `DEPLOY_HOST` es un nombre que cubra el certificado: se conecta a la IP y se comprueba el certificado con ese nombre. En Hostinger (certificado `*.hstgr.io`), p. ej. `ftp.hstgr.io` |
 | Variable (opcional) | `DEPLOY_DELETE` | `true` para borrar en el servidor lo que ya no existe en `out/`. Solo si `DEPLOY_PATH` es una carpeta exclusiva de la app |
 
-Las variables opcionales también valen creadas como secrets. Si el servidor FTPS presenta un certificado a nombre de otro servidor (habitual en hosting compartido), usa en `DEPLOY_HOST` el nombre que figura en el certificado.
+Las variables opcionales también valen creadas como secrets. Si el servidor FTPS presenta un certificado a nombre de otro servidor (habitual en hosting compartido), usa en `DEPLOY_HOST` el nombre que figura en el certificado y, si ese nombre no lleva a tu servidor, añade `DEPLOY_IP`. Para ver el certificado: `openssl s_client -starttls ftp -connect SERVIDOR:21 </dev/null 2>/dev/null | openssl x509 -noout -subject -text | grep -E "subject=|DNS:"`.
 
 `sw.js` se sube el último, para que un móvil que lo reciba a mitad de la subida ya tenga en el servidor todo lo que precachea. La versión del pie muestra el commit desplegado.
 
