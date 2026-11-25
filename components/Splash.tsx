@@ -1,4 +1,5 @@
 'use client';
+import { Info } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import {
   AlertDialog,
@@ -9,6 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import { withBase } from '@/lib/base-path';
 import { VERSION_LABEL } from '@/lib/version';
 
@@ -47,6 +49,31 @@ export default function Splash() {
     if (!next) markSeen();
   };
 
+  return <SplashDialog open={open} onOpenChange={onOpenChange} action="Empezar" />;
+}
+
+/** «Acerca de Ajedrez Tutor» (página de créditos): la misma ventana, a petición. */
+export function AboutButton() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="outline" onClick={() => setOpen(true)}>
+        <Info /> Acerca de Ajedrez Tutor
+      </Button>
+      <SplashDialog open={open} onOpenChange={setOpen} action="Cerrar" />
+    </>
+  );
+}
+
+function SplashDialog({
+  open,
+  onOpenChange,
+  action,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  action: string;
+}) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="max-w-xs justify-items-center gap-5 text-center sm:max-w-xs">
@@ -60,7 +87,7 @@ export default function Splash() {
           <p className="text-xs text-muted-foreground tabular-nums">{VERSION_LABEL}</p>
         </AlertDialogHeader>
         <AlertDialogFooter className="w-full sm:justify-center">
-          <AlertDialogAction className="w-full">Empezar</AlertDialogAction>
+          <AlertDialogAction className="w-full">{action}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

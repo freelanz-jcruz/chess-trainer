@@ -1,3 +1,5 @@
+import { AboutButton } from '@/components/Splash';
+
 export const metadata = { title: 'Créditos · Ajedrez Tutor' };
 
 export default function Credits() {
@@ -9,6 +11,9 @@ export default function Credits() {
         cuentas y tu progreso se guarda solo en este navegador.
       </p>
       <p>Idea y diseño de webapp por <a target="_blank" href="https://freelanz.es">freelanz.es</a>, desarrollado con el apoyo de inteligencia artificial (<a target="_blank" href="https://claude.ai">Claude</a> by Anthropic).</p>
+      <div className="my-5">
+        <AboutButton />
+      </div>
       <h2>Datos</h2>
       <ul>
         <li>
