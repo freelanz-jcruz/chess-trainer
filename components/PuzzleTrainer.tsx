@@ -6,6 +6,7 @@ import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
+import ResultDialog, { useRevealResult } from './ResultDialog';
 import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Puzzle } from '@/lib/content/schemas';
@@ -149,6 +150,12 @@ function PuzzleBoard({
   const reported = useRef(false);
   const timers = useRef<number[]>([]);
   const { preAnalyze, evaluate, cancel } = useMoveEvaluator(engineTimeMs);
+  // Al resolverlo: ventana de resultado en móvil y el mensaje se desplaza a la vista (ver useRevealResult).
+  // Los fallos no la abren: el mensaje queda sobre el tablero y se ve la jugada antes de deshacerla.
+  const [dialog, setDialog] = useState(false);
+  const closeDialog = useCallback(() => setDialog(false), []);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  useRevealResult(feedbackRef, phase === 'solved', dialog);
 
   const later = (fn: () => void, ms: number) => {
     timers.current.push(window.setTimeout(fn, ms));
@@ -206,6 +213,7 @@ function PuzzleBoard({
         setFeedback({ kind: 'verdict', verdict: 'correct', san: sanToEs(played.san), text: isLast ? '¡Resuelto!' : 'Sigue…' });
         if (isLast) {
           setPhase('solved');
+          setDialog(true);
           report(true);
         } else {
           playOpponent(played.fenAfter, puzzle.solution[step + 1], step + 2);
@@ -243,6 +251,7 @@ function PuzzleBoard({
   };
 
   const next = () => {
+    setDialog(false);
     if (phase !== 'solved') report(false);
     cancel();
     onNext();
@@ -250,6 +259,17 @@ function PuzzleBoard({
 
   return (
     <Trainer>
+      {dialog && feedback.kind === 'verdict' && (
+        <ResultDialog
+          tone="correct"
+          title="¡Resuelto!"
+          primary={{ label: 'Siguiente', onClick: next }}
+          secondary={{ label: 'Cerrar', onClick: closeDialog }}
+          onDismiss={closeDialog}
+        >
+          <strong>{feedback.san}</strong> · {solvedSummary(errors.current, hintUsed.current)}
+        </ResultDialog>
+      )}
       <Board
         fen={fen}
         orientation={myColor}
@@ -269,7 +289,7 @@ function PuzzleBoard({
         </Statement>
         {/* El mensaje de la jugada también va encima del tablero en móvil, bajo el enunciado. */}
         <Statement>
-          <Feedback state={feedback} />
+          <Feedback ref={feedbackRef} state={feedback} />
         </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
@@ -295,4 +315,11 @@ function PuzzleBoard({
       </Panel>
     </Trainer>
   );
+}
+
+/** Cómo se ha resuelto, para la ventana de resultado. */
+function solvedSummary(errors: number, hintUsed: boolean): string {
+  if (!errors && !hintUsed) return 'A la primera y sin pistas.';
+  const parts = [errors ? `${errors} ${errors === 1 ? 'fallo' : 'fallos'}` : '', hintUsed ? 'pista' : ''].filter(Boolean);
+  return `Resuelto con ${parts.join(' y ')}.`;
 }
