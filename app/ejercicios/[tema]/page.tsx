@@ -20,8 +20,8 @@ export default async function PuzzlesPage({ params }: { params: Promise<{ tema: 
   if (!set) notFound();
   return (
     <>
-      <h1>Ejercicios</h1>
-      <nav className="my-2 flex flex-wrap gap-1.5" aria-label="Temas">
+      <h1 className="mb-5">Ejercicios</h1>
+      <nav className="my-2 flex flex-wrap gap-1.5 mb-5" aria-label="Temas">
         {puzzleSets.map((s) => (
           <Link key={s.id} href={`/ejercicios/${s.id}/`} className={chipClass(s.id === tema)}>
             {s.title}

@@ -10,7 +10,7 @@ en tu navegador y el progreso se guarda solo en tu dispositivo.
 - **Ejercicios**: problemas de Lichess de mate en 1, mate en 2, pieza colgada, ataque doble, clavada y ataque a la descubierta.
 - **Repaso espaciado**: las aperturas practicadas y los problemas fallados vuelven a aparecer a intervalos crecientes (1, 3, 7, 14 y 30 días).
 - **Exportar e importar el progreso** a un fichero, para no perderlo o pasarlo a otro dispositivo.
-- **Funciona sin conexión** (PWA): se puede instalar en el móvil y, tras la primera visita, todo (incluido el motor) está disponible sin red.
+- **Funciona sin conexión** (PWA): se puede instalar en el móvil (Progreso → Ajustes → «Instalar la app») y, tras la primera visita, todo (incluido el motor) está disponible sin red.
 - **Valoración** de cada jugada según la pérdida respecto a la mejor (correcta, buena alternativa, imprecisión, error, error grave) y **pista** con flecha.
 
 La app no explica en profundidad por qué una jugada es mejor que otra: indica si es correcta según el motor. El plan completo está en [PLAN.md](PLAN.md).

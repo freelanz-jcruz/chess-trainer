@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
+import InstallApp from '@/components/InstallApp';
 import { localDay } from '@/lib/progress/review';
 import {
   currentProgress,
@@ -231,6 +232,13 @@ export default function ProgressTools() {
               </SelectContent>
             </Select>
           </SettingRow>
+          <InstallApp
+            row={(control, description) => (
+              <SettingRow title="Instalar la app" description={description}>
+                {control}
+              </SettingRow>
+            )}
+          />
         </div>
       </section>
     </div>

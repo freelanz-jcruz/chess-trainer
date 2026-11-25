@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { withBase } from '@/lib/base-path';
+// Empieza a escuchar el aviso de instalación desde la primera página (llega antes de abrir Ajustes).
+import '@/lib/install';
 
 /**
  * Registra el service worker (solo en producción) y avisa (con Sonner) cuando hay una versión nueva esperando.

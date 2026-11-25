@@ -262,7 +262,7 @@ function PuzzleBoard({
       <Panel>
         <Statement className="grid gap-1">
           {/* El enunciado, fijo: el resultado de cada jugada va abajo, junto a los botones. */}
-          <p className="font-medium">
+          <p className="text-lg font-medium">
             Juegan las {myColor === 'white' ? 'blancas' : 'negras'}: encuentra la mejor jugada.
           </p>
           {header}
