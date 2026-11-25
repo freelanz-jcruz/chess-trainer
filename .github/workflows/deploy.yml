@@ -45,16 +45,20 @@ jobs:
           LFTP_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
           REMOTE_PATH: ${{ secrets.DEPLOY_PATH }}
           KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-          PROTOCOL: ${{ vars.DEPLOY_PROTOCOL || 'sftp' }}
-          PORT: ${{ vars.DEPLOY_PORT }}
-          DELETE: ${{ vars.DEPLOY_DELETE }}
+          # Valen como variable o como secret (lo que se haya creado).
+          PROTOCOL: ${{ vars.DEPLOY_PROTOCOL || secrets.DEPLOY_PROTOCOL || 'sftp' }}
+          PORT: ${{ vars.DEPLOY_PORT || secrets.DEPLOY_PORT }}
+          DELETE: ${{ vars.DEPLOY_DELETE || secrets.DEPLOY_DELETE }}
         run: |
           if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$LFTP_PASSWORD" ] || [ -z "$REMOTE_PATH" ]; then
             echo "::notice::Faltan los secrets DEPLOY_HOST, DEPLOY_USER, DEPLOY_PASSWORD o DEPLOY_PATH: no se sube nada."
             exit 0
           fi
-          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          PROTOCOL=$(printf '%s' "$PROTOCOL" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+          echo "Protocolo: $PROTOCOL${PORT:+ · puerto $PORT}"
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp > /dev/null
 
+          SCHEME="$PROTOCOL"
           case "$PROTOCOL" in
             sftp)
               if [ -n "$KNOWN_HOSTS" ]; then
@@ -64,7 +68,9 @@ jobs:
                 echo "::warning::Sin DEPLOY_KNOWN_HOSTS se acepta la huella del servidor sin comprobarla."
                 SETTINGS="set sftp:auto-confirm yes;"
               fi ;;
-            ftps) SETTINGS="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes;" ;;
+            # FTP con TLS explícito (puerto 21, lo habitual en hosting compartido): en lftp es ftp:// + ssl-force;
+            # «ftps://» sería TLS implícito (puerto 990).
+            ftps) SCHEME="ftp"; SETTINGS="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes;" ;;
             ftp)
               echo "::warning::FTP sin cifrar: la contraseña viaja en claro. Usa sftp o ftps si el hosting lo permite."
               SETTINGS="set ftp:ssl-allow no;" ;;
@@ -78,7 +84,7 @@ jobs:
           [ "$DELETE" = "true" ] && MIRROR_DELETE="--delete"
 
           # sw.js va el último: si un móvil lo recibe a mitad de la subida, todo lo que precachea ya está.
-          lftp --env-password -u "$USER" "$PROTOCOL://$HOST${PORT:+:$PORT}" -e "
+          lftp --env-password -u "$USER" "$SCHEME://$HOST${PORT:+:$PORT}" -e "
             $SETTINGS
             set net:max-retries 3; set net:timeout 30;
             mirror --reverse --verbose=1 --parallel=4 $MIRROR_DELETE \

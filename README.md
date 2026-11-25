@@ -60,9 +60,11 @@ En GitHub → **Settings → Secrets and variables → Actions**:
 | Secret | `DEPLOY_PASSWORD` | Contraseña |
 | Secret | `DEPLOY_PATH` | Carpeta de la web en el servidor, p. ej. `/public_html` o `/www` |
 | Secret (opcional) | `DEPLOY_KNOWN_HOSTS` | Huella del servidor SFTP: la salida de `ssh-keyscan -p PUERTO SERVIDOR`. Sin ella se acepta sin comprobar |
-| Variable (opcional) | `DEPLOY_PROTOCOL` | `sftp` (por defecto), `ftps` o `ftp` (sin cifrar, solo si no hay otra) |
+| Variable (opcional) | `DEPLOY_PROTOCOL` | `sftp` (por defecto), `ftps` (FTP con TLS explícito, puerto 21) o `ftp` (sin cifrar, solo si no hay otra) |
 | Variable (opcional) | `DEPLOY_PORT` | Puerto, si no es el habitual (22 SFTP, 21 FTP) |
 | Variable (opcional) | `DEPLOY_DELETE` | `true` para borrar en el servidor lo que ya no existe en `out/`. Solo si `DEPLOY_PATH` es una carpeta exclusiva de la app |
+
+Las variables opcionales también valen creadas como secrets. Si el servidor FTPS presenta un certificado a nombre de otro servidor (habitual en hosting compartido), usa en `DEPLOY_HOST` el nombre que figura en el certificado.
 
 `sw.js` se sube el último, para que un móvil que lo reciba a mitad de la subida ya tenga en el servidor todo lo que precachea. La versión del pie muestra el commit desplegado.
 
