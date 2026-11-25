@@ -3,6 +3,7 @@
 Aplicación web para aprender ajedrez desde cero, pensada para ratos sueltos en el móvil.
 Libre (GPL-3), gratuita, sin cuentas y sin servidor: es un sitio estático, el motor de ajedrez corre
 en tu navegador y el progreso se guarda solo en tu dispositivo.
+La web publicada recoge estadísticas anónimas de visitas con [Umami](https://umami.is) (sin cookies ni datos personales); solo en el build de producción.
 
 - **Temario en 7 bloques**: fundamentos, movimientos especiales, mates comunes, principios de apertura, repertorio, táctica y finales básicos.
 - **Lecciones guiadas**: explicaciones breves, preguntas, ejercicios sobre el tablero y partidas contra Stockfish (mates básicos, rey y peón, oposición).

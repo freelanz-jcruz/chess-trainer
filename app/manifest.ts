@@ -6,7 +6,7 @@ export const dynamic = 'force-static';
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Ajedrez Tutor',
-    short_name: 'Ajedrez',
+    short_name: 'Ajedrez Tutor',
     description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
     lang: 'es',
     start_url: withBase('/'),

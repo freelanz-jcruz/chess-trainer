@@ -40,6 +40,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" className={inter.variable} suppressHydrationWarning>
       <head>
         <ThemeScript />
+        {/* Estadísticas de visitas con Umami (sin cookies). Solo en el build de producción: no cuenta las
+            visitas de `npm run dev`. El script sigue solo los cambios de página de la navegación de Next. */}
+        {process.env.NODE_ENV === 'production' && (
+          <script defer src="https://cloud.umami.is/script.js" data-website-id="639d9298-c563-422a-98b1-ffb1262deb8b" />
+        )}
       </head>
       <body className="pb-[var(--tabbar-h)]">
         <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">

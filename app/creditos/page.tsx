@@ -1,4 +1,6 @@
 import { AboutButton } from '@/components/Splash';
+import { buttonVariants } from "@/components/ui/button"
+import { Mail } from 'lucide-react';
 
 export const metadata = { title: 'Créditos · Ajedrez Tutor' };
 
@@ -10,9 +12,19 @@ export default function Credits() {
         Ajedrez Tutor es software libre bajo la licencia <a target="_blank" href="https://www.gnu.org/licenses/gpl-3.0.html"><strong>GNU GPL v3 o posterior</strong></a>. Es gratuito, no tiene
         cuentas y tu progreso se guarda solo en este navegador.
       </p>
+      <p>
+        Para saber cuánta gente la usa, se recogen estadísticas anónimas de visitas con{' '}
+        <a target="_blank" href="https://umami.is">Umami</a>: sin cookies ni datos personales, y sin nada de tu progreso.
+      </p>
       <p>Idea y diseño de webapp por <a target="_blank" href="https://freelanz.es">freelanz.es</a>, desarrollado con el apoyo de inteligencia artificial (<a target="_blank" href="https://claude.ai">Claude</a> by Anthropic).</p>
-      <div className="my-5">
+      <div className="flex my-5 gap-2">
         <AboutButton />
+        <a 
+          target="_blank" 
+          href="mailto:info@ajedreztutor.com" 
+          className={buttonVariants({ variant: "outline", size: "default" })}>
+            <Mail /> Contacto
+        </a>
       </div>
       <h2>Datos</h2>
       <ul>
