@@ -395,11 +395,32 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 | **4** ✅ | Bloques 4–5: principios de apertura y repertorio completo (Italiana con más variantes del rival, 1...e5 contra las principales respuestas de las blancas, Gambito de Dama rehusado, trampas). Comprobación de nombres/ECO contra el catálogo `lichess-org/chess-openings` (CC0). Hecho: lecciones «Los cinco principios» y «Aplica los principios»; aperturas 1...e5 (12 líneas: Italiana, 2.Dh5, Vienesa, Gambito de Rey, Centro, Española con la variante del cambio, Escocesa, Cuatro Caballos…), Gambito de Dama rehusado (6 líneas: Colle, Londres, Catalana, cambio…), esquema del GDR contra 1.Cf3 y 1.c4 (7 líneas), rama de los Dos Caballos en la Italiana y trampas Fegatello y Légal; selector de variantes en el recorrido y `npm run eco`. |
 | **5** ✅ | Bloques 6–7: más temas tácticos (`pin`, `discoveredAttack`: 96 y 100 problemas nuevos; los 400 anteriores se mantienen), finales de rey y peón (regla del cuadrado, rey delante del peón, peón de torre) y oposición (tomarla, desbordar y defender), con partidas contra Stockfish hasta coronar. |
 | **6** ✅ | Repaso espaciado de aperturas y problemas fallados y exportar/importar progreso (sección 10), con página de ajustes. Repositorio público en GitHub (GPL-3) hecho. **Pospuesto:** el despliegue; en lugar de GitHub Pages irá a un hosting propio con dominio (es un sitio estático: basta con subir `out/`, y `BASE_PATH` sirve si va en un subdirectorio). |
-| **7+** | **Niveles superiores.** Cada lección y cada rama lleva un campo `level` (`principiante`, `intermedio`, `avanzado`), y la app muestra solo el nivel elegido y los anteriores. Repertorio ampliado como datos: **Española con blancas** y sus variantes principales (Cerrada, del Cambio, Berlinesa, Abierta, Marshall como defensa), más variantes de la Italiana (Evans, 4.d4) y del Gambito de Dama. Problemas de rating más alto y más temas tácticos con el mismo script de filtrado. |
+| **7** | **Niveles superiores.** Cada lección y cada rama lleva un campo `level` (`principiante`, `intermedio`, `avanzado`), y la app muestra solo el nivel elegido y los anteriores. Repertorio ampliado como datos: **Española con blancas** y sus variantes principales (Cerrada, del Cambio, Berlinesa, Abierta, Marshall como defensa), más variantes de la Italiana (Evans, 4.d4) y del Gambito de Dama. Problemas de rating más alto y más temas tácticos con el mismo script de filtrado. |
+| **8** | **Partida libre contra Stockfish** (petición de jugadores con experiencia). Nueva sección «Jugar» con partidas completas desde la posición inicial; detalle en la sección 12. Por partes: **8a** partida con niveles, elección de color, reglas completas, abandonar, guardar la partida en curso y exportar PGN; **8b** revisión al terminar, con la valoración de cada jugada propia y salto a los errores; **8c** opcionales: modo entrenamiento (aviso antes de un error grave), deshacer, reloj e historial de partidas. |
 
 ---
 
-## 12. Licencias y créditos
+## 12. Partida libre contra Stockfish (fase 8)
+
+**Viabilidad: alta.** Casi todo existe ya: tablero con coronación, reglas con chess.js (mate, ahogado, triple repetición, 50 jugadas, material insuficiente), Stockfish en un Web Worker, la valoración de jugadas de los ejercicios (`evaluateMove`) y partidas contra el motor en las lecciones (`PlayPageView`). Sigue siendo estático y sin conexión: no hace falta servidor.
+
+**Lo que hay que construir:**
+
+- **Niveles de juego.** Stockfish tiene `Skill Level` (0–20) y `UCI_LimitStrength` + `UCI_Elo`, pero el mínimo de `UCI_Elo` es 1320 y `Skill Level 0` sigue siendo demasiado fuerte para quien empieza. Para los niveles bajos, el motor analiza varias candidatas (`MultiPV`) y elige al azar entre las que no pierden más de un margen que depende del nivel, con errores más probables cuanto más bajo; para los altos, `UCI_Elo`. Unos 6–8 niveles, de «Principiante» a «Fuerte». Hay que calibrarlos jugando.
+- **Motor compartido.** El envoltorio (`lib/engine/engine.ts`) fija `MultiPV 1` al arrancar y lo comparte con la valoración de jugadas. Cada análisis llevará sus opciones (`setoption` antes de `position`), restableciendo las de valoración, para no crear un segundo worker (memoria en el móvil).
+- **Página «Jugar»** (quinta pestaña en móvil): ajustes de partida (color: blancas, negras o al azar; nivel), tablero, lista de jugadas (`PanelExtras`), botones «Abandonar» y «Nueva partida», y resultado en la ventana modal de siempre (`ResultDialog`) con el motivo (mate, ahogado, repetición…).
+- **Partida en curso guardada** en el progreso (FEN inicial + jugadas), para seguirla si se cierra la app; sin romper el progreso ya guardado (la carga actual completa los campos que falten).
+- **Exportar PGN** (copiar o descargar), para analizarla en Lichess u otra herramienta.
+- **Revisión (8b):** al terminar, se valoran las jugadas propias con el clasificador actual (correcta, imprecisión, error, error grave) y se muestran un resumen y la lista de errores, con salto a cada posición y la mejor jugada como flecha. Se analiza jugada a jugada en segundo plano y con barra de progreso; en el móvil puede llevar un minuto en partidas largas.
+- **Opcionales (8c):** modo entrenamiento (si la jugada es un error grave, avisa y deja repetirla), deshacer jugada, reloj (no es prioritario para principiantes), tablas por acuerdo (el motor acepta si la valoración está igualada), historial de partidas y estadísticas por nivel con sugerencia de subir de nivel.
+
+**Riesgos:** calibrar niveles que fallen de forma creíble (no regalar piezas al azar a cada jugada); consumo de batería con análisis largos en el móvil (tiempos cortos para el rival y la revisión, a petición); y que la quinta pestaña quepa bien en pantallas estrechas.
+
+**Orden:** se puede hacer antes que la fase 7 sin problema, porque no dependen una de otra. La 8a sola ya responde a la petición.
+
+---
+
+## 13. Licencias y créditos
 
 - Código: **GPL-3.0** (compatible con Chessground y Stockfish, ambos GPL-3).
 - Problemas de ajedrez y catálogo de aperturas: **Lichess, CC0** (dominio público). Se acredita en el README y en `/creditos` por cortesía, sin usar la marca ni el diseño de Lichess.
@@ -408,7 +429,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 
 ---
 
-## 13. Riesgos y decisiones abiertas
+## 14. Riesgos y decisiones abiertas
 
 - **Rendimiento del motor en móvil:** la variante *lite* de un hilo es más lenta; se compensa empezando a analizar mientras el usuario piensa y con tiempo de análisis ajustable.
 - **Tamaño de descarga:** el `.wasm` *lite* pesa unos MB; se carga solo al entrar en un modo que lo necesite.
