@@ -84,11 +84,19 @@ export default function InstallApp({ row }: { row: (content: React.ReactNode, de
  * Botón grande de instalar para la landing (/info). Si el navegador no permite instalar desde la página
  * (escritorio sin soporte) o ya está instalada, ofrece empezar directamente (o nada, con `fallback={false}`).
  */
-export function InstallButton({ size = 'lg', fallback = true }: { size?: 'default' | 'lg'; fallback?: boolean }) {
+export function InstallButton({
+  size = 'lg',
+  variant = 'default',
+  fallback = true,
+}: {
+  size?: 'default' | 'lg';
+  variant?: 'default' | 'outline';
+  fallback?: boolean;
+}) {
   const state = useInstallState();
   if (state === 'prompt') {
     return (
-      <Button size={size} onClick={install}>
+      <Button size={size} variant={variant} onClick={install}>
         <Smartphone /> Instalar la app
       </Button>
     );
@@ -97,7 +105,7 @@ export function InstallButton({ size = 'lg', fallback = true }: { size?: 'defaul
     return (
       <IosSteps
         trigger={
-          <Button size={size}>
+          <Button size={size} variant={variant}>
             <Smartphone /> Instalar en el iPhone
           </Button>
         }
@@ -106,7 +114,7 @@ export function InstallButton({ size = 'lg', fallback = true }: { size?: 'defaul
   }
   if (!fallback) return null;
   return (
-    <Button size={size} asChild>
+    <Button size={size} variant={variant} asChild>
       <Link href="/">Empezar ahora</Link>
     </Button>
   );

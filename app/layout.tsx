@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import ServiceWorker from '@/components/ServiceWorker';
-import Splash from '@/components/Splash';
 import { DesktopNav, MobileTabBar } from '@/components/SiteNav';
 import { ThemeToggle } from '@/components/Theme';
 import ThemeScript from '@/components/ThemeScript';
@@ -79,7 +78,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
         <MobileTabBar />
         <ServiceWorker />
-        <Splash />
         {/* Arriba: en móvil abajo están la barra de pestañas y los controles del entrenador. */}
         <Toaster position="top-center" offset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} mobileOffset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} />
       </body>

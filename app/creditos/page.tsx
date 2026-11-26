@@ -1,4 +1,4 @@
-import { AboutButton } from '@/components/Splash';
+import { AboutButton } from '@/components/About';
 import { buttonVariants } from "@/components/ui/button"
 import { Mail } from 'lucide-react';
 
