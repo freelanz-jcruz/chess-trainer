@@ -397,6 +397,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 | **6** ✅ | Repaso espaciado de aperturas y problemas fallados y exportar/importar progreso (sección 10), con página de ajustes. Repositorio público en GitHub (GPL-3) hecho. **Pospuesto:** el despliegue; en lugar de GitHub Pages irá a un hosting propio con dominio (es un sitio estático: basta con subir `out/`, y `BASE_PATH` sirve si va en un subdirectorio). |
 | **7** | **Niveles superiores.** Cada lección y cada rama lleva un campo `level` (`principiante`, `intermedio`, `avanzado`), y la app muestra solo el nivel elegido y los anteriores. Repertorio ampliado como datos: **Española con blancas** y sus variantes principales (Cerrada, del Cambio, Berlinesa, Abierta, Marshall como defensa), más variantes de la Italiana (Evans, 4.d4) y del Gambito de Dama. Problemas de rating más alto y más temas tácticos con el mismo script de filtrado. |
 | **8** | **Partida libre contra Stockfish** (petición de jugadores con experiencia). Nueva sección «Jugar» con partidas completas desde la posición inicial; detalle en la sección 12. Por partes: **8a** partida con niveles, elección de color, reglas completas, abandonar, guardar la partida en curso y exportar PGN; **8b** revisión al terminar, con la valoración de cada jugada propia y salto a los errores; **8c** opcionales: modo entrenamiento (aviso antes de un error grave), deshacer, reloj e historial de partidas. |
+| **9** | **Idiomas: inglés** (y otros más adelante). Interfaz y contenido traducidos, español en la raíz e inglés en `/en/`, notación con las letras de cada idioma y elección automática según el navegador con selector en Ajustes; detalle en la sección 13. Se puede posponer hasta confirmar el interés (Umami); el mejor momento para la base técnica es entre las fases 7 y 8. |
 
 ---
 
@@ -420,7 +421,28 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 
 ---
 
-## 13. Licencias y créditos
+## 13. Idiomas (fase 9)
+
+**Motivo:** empieza a llegar tráfico de fuera de España; el inglés es el que más público abre.
+
+**Viabilidad: alta, con un coste repartido entre la base técnica y la traducción.** Medido sobre el proyecto actual: unas 7.000 palabras de contenido (18 lecciones y 6 aperturas) y unos 250–400 textos de interfaz repartidos por los componentes. Sigue siendo un sitio estático y sin conexión.
+
+**Cómo hacerlo:**
+
+- **Direcciones:** el español sigue en la raíz (no cambian las direcciones actuales ni las apps ya instaladas) y el inglés va en `/en/`. Con la exportación estática no hay middleware ni redirecciones del servidor de Next: dos *root layouts* con grupos de rutas (`app/(es)/…` con `<html lang="es">` y `app/en/…` con `lang="en"`), y las páginas de `/en/` son envoltorios finos que reutilizan los mismos componentes con el idioma como dato.
+- **Textos de interfaz:** un diccionario tipado por idioma (`lib/i18n/es.ts`, `en.ts`) y un contexto de React con el idioma. TypeScript obliga a que los dos tengan las mismas claves, así que no se escapa un texto sin traducir. No hace falta una librería (next-intl y similares encajan peor con la exportación estática).
+- **Contenido:** las jugadas, posiciones y soluciones no se duplican. Cada lección y apertura tiene un fichero de textos por idioma con solo las frases, por clave (`content/lessons/en/piezas.json`…), y `npm run validate` comprueba que cada idioma tenga todas las claves y ninguna sobrante.
+- **Notación:** `sanToEs` (R, D, T, A, C) pasa a depender del idioma (K, Q, R, B, N en inglés). Los nombres de aperturas en inglés salen del catálogo de Lichess que ya se usa para los códigos ECO.
+- **Elección del idioma:** la primera vez, si el navegador no está en español, se propone o se lleva a `/en/`. Hay un selector en Ajustes y un enlace en el pie, y la elección se guarda en el progreso. Se añaden `hreflang` en el HTML para los buscadores.
+- **Lo demás:** manifiesto con nombre y descripción por idioma; el progreso es el mismo en los dos idiomas; el service worker precachea las páginas de ambos (unos MB más, sin cambiar el motor); Umami separa las visitas por ruta.
+
+**Traducción:** la interfaz es mecánica. El contenido conviene traducirlo con ayuda de IA y que lo revise alguien que juegue y hable inglés, porque el vocabulario de ajedrez tiene sus giros (*fork*, *pin*, *skewer*, *zugzwang*…).
+
+**Orden:** posponerlo no cierra puertas (las direcciones actuales no cambian y traducir el contenido cuesta lo mismo antes que después), pero cada pantalla nueva con textos en el código y cada frase montada por piezas añade trabajo de migración. Se puede esperar a confirmar en Umami que las visitas de fuera son personas. Si se pospone, el mejor momento para la base técnica es **entre las fases 7 y 8**: la 7 es sobre todo contenido en JSON y la 8 mucha interfaz nueva, que conviene hacer ya preparada para varios idiomas. Mientras tanto: frases del contenido siempre en los JSON, notación siempre a través de `sanToEs` y frases completas en vez de montadas por piezas en las pantallas nuevas. Una vez montado, añadir otro idioma (portugués, francés…) es solo traducir.
+
+---
+
+## 14. Licencias y créditos
 
 - Código: **GPL-3.0** (compatible con Chessground y Stockfish, ambos GPL-3).
 - Problemas de ajedrez y catálogo de aperturas: **Lichess, CC0** (dominio público). Se acredita en el README y en `/creditos` por cortesía, sin usar la marca ni el diseño de Lichess.
@@ -429,7 +451,7 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 
 ---
 
-## 14. Riesgos y decisiones abiertas
+## 15. Riesgos y decisiones abiertas
 
 - **Rendimiento del motor en móvil:** la variante *lite* de un hilo es más lenta; se compensa empezando a analizar mientras el usuario piensa y con tiempo de análisis ajustable.
 - **Tamaño de descarga:** el `.wasm` *lite* pesa unos MB; se carga solo al entrar en un modo que lo necesite.
