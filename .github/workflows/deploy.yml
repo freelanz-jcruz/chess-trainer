@@ -95,12 +95,29 @@ jobs:
           [ "$DELETE" = "true" ] && MIRROR_DELETE="--delete"
 
           # sw.js va el último: si un móvil lo recibe a mitad de la subida, todo lo que precachea ya está.
-          lftp --env-password -u "$USER" "$SCHEME://$HOST${PORT:+:$PORT}" -e "
-            $SETTINGS
-            set net:max-retries 3; set net:timeout 30;
-            mirror --reverse --verbose=1 --parallel=4 $MIRROR_DELETE \
-              --exclude-glob sw.js --exclude ^\.well-known/ \
-              out/ '$REMOTE_PATH';
-            put out/sw.js -o '$REMOTE_PATH/sw.js';
-            bye
-          "
+          # Hasta 3 intentos (el FTP de un hosting compartido falla a veces por saturación o límites de
+          # conexiones). Con el registro detallado de lftp, si falla se ve en qué punto (conexión, TLS,
+          # transferencia); lftp oculta la contraseña y GitHub tapa los secrets con ***.
+          upload() {
+            lftp --env-password -u "$USER" "$SCHEME://$HOST${PORT:+:$PORT}" -e "
+              debug -o lftp.log -t 3;
+              $SETTINGS
+              set cmd:fail-exit yes;
+              set net:timeout 20; set net:max-retries 2; set net:reconnect-interval-base 5;
+              mirror --reverse --verbose=1 --parallel=2 $MIRROR_DELETE \
+                --exclude-glob sw.js --exclude ^\.well-known/ \
+                out/ '$REMOTE_PATH';
+              put out/sw.js -o '$REMOTE_PATH/sw.js';
+              bye
+            "
+          }
+          for attempt in 1 2 3; do
+            rm -f lftp.log
+            if upload; then exit 0; fi
+            echo "::group::Registro de lftp (intento $attempt)"
+            tail -n 60 lftp.log 2>/dev/null
+            echo "::endgroup::"
+            [ "$attempt" -lt 3 ] && { echo "Reintentando en 30 s…"; sleep 30; }
+          done
+          echo "::error::No se pudo subir tras 3 intentos. Revisa el registro de lftp de arriba."
+          exit 1
