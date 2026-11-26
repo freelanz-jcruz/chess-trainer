@@ -70,6 +70,8 @@ Las variables opcionales también valen creadas como secrets. Si el servidor FTP
 
 `sw.js` se sube el último, para que un móvil que lo reciba a mitad de la subida ya tenga en el servidor todo lo que precachea. La versión del pie muestra el commit desplegado.
 
+**SEO:** la presentación está en `/info/` (con datos estructurados `WebApplication` y `FAQPage`), y al compilar se generan `robots.txt` y `sitemap.xml` con todas las lecciones, aperturas y ejercicios. Las URLs absolutas (sitemap, canónica, Open Graph) usan `https://ajedreztutor.com`; para otro dominio, compila con `SITE_URL=https://otro.dominio`.
+
 Requisitos del servidor:
 
 - **HTTPS**: sin él no funcionan el service worker (uso sin conexión) ni la instalación en el móvil.

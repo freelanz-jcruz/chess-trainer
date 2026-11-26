@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { Share, SquarePlus, Smartphone } from 'lucide-react';
 import { toast } from 'sonner';
 import {
@@ -14,35 +15,17 @@ import {
 import { Button } from '@/components/ui/button';
 import { promptInstall, useInstallState } from '@/lib/install';
 
-/** Fila de Ajustes para añadir la app a la pantalla de inicio. No se muestra si no aplica. */
-export default function InstallApp({ row }: { row: (content: React.ReactNode, description: string) => React.ReactNode }) {
-  const state = useInstallState();
-  if (state === 'unsupported') return null;
+const INSTALL_BENEFIT = 'Ábrela desde la pantalla de inicio, a pantalla completa y también sin conexión.';
 
-  if (state === 'installed') return row(<span className="text-sm text-muted-foreground">Instalada</span>, 'Ya la tienes en la pantalla de inicio.');
+async function install() {
+  if (await promptInstall()) toast.success('App instalada en la pantalla de inicio.');
+}
 
-  if (state === 'prompt') {
-    return row(
-      <Button
-        variant="outline"
-        onClick={async () => {
-          if (await promptInstall()) toast.success('App instalada en la pantalla de inicio.');
-        }}
-      >
-        <Smartphone /> Instalar
-      </Button>,
-      'Ábrela desde la pantalla de inicio, a pantalla completa y también sin conexión.',
-    );
-  }
-
-  // iPhone / iPad: Safari no permite abrir la instalación desde la página; se explican los pasos.
-  return row(
+/** iPhone / iPad: Safari no permite abrir la instalación desde la página; se explican los pasos. */
+function IosSteps({ trigger }: { trigger: React.ReactNode }) {
+  return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">
-          <Smartphone /> Cómo hacerlo
-        </Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Añadir a la pantalla de inicio</AlertDialogTitle>
@@ -68,7 +51,63 @@ export default function InstallApp({ row }: { row: (content: React.ReactNode, de
           <AlertDialogAction>Entendido</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
-    </AlertDialog>,
-    'Ábrela desde la pantalla de inicio, a pantalla completa y también sin conexión.',
+    </AlertDialog>
+  );
+}
+
+/** Fila de Ajustes para añadir la app a la pantalla de inicio. No se muestra si no aplica. */
+export default function InstallApp({ row }: { row: (content: React.ReactNode, description: string) => React.ReactNode }) {
+  const state = useInstallState();
+  if (state === 'unsupported') return null;
+  if (state === 'installed') return row(<span className="text-sm text-muted-foreground">Instalada</span>, 'Ya la tienes en la pantalla de inicio.');
+  if (state === 'prompt') {
+    return row(
+      <Button variant="outline" onClick={install}>
+        <Smartphone /> Instalar
+      </Button>,
+      INSTALL_BENEFIT,
+    );
+  }
+  return row(
+    <IosSteps
+      trigger={
+        <Button variant="outline">
+          <Smartphone /> Cómo hacerlo
+        </Button>
+      }
+    />,
+    INSTALL_BENEFIT,
+  );
+}
+
+/**
+ * Botón grande de instalar para la landing (/info). Si el navegador no permite instalar desde la página
+ * (escritorio sin soporte) o ya está instalada, ofrece empezar directamente (o nada, con `fallback={false}`).
+ */
+export function InstallButton({ size = 'lg', fallback = true }: { size?: 'default' | 'lg'; fallback?: boolean }) {
+  const state = useInstallState();
+  if (state === 'prompt') {
+    return (
+      <Button size={size} onClick={install}>
+        <Smartphone /> Instalar la app
+      </Button>
+    );
+  }
+  if (state === 'ios') {
+    return (
+      <IosSteps
+        trigger={
+          <Button size={size}>
+            <Smartphone /> Instalar en el iPhone
+          </Button>
+        }
+      />
+    );
+  }
+  if (!fallback) return null;
+  return (
+    <Button size={size} asChild>
+      <Link href="/">Empezar ahora</Link>
+    </Button>
   );
 }

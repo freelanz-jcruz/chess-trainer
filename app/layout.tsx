@@ -8,6 +8,7 @@ import { ThemeToggle } from '@/components/Theme';
 import ThemeScript from '@/components/ThemeScript';
 import { Toaster } from '@/components/ui/sonner';
 import { withBase } from '@/lib/base-path';
+import { OPEN_GRAPH_BASE, SITE_ORIGIN } from '@/lib/site';
 import { VERSION_LABEL } from '@/lib/version';
 import './globals.css';
 
@@ -15,9 +16,13 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', variable: '--font-inter' });
 
 export const metadata: Metadata = {
+  // Base de las URLs absolutas (canónica, Open Graph): ver lib/site.ts.
+  metadataBase: new URL(SITE_ORIGIN),
   title: 'Ajedrez Tutor',
   description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
   applicationName: 'Ajedrez Tutor',
+  // Vista previa al compartir el enlace (WhatsApp, redes…); las páginas pueden cambiar título y descripción.
+  openGraph: OPEN_GRAPH_BASE,
   appleWebApp: { capable: true, title: 'Ajedrez', statusBarStyle: 'default' },
   icons: {
     icon: [{ url: withBase('/icons/icon-192.png'), sizes: '192x192', type: 'image/png' }],
@@ -66,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main className="mx-auto max-w-[960px] pt-2 pr-[max(1rem,env(safe-area-inset-right))] pb-12 pl-[max(1rem,env(safe-area-inset-left))]">{children}</main>
         <footer className="mx-auto max-w-[960px] border-t border-border p-4 text-[0.85rem] text-muted-foreground">
-          <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3) ·{' '}
+          <Link href="/info/">Qué es Ajedrez Tutor</Link> · <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3) ·{' '}
           {/* Versión y commit con el que se compiló (ver next.config.ts): útil para saber qué versión se está viendo. */}
           <span className="tabular-nums" title="Versión de la app y commit con el que se compiló">
             {VERSION_LABEL}

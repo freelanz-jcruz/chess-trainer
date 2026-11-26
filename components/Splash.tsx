@@ -1,5 +1,6 @@
 'use client';
 import { Info } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
   AlertDialog,
@@ -39,10 +40,13 @@ function markSeen() {
 /** Bienvenida la primera vez que se abre la app: icono, nombre, versión y commit. */
 export default function Splash() {
   const [open, setOpen] = useState(false);
+  const path = usePathname() ?? '/';
+  // En la presentación (/info) no: ya presenta la app, y quien llega desde un buscador la lee primero.
+  const onLanding = path.startsWith('/info');
   // Solo en el cliente y tras montar: en el HTML estático no se sabe si ya se vio.
   useEffect(() => {
-    if (!seen()) setOpen(true);
-  }, []);
+    if (!onLanding && !seen()) setOpen(true);
+  }, [onLanding]);
 
   const onOpenChange = (next: boolean) => {
     setOpen(next);

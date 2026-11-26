@@ -91,6 +91,11 @@ export default function Board({
     });
   }, [fen, orientation, movable, lastMove, coordinates, highlight, promo]);
 
+  // Chessground dibuja las coordenadas al crearse: si cambian (o se piden ocultas desde el principio), se redibuja.
+  useEffect(() => {
+    api.current?.redrawAll();
+  }, [coordinates]);
+
   useEffect(() => {
     api.current?.setAutoShapes(
       arrows.map((a) => ({ orig: a.from as Key, dest: a.to as Key, brush: a.brush ?? 'green' })),
@@ -107,7 +112,7 @@ export default function Board({
 
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[560px]">
-      <div ref={el} className="size-full" />
+      <div ref={el} className="size-full rounded-md overflow-hidden" />
       {promo && (
         <div
           className="absolute inset-0 z-20 grid place-content-center gap-2.5 rounded-sm bg-black/45 text-center text-white"
