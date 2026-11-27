@@ -4,6 +4,7 @@ import { ChevronRight, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { InstallButton } from '@/components/InstallApp';
 import { Button } from '@/components/ui/button';
+import { withBase } from '@/lib/base-path';
 
 /**
  * Misma clave que la antigua ventana de bienvenida: quien ya la vio no vuelve a ver el aviso. Se guarda
@@ -46,24 +47,26 @@ export default function WelcomeBanner() {
     setShow(false);
   };
 
+  // Mismo estilo que los avisos de actualización y de uso sin conexión (ServiceWorker.tsx), pero dentro de la página.
   return (
     <aside
       aria-label="Bienvenida"
-      className="relative my-4 grid gap-3 rounded-xl border border-primary/50 bg-primary/10 py-4 pr-12 pl-4 trainer:flex trainer:items-center trainer:gap-5"
+      className="relative my-4 flex items-center gap-4 rounded-2xl border border-primary/60 bg-popover py-4 pr-12 pl-4 text-popover-foreground shadow-2xl"
     >
-      <div className="grid gap-1 trainer:flex-1">
-        <p className="m-0 font-semibold">¿Primera vez por aquí?</p>
-        <p className="m-0 text-sm text-muted-foreground">
-          Descubre qué puedes aprender con Ajedrez Tutor y cómo instalarla en tu móvil.
-        </p>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <Button asChild onClick={markSeen}>
-          <Link href="/info/">
-            Conocer la app <ChevronRight />
-          </Link>
-        </Button>
-        <InstallButton size="default" fallback={false} variant="outline" />
+      <img src={withBase('/icons/icon-192.png')} alt="" width={56} height={56} className="size-14 shrink-0 rounded-xl" />
+      <div className="grid min-w-0 flex-1 gap-2">
+        <div>
+          <p className="m-0 font-semibold">¿Primera vez por aquí?</p>
+          <p className="m-0 text-sm text-muted-foreground">Descubre qué puedes aprender con Ajedrez Tutor y cómo instalarla en tu móvil.</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild onClick={markSeen}>
+            <Link href="/info/">
+              Conocer la app <ChevronRight />
+            </Link>
+          </Button>
+          <InstallButton size="default" fallback={false} variant="outline" />
+        </div>
       </div>
       <Button
         variant="ghost"
