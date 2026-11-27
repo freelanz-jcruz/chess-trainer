@@ -1,14 +1,16 @@
 import type { MetadataRoute } from 'next';
 import { withBase } from '@/lib/base-path';
+import { DEFAULT_LOCALE, getMessages } from '@/lib/i18n';
 
 export const dynamic = 'force-static';
 
 export default function manifest(): MetadataRoute.Manifest {
+  const t = getMessages(DEFAULT_LOCALE);
   return {
-    name: 'Ajedrez Tutor',
-    short_name: 'Ajedrez Tutor',
-    description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
-    lang: 'es',
+    name: t.appName,
+    short_name: t.appName,
+    description: t.meta.description,
+    lang: DEFAULT_LOCALE,
     start_url: withBase('/'),
     scope: withBase('/'),
     display: 'standalone',

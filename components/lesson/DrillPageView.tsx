@@ -5,6 +5,7 @@ import { Controls, Note, Panel, Statement, Trainer } from '../Trainer';
 import { Button } from '@/components/ui/button';
 import Board, { type Arrow } from '../board/Board';
 import Feedback, { type FeedbackState } from '../Feedback';
+import { useT } from '@/lib/i18n/react';
 import ResultDialog, { useRevealResult } from '../ResultDialog';
 import RichText from './RichText';
 import { playUci, toUci, turnColor, uciToSquares, withTurn } from '@/lib/chess/game';
@@ -13,7 +14,9 @@ import type { DrillPage } from '@/lib/content/schemas';
 import type { PageProps } from './types';
 
 /** Ejercicio de movimiento: el rival no mueve; se cuenta el número de jugadas. */
-export default function DrillPageView({ page, onComplete, coordinates, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<DrillPage>) {
+export default function DrillPageView({ page, onComplete, coordinates, nav, onNext, nextLabel, finishTitle }: PageProps<DrillPage>) {
+  const tr = useT();
+  const tl = tr.lesson;
   const me = turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [moves, setMoves] = useState(0);
@@ -21,7 +24,7 @@ export default function DrillPageView({ page, onComplete, coordinates, nav, onNe
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [done, setDone] = useState(false);
   // Texto inicial: qué se espera, en lugar de un recuadro vacío.
-  const startText = page.par ? `Tu turno. Objetivo: ${page.par} jugada${page.par === 1 ? '' : 's'}.` : 'Tu turno.';
+  const startText = tl.drillStart(page.par);
   const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle', text: startText });
   // Al terminar: ventana de resultado en móvil y el mensaje se desplaza a la vista (ver useRevealResult).
   const [result, setResult] = useState<{ n: number; perfect: boolean } | null>(null);
@@ -49,11 +52,11 @@ export default function DrillPageView({ page, onComplete, coordinates, nav, onNe
         setFeedback({
           kind: 'done',
           text: perfect
-            ? `¡Conseguido en ${n} jugada${n === 1 ? '' : 's'}!${page.par ? ' Es lo mínimo posible.' : ''}`
-            : `¡Conseguido en ${n} jugadas! Se puede en ${page.par}: ¿lo intentas otra vez?`,
+            ? tl.drillDone(n, !!page.par)
+            : tl.drillCanDoBetter(n, page.par!),
         });
       } else {
-        setFeedback({ kind: 'idle', text: `Jugadas: ${n}${page.par ? ` · objetivo: ${page.par}` : ''}` });
+        setFeedback({ kind: 'idle', text: tl.drillProgress(n, page.par) });
       }
     },
     [done, fen, me, moves, page, onComplete],
@@ -77,9 +80,9 @@ export default function DrillPageView({ page, onComplete, coordinates, nav, onNe
     setFeedback({ kind: 'idle', text: startText });
   };
   const closeDialog = useCallback(() => setDialog(false), []);
-  const nextAction = onNext && { label: nextLabel, onClick: onNext };
-  const closeAction = { label: 'Cerrar', onClick: closeDialog };
-  const retryAction = { label: 'Intentarlo otra vez', onClick: reset };
+  const nextAction = onNext && { label: nextLabel ?? tr.common.next, onClick: onNext };
+  const closeAction = { label: tr.common.close, onClick: closeDialog };
+  const retryAction = { label: tl.tryAgainButton, onClick: reset };
 
   const target = page.goal.type === 'reach' ? [page.goal.square] : [];
 
@@ -98,15 +101,15 @@ export default function DrillPageView({ page, onComplete, coordinates, nav, onNe
       {dialog && result && (
         <ResultDialog
           tone="correct"
-          title={finishTitle ?? '¡Conseguido!'}
+          title={finishTitle ?? tl.achieved}
           // Si se pudo en menos jugadas, se propone repetir; si no, seguir.
-          primary={!result.perfect ? retryAction : (nextAction ?? { label: 'Continuar', onClick: closeDialog })}
+          primary={!result.perfect ? retryAction : (nextAction ?? { label: tr.common.continue, onClick: closeDialog })}
           secondary={!result.perfect ? (nextAction ?? closeAction) : nextAction && closeAction}
           onDismiss={closeDialog}
         >
           {result.perfect
-            ? `En ${result.n} jugada${result.n === 1 ? '' : 's'}${page.par ? ': es lo mínimo posible.' : '.'}`
-            : `En ${result.n} jugadas. Se puede en ${page.par}: ¿lo intentas otra vez?`}
+            ? tl.drillSummary(result.n, page.par)
+            : tl.drillSummaryBetter(result.n, page.par!)}
         </ResultDialog>
       )}
       <Panel>
@@ -119,10 +122,10 @@ export default function DrillPageView({ page, onComplete, coordinates, nav, onNe
         </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={done}>
-            <Lightbulb /> Pista
+            <Lightbulb /> {tr.common.hint}
           </Button>
           <Button variant="outline" onClick={reset}>
-            <RotateCcw /> Empezar de nuevo
+            <RotateCcw /> {tr.common.restart}
           </Button>
         </Controls>
         {nav}

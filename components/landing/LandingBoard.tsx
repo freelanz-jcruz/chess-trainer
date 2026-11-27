@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Board from '@/components/board/Board';
 import { playUci, uciToSquares } from '@/lib/chess/game';
-import { formatMoveList } from '@/lib/chess/notation-es';
+import { useSan, useT } from '@/lib/i18n/react';
 
 const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 /** Apertura Italiana: la primera del repertorio de la app. */
@@ -29,6 +29,8 @@ const FRAMES: Frame[] = LINE.reduce<Frame[]>(
  */
 export default function LandingBoard() {
   const [i, setI] = useState(FRAMES.length - 1);
+  const tl = useT().landing;
+  const { moveList } = useSan();
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -54,8 +56,8 @@ export default function LandingBoard() {
         <Board fen={frame.fen} orientation="white" movable={null} lastMove={frame.lastMove} coordinates={false} />
       </div>
       <figcaption className="text-center text-sm text-muted-foreground">
-        <span className="font-semibold text-foreground">Apertura Italiana</span>
-        <span className="block min-h-[1.5em] tabular-nums">{formatMoveList(frame.sans) || 'Posición inicial'}</span>
+        <span className="font-semibold text-foreground">{tl.boardOpening}</span>
+        <span className="block min-h-[1.5em] tabular-nums">{moveList(frame.sans) || tl.boardStart}</span>
       </figcaption>
     </figure>
   );

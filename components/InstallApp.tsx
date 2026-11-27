@@ -14,41 +14,49 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { promptInstall, useInstallState } from '@/lib/install';
+import { Bold, Fill } from '@/lib/i18n/bold';
+import { useT } from '@/lib/i18n/react';
+import type { Messages } from '@/lib/i18n';
 
-const INSTALL_BENEFIT = 'Ábrela desde la pantalla de inicio, a pantalla completa y también sin conexión.';
-
-async function install() {
-  if (await promptInstall()) toast.success('App instalada en la pantalla de inicio.');
+async function install(ti: Messages['install']) {
+  if (await promptInstall()) toast.success(ti.installed);
 }
 
 /** iPhone / iPad: Safari no permite abrir la instalación desde la página; se explican los pasos. */
 function IosSteps({ trigger }: { trigger: React.ReactNode }) {
+  const t = useT();
+  const ti = t.install;
+  const strong = 'text-foreground';
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Añadir a la pantalla de inicio</AlertDialogTitle>
+          <AlertDialogTitle>{ti.iosTitle}</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <ol className="m-0 grid list-decimal gap-2 pl-5 text-left">
               <li>
-                Toca el botón <strong className="text-foreground">Compartir</strong>{' '}
-                <Share aria-label="(icono de compartir)" className="inline size-4 align-text-bottom" /> de Safari, en la barra
-                de abajo o arriba.
+                <Fill
+                  text={ti.iosStep1}
+                  strongClassName={strong}
+                  values={{ share: <Share aria-label={ti.iosShareIcon} className="inline size-4 align-text-bottom" /> }}
+                />
               </li>
               <li>
-                Elige <strong className="text-foreground">Añadir a pantalla de inicio</strong>{' '}
-                <SquarePlus aria-hidden className="inline size-4 align-text-bottom" />. Si no aparece, desliza la lista hacia
-                abajo.
+                <Fill
+                  text={ti.iosStep2}
+                  strongClassName={strong}
+                  values={{ add: <SquarePlus aria-hidden className="inline size-4 align-text-bottom" /> }}
+                />
               </li>
               <li>
-                Pulsa <strong className="text-foreground">Añadir</strong>. La app aparecerá con su icono junto a las demás.
+                <Bold text={ti.iosStep3} strongClassName={strong} />
               </li>
             </ol>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>Entendido</AlertDialogAction>
+          <AlertDialogAction>{t.common.understood}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -58,25 +66,26 @@ function IosSteps({ trigger }: { trigger: React.ReactNode }) {
 /** Fila de Ajustes para añadir la app a la pantalla de inicio. No se muestra si no aplica. */
 export default function InstallApp({ row }: { row: (content: React.ReactNode, description: string) => React.ReactNode }) {
   const state = useInstallState();
+  const ti = useT().install;
   if (state === 'unsupported') return null;
-  if (state === 'installed') return row(<span className="text-sm text-muted-foreground">Instalada</span>, 'Ya la tienes en la pantalla de inicio.');
+  if (state === 'installed') return row(<span className="text-sm text-muted-foreground">{ti.installedLabel}</span>, ti.installedHelp);
   if (state === 'prompt') {
     return row(
-      <Button variant="outline" onClick={install}>
-        <Smartphone /> Instalar
+      <Button variant="outline" onClick={() => install(ti)}>
+        <Smartphone /> {ti.install}
       </Button>,
-      INSTALL_BENEFIT,
+      ti.benefit,
     );
   }
   return row(
     <IosSteps
       trigger={
         <Button variant="outline">
-          <Smartphone /> Cómo hacerlo
+          <Smartphone /> {ti.howTo}
         </Button>
       }
     />,
-    INSTALL_BENEFIT,
+    ti.benefit,
   );
 }
 
@@ -94,10 +103,11 @@ export function InstallButton({
   fallback?: boolean;
 }) {
   const state = useInstallState();
+  const ti = useT().install;
   if (state === 'prompt') {
     return (
-      <Button size={size} variant={variant} onClick={install}>
-        <Smartphone /> Instalar la app
+      <Button size={size} variant={variant} onClick={() => install(ti)}>
+        <Smartphone /> {ti.installApp}
       </Button>
     );
   }
@@ -106,7 +116,7 @@ export function InstallButton({
       <IosSteps
         trigger={
           <Button size={size} variant={variant}>
-            <Smartphone /> Instalar en el iPhone
+            <Smartphone /> {ti.installIphone}
           </Button>
         }
       />
@@ -115,7 +125,7 @@ export function InstallButton({
   if (!fallback) return null;
   return (
     <Button size={size} variant={variant} asChild>
-      <Link href="/">Empezar ahora</Link>
+      <Link href="/">{ti.startNow}</Link>
     </Button>
   );
 }

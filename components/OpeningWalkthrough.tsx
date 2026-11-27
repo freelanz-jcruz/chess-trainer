@@ -10,7 +10,7 @@ import PanelExtras from './PanelExtras';
 import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen } from '@/lib/chess/opening-line';
-import { sanToEs } from '@/lib/chess/notation-es';
+import { useSan, useT } from '@/lib/i18n/react';
 import { uciToSquares } from '@/lib/chess/game';
 import type { Opening } from '@/lib/content/schemas';
 import { openingForLevel } from '@/lib/content/levels';
@@ -18,6 +18,9 @@ import { updateOpening, useProgress } from '@/lib/progress/store';
 
 /** Recorrido paso a paso de una apertura con una frase breve por jugada. */
 export default function OpeningWalkthrough({ opening: fullOpening }: { opening: Opening }) {
+  const t = useT();
+  const tw = t.walkthrough;
+  const { san: sanToEs } = useSan();
   const { progress, update } = useProgress();
   // Solo las variantes del nivel elegido (y anteriores).
   const opening = useMemo(() => openingForLevel(fullOpening, progress.settings.level), [fullOpening, progress.settings.level]);
@@ -81,25 +84,25 @@ export default function OpeningWalkthrough({ opening: fullOpening }: { opening: 
                 {ply.note}
               </>
             ) : (
-              <>{opening.summary} Pulsa «Siguiente» para empezar.</>
+              <>{tw.intro(opening.summary)}</>
             )}
           </Callout>
         </Statement>
         <Controls>
-          <Button variant="outline" size="icon" className="size-10" onClick={() => setIndex(-1)} disabled={index < 0} aria-label="Al principio">
+          <Button variant="outline" size="icon" className="size-10" onClick={() => setIndex(-1)} disabled={index < 0} aria-label={tw.toStart}>
             <ChevronsLeft />
           </Button>
           <Button variant="outline" onClick={() => setIndex(index - 1)} disabled={index < 0}>
-            <ChevronLeft /> Anterior
+            <ChevronLeft /> {t.common.previous}
           </Button>
           <Button onClick={() => setIndex(index + 1)} disabled={atEnd}>
-            Siguiente <ChevronRight />
+            {t.common.next} <ChevronRight />
           </Button>
         </Controls>
         {/* El selector de variantes también va encima del tablero en móvil. */}
         {next?.choice && (
           <Statement className="rounded-lg border border-dashed border-border px-3 py-2.5">
-            <Note className="mb-1.5">Aquí la partida puede seguir de varias formas:</Note>
+            <Note className="mb-1.5">{tw.branchesHere}</Note>
             <div className="flex flex-wrap gap-1.5">
               <button
                 type="button"
@@ -107,8 +110,7 @@ export default function OpeningWalkthrough({ opening: fullOpening }: { opening: 
                 aria-pressed={next.choice.chosen === null}
                 onClick={() => choose(next.ply, null)}
               >
-                {numberFor(next.ply)}
-                {sanToEs(next.choice.mainSan)} · principal
+                {tw.mainLine(numberFor(next.ply) + sanToEs(next.choice.mainSan))}
               </button>
               {next.choice.options.map((b) => (
                 <button
@@ -124,15 +126,15 @@ export default function OpeningWalkthrough({ opening: fullOpening }: { opening: 
             </div>
           </Statement>
         )}
-        <PanelExtras title="Jugadas de la línea" label={`Jugadas · ${index + 1}/${line.length}`} description="Toca una jugada para verla en el tablero.">
-          <Note>Línea: {names.length ? names.join(' › ') : 'principal'}</Note>
+        <PanelExtras title={tw.lineMoves} label={tw.movesProgress(index + 1, line.length)} description={tw.tapMove}>
+          <Note>{t.openingPractice.line(names)}</Note>
           <MoveList sans={line.map((p) => p.san)} current={index} onSelect={setIndex} />
         </PanelExtras>
         {atEnd && (
           <p className="flex flex-wrap items-center gap-2.5">
-            Has visto toda la línea.
+            {tw.seenAll}
             <Button asChild>
-              <Link href={`/aperturas/${opening.id}/practica/`}>Practicar ahora</Link>
+              <Link href={`/aperturas/${opening.id}/practica/`}>{tw.practiceNow}</Link>
             </Button>
           </p>
         )}

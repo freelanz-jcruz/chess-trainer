@@ -14,6 +14,7 @@
     "validate": "tsx tools/validate-content.ts",
     "puzzles": "tsx tools/filter-puzzles.ts",
     "eco": "tsx tools/check-eco.ts",
+    "i18n:template": "tsx tools/i18n-template.ts",
     "postbuild": "node tools/build-sw.mjs"
   },
   "dependencies": {

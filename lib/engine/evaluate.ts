@@ -2,14 +2,6 @@ import type { Score } from './uci';
 
 export type Verdict = 'correct' | 'good' | 'inaccuracy' | 'mistake' | 'blunder';
 
-export const VERDICT_LABEL: Record<Verdict, string> = {
-  correct: 'Correcta',
-  good: 'Buena alternativa',
-  inaccuracy: 'Imprecisión',
-  mistake: 'Error',
-  blunder: 'Error grave',
-};
-
 /** Las evaluaciones normales se acotan para no inventar pérdidas en posiciones ya ganadas. */
 const CP_CLAMP = 15;
 

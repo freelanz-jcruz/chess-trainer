@@ -21,6 +21,9 @@ import {
 } from './schemas';
 
 import { LESSON_FILES } from '@/content/lessons';
+import { CONTENT_TRANSLATIONS } from '@/content/i18n';
+import { DEFAULT_LOCALE, getMessages, type Locale } from '@/lib/i18n';
+import { applyPhrases } from './translations';
 import { lessonHref } from './links';
 
 /** Registro de aperturas. Añadir una apertura = añadir su JSON aquí. */
@@ -57,7 +60,7 @@ export type PuzzleSet = { id: string; title: string; themes: string[] | null; le
 
 /** Cada lección de tipo "puzzles" del temario es un conjunto; "todos" los junta. */
 export const puzzleSets: PuzzleSet[] = [
-  { id: 'todos', title: 'Todos', themes: null, level: null },
+  { id: 'todos', title: getMessages(DEFAULT_LOCALE).pages.puzzles.all, themes: null, level: null },
   ...curriculum.blocks.flatMap((b) =>
     b.lessons.flatMap((l) =>
       l.type === 'puzzles' && l.status === 'available'
@@ -78,4 +81,21 @@ export function puzzlesForSet(set: PuzzleSet): Puzzle[] {
 
 export function puzzleIdsByLesson(): Record<string, string[]> {
   return Object.fromEntries(puzzleSets.map((s) => [s.id, puzzlesForSet(s).map((p) => p.id)]));
+}
+
+// ---------- Contenido en otros idiomas (ver lib/content/translations.ts) ----------
+
+/** El temario en `locale` (lo no traducido sigue en español). */
+export function curriculumIn(locale: Locale): Curriculum {
+  return applyPhrases(curriculum, CONTENT_TRANSLATIONS[locale]?.curriculum);
+}
+
+/** Una lección en `locale`. */
+export function lessonIn(lesson: LessonFile, locale: Locale): LessonFile {
+  return applyPhrases(lesson, CONTENT_TRANSLATIONS[locale]?.lessons?.[lesson.id]);
+}
+
+/** Una apertura en `locale`. */
+export function openingIn(opening: Opening, locale: Locale): Opening {
+  return applyPhrases(opening, CONTENT_TRANSLATIONS[locale]?.openings?.[opening.id]);
 }

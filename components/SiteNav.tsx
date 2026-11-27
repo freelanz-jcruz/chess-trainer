@@ -3,21 +3,23 @@ import { BookOpen, ChartColumn, History, Puzzle, type LucideIcon } from 'lucide-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useT } from '@/lib/i18n/react';
+import type { Messages } from '@/lib/i18n';
 import { useDueCount } from './ReviewPage';
 
-type NavItem = { href: string; label: string; icon: LucideIcon; match: (path: string) => boolean };
+type NavItem = { href: string; label: keyof Omit<Messages['nav'], 'label' | 'pending'>; icon: LucideIcon; match: (path: string) => boolean };
 
 const NAV: NavItem[] = [
   {
     href: '/',
-    label: 'Temario',
+    label: 'curriculum',
     icon: BookOpen,
     // Las lecciones y aperturas se abren desde el temario.
     match: (p) => p === '/' || p.startsWith('/lecciones/') || p.startsWith('/aperturas/'),
   },
-  { href: '/repaso/', label: 'Repaso', icon: History, match: (p) => p.startsWith('/repaso/') },
-  { href: '/ejercicios/todos/', label: 'Ejercicios', icon: Puzzle, match: (p) => p.startsWith('/ejercicios/') },
-  { href: '/progreso/', label: 'Progreso', icon: ChartColumn, match: (p) => p.startsWith('/progreso/') },
+  { href: '/repaso/', label: 'review', icon: History, match: (p) => p.startsWith('/repaso/') },
+  { href: '/ejercicios/todos/', label: 'puzzles', icon: Puzzle, match: (p) => p.startsWith('/ejercicios/') },
+  { href: '/progreso/', label: 'progress', icon: ChartColumn, match: (p) => p.startsWith('/progreso/') },
 ];
 
 /** Ruta actual sin basePath y siempre con barra final, para comparar. */
@@ -27,10 +29,11 @@ function useCurrentPath() {
 }
 
 function DueBadge({ count, className }: { count: number | null; className?: string }) {
+  const tn = useT().nav;
   if (!count) return null;
   return (
     <span
-      aria-label={`${count} pendientes`}
+      aria-label={tn.pending(count)}
       className={cn(
         'inline-grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] leading-none font-semibold text-primary-foreground tabular-nums',
         className,
@@ -45,8 +48,9 @@ function DueBadge({ count, className }: { count: number | null; className?: stri
 export function DesktopNav() {
   const path = useCurrentPath();
   const due = useDueCount();
+  const tn = useT().nav;
   return (
-    <nav aria-label="Principal" className="hidden items-center gap-1 md:flex">
+    <nav aria-label={tn.label} className="hidden items-center gap-1 md:flex">
       {NAV.map(({ href, label, match }) => {
         const active = match(path);
         return (
@@ -59,7 +63,7 @@ export function DesktopNav() {
               active ? 'bg-accent text-foreground' : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground',
             )}
           >
-            {label}
+            {tn[label]}
             {href === '/repaso/' && <DueBadge count={due} />}
           </Link>
         );
@@ -72,9 +76,10 @@ export function DesktopNav() {
 export function MobileTabBar() {
   const path = useCurrentPath();
   const due = useDueCount();
+  const tn = useT().nav;
   return (
     <nav
-      aria-label="Principal"
+      aria-label={tn.label}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 px-[env(safe-area-inset-left)] pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
       <ul className="m-0 grid h-14 list-none grid-cols-4 p-0">
@@ -94,7 +99,7 @@ export function MobileTabBar() {
                   <Icon aria-hidden size={22} strokeWidth={active ? 2.2 : 1.8} />
                   {href === '/repaso/' && <DueBadge count={due} className="absolute -top-1.5 -right-2.5" />}
                 </span>
-                {label}
+                {tn[label]}
               </Link>
             </li>
           );

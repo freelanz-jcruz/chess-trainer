@@ -13,12 +13,6 @@ export const LEVEL_RATING: Record<Level, { min: number; max: number }> = {
   avanzado: { min: 1901, max: 9999 },
 };
 
-export const LEVEL_LABEL: Record<Level, string> = {
-  principiante: 'Principiante',
-  intermedio: 'Intermedio',
-  avanzado: 'Avanzado',
-};
-
 /** El nivel elegido muestra su contenido y el de los niveles anteriores. Sin nivel = principiante. */
 export function levelAllows(selected: Level, content: Level = 'principiante'): boolean {
   return LEVELS.indexOf(content) <= LEVELS.indexOf(selected);

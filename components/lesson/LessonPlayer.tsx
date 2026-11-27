@@ -7,6 +7,7 @@ import type { LessonFile, LessonPage } from '@/lib/content/schemas';
 import { updateLesson, useProgress } from '@/lib/progress/store';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useT } from '@/lib/i18n/react';
 import { Note } from '../Trainer';
 import ResultDialog, { TWO_COLUMNS } from '../ResultDialog';
 import { QuizPageView, TextPageView } from './StaticPages';
@@ -17,16 +18,10 @@ import PlayPageView from './PlayPageView';
 /** Las páginas de texto se superan solo con verlas; el resto, resolviéndolas. */
 const autoComplete = (p: LessonPage) => p.kind === 'text';
 
-const KIND_LABEL: Record<LessonPage['kind'], string> = {
-  text: 'Explicación',
-  quiz: 'Pregunta',
-  move: 'Tu turno',
-  drill: 'Ejercicio',
-  play: 'Contra Stockfish',
-};
-
 export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; next?: { href: string; title: string } }) {
   const { progress, update } = useProgress();
+  const tr = useT();
+  const tl = tr.lesson;
   const router = useRouter();
   const saved = progress.lessons[lesson.id];
   const [index, setIndex] = useState(0);
@@ -88,23 +83,23 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
   const navButtons = (
     <>
       <Button className="text-base" variant="outline" onClick={() => go(index - 1)} disabled={index === 0}>
-        <ChevronLeft /> Anterior
+        <ChevronLeft /> {tr.common.previous}
       </Button>
       {!isLast && (
         <Button className="text-base" onClick={() => go(index + 1)} disabled={!pageDone}>
-          Siguiente <ChevronRight />
+          {tr.common.next} <ChevronRight />
         </Button>
       )}
       {isLast && pageDone && (
         <span className="inline-flex flex-wrap items-center gap-2.5">
-          <strong>¡Lección completada!</strong>
+          <strong>{tl.completed}</strong>
           <Button asChild className="h-auto min-h-9 max-w-64 py-1.5 whitespace-normal">
             {next ? (
               <Link href={next.href}>
                 <NextLessonLabel title={next.title} />
               </Link>
             ) : (
-              <Link href="/">Volver al temario</Link>
+              <Link href="/">{tl.backToCurriculum}</Link>
             )}
           </Button>
         </span>
@@ -114,7 +109,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
 
   // Al terminar la lección, la ventana de resultado (móvil) ofrece ir a la siguiente lección.
   const nextHref = next?.href ?? '/';
-  const nextLabel = next ? <NextLessonLabel title={next.title} /> : 'Volver al temario';
+  const nextLabel = next ? <NextLessonLabel title={next.title} /> : tl.backToCurriculum;
   const goNextLesson = useCallback(() => router.push(nextHref), [router, nextHref]);
 
   // Si la última página es de texto (un resumen), no hay ventana de resultado: se abre una al llegar al
@@ -150,7 +145,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
     onComplete: complete,
     onNext: isLast ? goNextLesson : () => go(index + 1),
     nextLabel: isLast ? nextLabel : undefined,
-    finishTitle: isLast ? '¡Lección completada!' : undefined,
+    finishTitle: isLast ? tl.completed : undefined,
     completed: pageDone,
     coordinates: progress.settings.showCoordinates,
     engineTimeMs: progress.settings.engineTimeMs,
@@ -158,7 +153,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
 
   return (
     <div>
-      <div className="mt-6 flex mb-2 flex-wrap gap-1.5" aria-label={`Página ${index + 1} de ${lesson.pages.length}`}>
+      <div className="mt-6 flex mb-2 flex-wrap gap-1.5" aria-label={tl.pagesLabel(index + 1, lesson.pages.length)}>
         {lesson.pages.map((p, i) => (
           <button
             key={i}
@@ -170,12 +165,12 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
             )}
             onClick={() => go(i)}
             disabled={i > index && !(saved?.completed || [...Array(i).keys()].every((j) => done.has(j) || autoComplete(lesson.pages[j])))}
-            aria-label={`Página ${i + 1}: ${KIND_LABEL[p.kind]}`}
+            aria-label={tl.pageDot(i + 1, tl.kind[p.kind])}
           />
         ))}
       </div>
       <Note className="mt-0 text-base font-medium">
-        {index + 1}/{lesson.pages.length} · {KIND_LABEL[page.kind]}
+        {index + 1}/{lesson.pages.length} · {tl.kind[page.kind]}
       </Note>
 
       {/* key: cada página empieza con su estado limpio */}
@@ -191,12 +186,12 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
       {finishOpen && (
         <ResultDialog
           tone="correct"
-          title="¡Lección completada!"
+          title={tl.completed}
           primary={{ label: nextLabel, onClick: goNextLesson }}
-          secondary={{ label: 'Cerrar', onClick: closeFinish }}
+          secondary={{ label: tr.common.close, onClick: closeFinish }}
           onDismiss={closeFinish}
         >
-          Has terminado «{lesson.title}».
+          {tl.finishedLesson(lesson.title)}
         </ResultDialog>
       )}
 
@@ -211,9 +206,10 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
 
 /** «Siguiente lección» y, debajo, su título (como mucho dos líneas, para títulos largos). */
 function NextLessonLabel({ title }: { title: string }) {
+  const tl = useT().lesson;
   return (
     <span className="grid min-w-0 text-center leading-tight">
-      <span>Siguiente lección</span>
+      <span>{tl.nextLesson}</span>
       <span className="line-clamp-2 text-xs font-normal opacity-85">{title}</span>
     </span>
   );

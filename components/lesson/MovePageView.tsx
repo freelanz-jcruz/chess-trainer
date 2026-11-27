@@ -8,7 +8,7 @@ import Feedback, { type FeedbackState } from '../Feedback';
 import ResultDialog, { useRevealResult } from '../ResultDialog';
 import RichText from './RichText';
 import { opposite, playUci, sanToUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
-import { sanToEs } from '@/lib/chess/notation-es';
+import { useSan, useT } from '@/lib/i18n/react';
 import type { MovePage } from '@/lib/content/schemas';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
 import { useTimers } from '@/lib/use-timers';
@@ -17,7 +17,10 @@ import type { PageProps } from './types';
 const stripSuffix = (san: string) => san.replace(/[+#]$/, '');
 
 /** Encontrar una jugada: de una lista, cualquier buena según Stockfish o cualquier mate. */
-export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<MovePage>) {
+export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext, nextLabel, finishTitle }: PageProps<MovePage>) {
+  const tr = useT();
+  const tl = tr.lesson;
+  const { san: sanToEs } = useSan();
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [startFen, setStartFen] = useState(page.fen);
@@ -27,7 +30,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
   const [fails, setFails] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackState>({
     kind: 'idle',
-    text: page.opponentMove ? 'Mira la jugada del rival…' : 'Tu turno.',
+    text: page.opponentMove ? tl.watchOpponent : tl.yourTurn,
   });
   // Al acertar: ventana de resultado en móvil y el mensaje se desplaza a la vista (ver useRevealResult).
   const [dialog, setDialog] = useState(false);
@@ -48,7 +51,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
       setStartFen(m.fenAfter);
       setLastMove(uciToSquares(page.opponentMove!));
       setPhase('user');
-      setFeedback({ kind: 'idle', text: 'Tu turno.' });
+      setFeedback({ kind: 'idle', text: tl.yourTurn });
     }, 700);
   }, [page, later]);
 
@@ -68,24 +71,24 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
       const san = sanToEs(played.san);
 
       let correct = false;
-      let wrong: FeedbackState = { kind: 'verdict', verdict: 'mistake', san, text: 'No es la jugada que buscamos. Prueba otra vez.' };
+      let wrong: FeedbackState = { kind: 'verdict', verdict: 'mistake', san, text: tl.notThatMove };
       if (page.goal === 'listed') {
         correct = (page.accept ?? []).some((a) => stripSuffix(a) === stripSuffix(played.san));
       } else if (page.goal === 'mate') {
         correct = played.isCheckmate;
-        if (!correct) wrong = { kind: 'verdict', verdict: 'mistake', san, text: 'Eso no es mate. Prueba otra vez.' };
+        if (!correct) wrong = { kind: 'verdict', verdict: 'mistake', san, text: tl.notMate };
       } else {
         setPhase('checking');
         setFeedback({ kind: 'thinking' });
         const r = await evaluate(before, played.fenAfter);
         correct = r.verdict === 'good' || r.best.bestMove === played.uci;
-        wrong = { kind: 'verdict', verdict: r.verdict, san, loss: r.loss, reason: r.reason, text: 'Hay algo mejor. Prueba otra vez.' };
+        wrong = { kind: 'verdict', verdict: r.verdict, san, loss: r.loss, reason: r.reason, text: tl.somethingBetter };
       }
 
       if (correct) {
         cancel();
         setPhase('done');
-        setFeedback({ kind: 'verdict', verdict: 'correct', san, text: page.success ?? '¡Bien hecho!' });
+        setFeedback({ kind: 'verdict', verdict: 'correct', san, text: page.success ?? tl.wellDone });
         setDialog(true);
         onComplete();
         return;
@@ -116,7 +119,7 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
     setFen(startFen);
     setLastMove(null);
     setArrows([]);
-    setFeedback({ kind: 'idle', text: 'Tu turno.' });
+    setFeedback({ kind: 'idle', text: tl.yourTurn });
     setPhase('user');
     setDialog(false);
   };
@@ -126,9 +129,9 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
       {dialog && feedback.kind === 'verdict' && (
         <ResultDialog
           tone="correct"
-          title={finishTitle ?? '¡Correcto!'}
-          primary={onNext ? { label: nextLabel, onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
-          secondary={onNext && { label: 'Cerrar', onClick: closeDialog }}
+          title={finishTitle ?? tl.correct}
+          primary={onNext ? { label: nextLabel ?? tr.common.next, onClick: onNext } : { label: tr.common.continue, onClick: closeDialog }}
+          secondary={onNext && { label: tr.common.close, onClick: closeDialog }}
           onDismiss={closeDialog}
         >
           <strong>{feedback.san}</strong> · {feedback.text}
@@ -153,11 +156,11 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
         </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
-            <Lightbulb /> Pista
+            <Lightbulb /> {tr.common.hint}
           </Button>
           {phase === 'done' && (
             <Button variant="outline" onClick={retry}>
-              <RotateCcw /> Repetir
+              <RotateCcw /> {tl.repeat}
             </Button>
           )}
         </Controls>

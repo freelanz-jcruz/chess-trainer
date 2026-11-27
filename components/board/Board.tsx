@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Chessground } from '@lichess-org/chessground';
 import type { Api } from '@lichess-org/chessground/api';
 import type { Key } from '@lichess-org/chessground/types';
+import { useT } from '@/lib/i18n/react';
 import { isInCheck, isPromotion, legalDests, turnColor, type Color } from '@/lib/chess/game';
 
 export type Arrow = { from: string; to: string; brush?: 'green' | 'red' | 'blue' | 'yellow' };
@@ -22,10 +23,10 @@ type Props = {
 };
 
 const PROMOTION_PIECES = [
-  { role: 'queen', letter: 'q', label: 'Dama' },
-  { role: 'rook', letter: 'r', label: 'Torre' },
-  { role: 'bishop', letter: 'b', label: 'Alfil' },
-  { role: 'knight', letter: 'n', label: 'Caballo' },
+  { role: 'queen', letter: 'q' },
+  { role: 'rook', letter: 'r' },
+  { role: 'bishop', letter: 'b' },
+  { role: 'knight', letter: 'n' },
 ] as const;
 
 /** Envoltorio de Chessground. El estado de la partida vive fuera: este componente solo lo muestra. */
@@ -45,6 +46,7 @@ export default function Board({
   onMoveRef.current = onMove;
   const fenRef = useRef(fen);
   fenRef.current = fen;
+  const tb = useT().board;
   const [promo, setPromo] = useState<{ from: string; to: string; color: Color } | null>(null);
 
   useEffect(() => {
@@ -117,9 +119,9 @@ export default function Board({
         <div
           className="absolute inset-0 z-20 grid place-content-center gap-2.5 rounded-sm bg-black/45 text-center text-white"
           role="dialog"
-          aria-label="Elige la pieza de coronación"
+          aria-label={tb.promotionLabel}
         >
-          <p className="font-semibold">Coronar a…</p>
+          <p className="font-semibold">{tb.promoteTo}</p>
           <div className="flex gap-2">
             {PROMOTION_PIECES.map((p) => (
               <button
@@ -127,8 +129,8 @@ export default function Board({
                 type="button"
                 className="size-16 rounded-md border border-border bg-card p-1 hover:bg-accent"
                 onClick={() => choose(p.letter)}
-                aria-label={p.label}
-                title={p.label}
+                aria-label={tb.pieces[p.role]}
+                title={tb.pieces[p.role]}
               >
                 <span className="cg-wrap promo-piece relative block size-full">
                   <piece className={`${p.role} ${promo.color}`} />
@@ -137,7 +139,7 @@ export default function Board({
             ))}
           </div>
           <button type="button" className="text-white underline" onClick={() => choose(null)}>
-            Cancelar
+            {tb.cancel}
           </button>
         </div>
       )}

@@ -8,7 +8,7 @@ import Feedback, { type FeedbackState } from '../Feedback';
 import ResultDialog, { useRevealResult } from '../ResultDialog';
 import RichText from './RichText';
 import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
-import { sanToEs } from '@/lib/chess/notation-es';
+import { useSan, useT } from '@/lib/i18n/react';
 import type { PlayPage } from '@/lib/content/schemas';
 import { getEngine } from '@/lib/engine/browser';
 import type { Score } from '@/lib/engine/uci';
@@ -30,7 +30,10 @@ function stillWinning(score: Score): boolean {
 type Phase = 'intro' | 'user' | 'checking' | 'opponent' | 'won' | 'lost';
 
 /** Jugar contra Stockfish desde una posición hasta dar mate (o coronar). */
-export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<PlayPage>) {
+export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext, nextLabel, finishTitle }: PageProps<PlayPage>) {
+  const tr = useT();
+  const tl = tr.lesson;
+  const { san: sanToEs } = useSan();
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [lastMove, setLastMove] = useState<[string, string] | null>(null);
@@ -48,15 +51,14 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
   const { later, clear } = useTimers();
   const { preAnalyze, analysis, cancel } = useMoveEvaluator(engineTimeMs);
 
-  const goalText = page.goal === 'checkmate' ? 'Da mate' : 'Corona un peón';
-  const limitText = page.maxMoves ? ` en ${page.maxMoves} jugada${page.maxMoves === 1 ? '' : 's'} como mucho` : '';
+  const goalText = tl.goal(page.goal === 'checkmate', page.maxMoves);
 
   useEffect(() => {
     setFen(page.fen);
     setLastMove(null);
     setMoves(0);
     setArrows([]);
-    setFeedback({ kind: 'idle', text: `${goalText}${limitText}.` });
+    setFeedback({ kind: 'idle', text: goalText });
     if (!page.opponentMove) {
       setPhase('user');
       return;
@@ -69,7 +71,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
       setLastMove(uciToSquares(page.opponentMove!));
       setPhase('user');
     }, 700);
-  }, [page, round, later, goalText, limitText]);
+  }, [page, round, later, goalText]);
 
   useEffect(() => {
     if (phase === 'user') preAnalyze(fen);
@@ -100,7 +102,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         cancel();
         setMoves(n);
         setPhase('won');
-        setFeedback({ kind: 'done', text: `¡Conseguido en ${n} jugada${n === 1 ? '' : 's'}!` });
+        setFeedback({ kind: 'done', text: tl.achievedIn(n) });
         setDialog(true);
         onComplete();
         return;
@@ -111,7 +113,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
           kind: 'verdict',
           verdict: 'blunder',
           san,
-          text: '¡Ahogado! El rey rival no está en jaque pero no puede mover: son tablas. Prueba otra jugada.',
+          text: tl.stalemate,
         });
         undo(before, prevLast);
         return;
@@ -125,7 +127,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         const left = page.maxMoves - n;
         const keepsMate = after.score.type === 'mate' && after.score.value < 0 && -after.score.value <= left;
         if (!keepsMate) {
-          setFeedback({ kind: 'verdict', verdict: 'mistake', san, text: `Así no hay mate en ${page.maxMoves}. Prueba otra vez.` });
+          setFeedback({ kind: 'verdict', verdict: 'mistake', san, text: tl.noMateIn(page.maxMoves!) });
           undo(before, prevLast);
           return;
         }
@@ -135,7 +137,7 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         cancel();
         const after = await getEngine().analyze(played.fenAfter, { movetime: engineTimeMs });
         if (!stillWinning(after.score)) {
-          setFeedback({ kind: 'verdict', verdict: 'blunder', san, text: 'Así se escapa la victoria. Prueba otra vez.' });
+          setFeedback({ kind: 'verdict', verdict: 'blunder', san, text: tl.winSlips });
           undo(before, prevLast);
           return;
         }
@@ -144,13 +146,13 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
       setMoves(n);
       if (page.maxMoves && n >= page.maxMoves) {
         setPhase('lost');
-        setFeedback({ kind: 'verdict', verdict: 'mistake', san, text: 'Se acabaron las jugadas. ¡Inténtalo de nuevo!' });
+        setFeedback({ kind: 'verdict', verdict: 'mistake', san, text: tl.outOfMoves });
         setDialog(true);
         return;
       }
       // Responde Stockfish.
       setPhase('opponent');
-      setFeedback({ kind: 'idle', text: `Jugadas: ${n}${page.maxMoves ? ` de ${page.maxMoves}` : ''}` });
+      setFeedback({ kind: 'idle', text: tl.movesSoFar(n, page.maxMoves) });
       const reply = await getEngine().analyze(played.fenAfter, { movetime: OPPONENT_TIME });
       if (!reply.bestMove) return;
       const m = playUci(played.fenAfter, reply.bestMove);
@@ -184,23 +186,23 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
       {dialog && phase === 'won' && (
         <ResultDialog
           tone="correct"
-          title={finishTitle ?? '¡Conseguido!'}
-          primary={onNext ? { label: nextLabel, onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
-          secondary={onNext && { label: 'Cerrar', onClick: closeDialog }}
+          title={finishTitle ?? tl.achieved}
+          primary={onNext ? { label: nextLabel ?? tr.common.next, onClick: onNext } : { label: tr.common.continue, onClick: closeDialog }}
+          secondary={onNext && { label: tr.common.close, onClick: closeDialog }}
           onDismiss={closeDialog}
         >
-          {`${page.goal === 'checkmate' ? 'Mate' : 'Peón coronado'} en ${moves} jugada${moves === 1 ? '' : 's'}.`}
+          {tl.wonSummary(page.goal === 'checkmate', moves)}
         </ResultDialog>
       )}
       {dialog && phase === 'lost' && (
         <ResultDialog
           tone="mistake"
-          title="Se acabaron las jugadas"
-          primary={{ label: 'Empezar de nuevo', onClick: restart }}
-          secondary={{ label: 'Cerrar', onClick: closeDialog }}
+          title={tl.outOfMovesTitle}
+          primary={{ label: tr.common.restart, onClick: restart }}
+          secondary={{ label: tr.common.close, onClick: closeDialog }}
           onDismiss={closeDialog}
         >
-          {`No lo has conseguido en ${page.maxMoves} jugada${page.maxMoves === 1 ? '' : 's'}. ¡Inténtalo de nuevo!`}
+          {tl.notAchievedIn(page.maxMoves ?? 0)}
         </ResultDialog>
       )}
       <Board
@@ -222,10 +224,10 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
         </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
-            <Lightbulb /> Pista
+            <Lightbulb /> {tr.common.hint}
           </Button>
           <Button variant="outline" onClick={restart}>
-            <RotateCcw /> Empezar de nuevo
+            <RotateCcw /> {tr.common.restart}
           </Button>
         </Controls>
         {hintShown && page.hint && <Note>{page.hint}</Note>}

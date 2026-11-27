@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatMoveList, sanToEs } from '@/lib/chess/notation-es';
+import { formatMoveList, sanToEs } from '@/lib/chess/notation';
 
 describe('sanToEs', () => {
   it('traduce piezas, enroques y coronaciones', () => {

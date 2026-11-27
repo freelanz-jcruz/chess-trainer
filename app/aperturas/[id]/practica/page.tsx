@@ -3,6 +3,10 @@ import { Note } from '@/components/Trainer';
 import { notFound } from 'next/navigation';
 import OpeningPractice from '@/components/OpeningPractice';
 import { getOpening, openings } from '@/lib/content/load';
+import { Fill } from '@/lib/i18n/bold';
+import { DEFAULT_LOCALE, getMessages } from '@/lib/i18n';
+
+const t = getMessages(DEFAULT_LOCALE);
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -11,7 +15,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return { title: `Práctica: ${getOpening(id)?.name ?? 'Apertura'} · Ajedrez Tutor` };
+  return { title: t.meta.pageTitle(t.pages.opening.practiceTitle(getOpening(id)?.name ?? t.pages.opening.fallback)) };
 }
 
 export default async function PracticePage({ params }: { params: Promise<{ id: string }> }) {
@@ -20,10 +24,12 @@ export default async function PracticePage({ params }: { params: Promise<{ id: s
   if (!opening) notFound();
   return (
     <>
-      <h1>Práctica: {opening.name}</h1>
+      <h1>{t.pages.opening.practiceTitle(opening.name)}</h1>
       <Note className="my-3.5">
-        Juega tú las jugadas de las {opening.side === 'white' ? 'blancas' : 'negras'}; Stockfish valora cada una ·{' '}
-        <Link href={`/aperturas/${opening.id}/`}>Ver el recorrido</Link>
+        <Fill
+          text={t.pages.opening.practiceNote(opening.side === 'white')}
+          values={{ walkthrough: <Link href={`/aperturas/${opening.id}/`}>{t.pages.opening.walkthroughLink}</Link> }}
+        />
       </Note>
       <OpeningPractice opening={opening} />
     </>

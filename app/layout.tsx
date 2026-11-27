@@ -9,20 +9,24 @@ import { Toaster } from '@/components/ui/sonner';
 import { withBase } from '@/lib/base-path';
 import { OPEN_GRAPH_BASE, SITE_ORIGIN } from '@/lib/site';
 import { VERSION_LABEL } from '@/lib/version';
+import { DEFAULT_LOCALE, getMessages } from '@/lib/i18n';
+import { I18nProvider } from '@/lib/i18n/react';
 import './globals.css';
 
 // Se descarga al compilar y se sirve desde la app (entra en la caché sin conexión).
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', variable: '--font-inter' });
 
+const t = getMessages(DEFAULT_LOCALE);
+
 export const metadata: Metadata = {
   // Base de las URLs absolutas (canónica, Open Graph): ver lib/site.ts.
   metadataBase: new URL(SITE_ORIGIN),
-  title: 'Ajedrez Tutor',
-  description: 'Aprende ajedrez desde cero: aperturas paso a paso y ejercicios valorados con Stockfish.',
-  applicationName: 'Ajedrez Tutor',
+  title: t.appName,
+  description: t.meta.description,
+  applicationName: t.appName,
   // Vista previa al compartir el enlace (WhatsApp, redes…); las páginas pueden cambiar título y descripción.
   openGraph: OPEN_GRAPH_BASE,
-  appleWebApp: { capable: true, title: 'Ajedrez', statusBarStyle: 'default' },
+  appleWebApp: { capable: true, title: t.meta.appleTitle, statusBarStyle: 'default' },
   icons: {
     icon: [{ url: withBase('/icons/icon-192.png'), sizes: '192x192', type: 'image/png' }],
     apple: [{ url: withBase('/icons/icon-180.png'), sizes: '180x180' }],
@@ -41,7 +45,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // suppressHydrationWarning: ThemeScript puede añadir data-theme antes de hidratar.
-    <html lang="es" className={inter.variable} suppressHydrationWarning>
+    <html lang={DEFAULT_LOCALE} className={inter.variable} suppressHydrationWarning>
       <head>
         <ThemeScript />
         {/* Estadísticas de visitas con Umami (sin cookies). Solo en el build de producción: no cuenta las
@@ -51,35 +55,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className="pb-[var(--tabbar-h)]">
-        <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">
-          <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))]">
-            <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-foreground no-underline mr-3">
-              {/* Marca como máscara: toma el color del texto y se adapta al tema (ver tools/make-icons.py). */}
-              <span
-                aria-hidden
-                className="h-7 w-[1.15rem] bg-current mask-(--brand) mask-contain mask-center mask-no-repeat"
-                style={{ '--brand': `url(${withBase('/brand-symbol.png')})` } as React.CSSProperties}
-              />
-              Ajedrez Tutor
-            </Link>
-            <DesktopNav />
-            <div className="ml-auto">
-              <ThemeToggle />
+        <I18nProvider locale={DEFAULT_LOCALE}>
+          <header className="border-b border-border bg-card pt-[env(safe-area-inset-top)]">
+            <div className="mx-auto flex h-14 max-w-[960px] items-center gap-4 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))]">
+              <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-foreground no-underline mr-3">
+                {/* Marca como máscara: toma el color del texto y se adapta al tema (ver tools/make-icons.py). */}
+                <span
+                  aria-hidden
+                  className="h-7 w-[1.15rem] bg-current mask-(--brand) mask-contain mask-center mask-no-repeat"
+                  style={{ '--brand': `url(${withBase('/brand-symbol.png')})` } as React.CSSProperties}
+                />
+                {t.appName}
+              </Link>
+              <DesktopNav />
+              <div className="ml-auto">
+                <ThemeToggle />
+              </div>
             </div>
-          </div>
-        </header>
-        <main className="mx-auto max-w-[960px] pt-2 pr-[max(1rem,env(safe-area-inset-right))] pb-12 pl-[max(1rem,env(safe-area-inset-left))]">{children}</main>
-        <footer className="mx-auto max-w-[960px] border-t border-border p-4 text-[0.85rem] text-muted-foreground">
-          <Link href="/info/">Qué es Ajedrez Tutor</Link> · <Link href="/creditos/">Créditos</Link> · Software libre (GPL-3) ·{' '}
-          {/* Versión y commit con el que se compiló (ver next.config.ts): útil para saber qué versión se está viendo. */}
-          <span className="tabular-nums" title="Versión de la app y commit con el que se compiló">
-            {VERSION_LABEL}
-          </span> · <a target="_blank" href="https://freelanz.es">freelanz.es</a>
-        </footer>
-        <MobileTabBar />
-        <ServiceWorker />
-        {/* Arriba: en móvil abajo están la barra de pestañas y los controles del entrenador. */}
-        <Toaster position="top-center" offset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} mobileOffset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} />
+          </header>
+          <main className="mx-auto max-w-[960px] pt-2 pr-[max(1rem,env(safe-area-inset-right))] pb-12 pl-[max(1rem,env(safe-area-inset-left))]">{children}</main>
+          <footer className="mx-auto max-w-[960px] border-t border-border p-4 text-[0.85rem] text-muted-foreground">
+            <Link href="/info/">{t.footer.about}</Link> · <Link href="/creditos/">{t.footer.credits}</Link> · {t.footer.license} ·{' '}
+            {/* Versión y commit con el que se compiló (ver next.config.ts): útil para saber qué versión se está viendo. */}
+            <span className="tabular-nums" title={t.footer.versionTitle}>
+              {VERSION_LABEL}
+            </span> · <a target="_blank" href="https://freelanz.es">freelanz.es</a>
+          </footer>
+          <MobileTabBar />
+          <ServiceWorker />
+          {/* Arriba: en móvil abajo están la barra de pestañas y los controles del entrenador. */}
+          <Toaster position="top-center" offset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} mobileOffset={{ top: 'calc(env(safe-area-inset-top) + 8px)' }} />
+        </I18nProvider>
       </body>
     </html>
   );

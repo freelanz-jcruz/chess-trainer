@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { BASE_PATH } from './base-path';
+import { DEFAULT_LOCALE, getMessages } from './i18n';
+
+const t = getMessages(DEFAULT_LOCALE);
 
 /**
  * Dirección pública de la app, para lo que necesita URLs absolutas: sitemap.xml, robots.txt, la URL
@@ -16,7 +19,7 @@ export const absoluteUrl = (path: string) => `${SITE_ORIGIN}${BASE_PATH}${path}`
  */
 export const OPEN_GRAPH_BASE: NonNullable<Metadata['openGraph']> & { type: 'website' } = {
   type: 'website',
-  siteName: 'Ajedrez Tutor',
-  locale: 'es_ES',
-  images: [{ url: `${BASE_PATH}/icons/icon-512.png`, width: 512, height: 512, alt: 'Ajedrez Tutor' }],
+  siteName: t.appName,
+  locale: t.meta.ogLocale,
+  images: [{ url: `${BASE_PATH}/icons/icon-512.png`, width: 512, height: 512, alt: t.appName }],
 };

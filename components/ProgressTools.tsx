@@ -30,35 +30,36 @@ import {
   type Progress,
   type Settings,
 } from '@/lib/progress/store';
-import { LEVEL_LABEL, LEVELS, type Level } from '@/lib/content/levels';
-import { THEME_LABEL, THEMES, type Theme } from '@/lib/theme';
+import { LEVELS, type Level } from '@/lib/content/levels';
+import { THEMES, type Theme } from '@/lib/theme';
+import { Bold } from '@/lib/i18n/bold';
+import { useT } from '@/lib/i18n/react';
+import type { Messages } from '@/lib/i18n';
 
 const APP = 'chess-trainer';
 
-const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-
 /** Resumen corto de un progreso, para confirmar antes de importarlo. */
-function summary(p: Progress): string {
+function summaryOf(p: Progress, t: Messages['progress']): string {
   const lessons = Object.values(p.lessons).filter((l) => l.completed).length;
   const puzzles = Object.values(p.puzzles).filter((x) => x.solved).length;
   const openings = Object.values(p.openings).filter((o) => o.practiceRuns > 0).length;
-  return [
-    count(lessons, 'lección completada', 'lecciones completadas'),
-    count(puzzles, 'problema resuelto', 'problemas resueltos'),
-    count(openings, 'apertura practicada', 'aperturas practicadas'),
-  ].join(', ') + ` y ${count(Object.keys(p.reviews).length, 'elemento', 'elementos')} en el repaso`;
+  return t.summary(lessons, puzzles, openings, Object.keys(p.reviews).length);
 }
 
 /** Exportar e importar el progreso (fichero JSON), borrarlo y cambiar los ajustes. */
 export default function ProgressTools() {
   const { progress, update } = useProgress();
+  const t = useT();
+  const tp = t.progress;
+  const ts = t.settings;
+  const summary = (p: Progress) => summaryOf(p, tp);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   // Progreso leído de un fichero, a la espera de confirmar la importación.
   const [pending, setPending] = useState<Progress | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  if (!mounted) return <p className="my-4">Cargando…</p>;
+  if (!mounted) return <p className="my-4">{tp.loading}</p>;
 
   const setSetting = <K extends keyof Settings>(key: K, value: Settings[K]) =>
     update((p) => ({ ...p, settings: { ...p.settings, [key]: value } }));
@@ -69,10 +70,10 @@ export default function ProgressTools() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ajedrez-tutor-progreso-${localDay()}.json`;
+    a.download = tp.exportFileName(localDay());
     a.click();
     URL.revokeObjectURL(url);
-    toast.success('Progreso exportado', { description: 'Guarda el fichero donde quieras.' });
+    toast.success(tp.exported, { description: tp.exportedDetail });
   };
 
   const readFile = async (file: File) => {
@@ -85,35 +86,34 @@ export default function ProgressTools() {
       parsed = null;
     }
     if (parsed) setPending(parsed);
-    else toast.error('Ese fichero no es un progreso de Ajedrez Tutor.');
+    else toast.error(tp.notAProgressFile);
   };
 
   const confirmImport = () => {
     if (!pending) return;
     replaceProgress(pending);
     setPending(null);
-    toast.success('Progreso importado');
+    toast.success(tp.imported);
   };
 
   const resetAll = () => {
     replaceProgress(resetKeepingSettings(currentProgress()));
-    toast.success('Progreso borrado', { description: 'Puedes empezar de cero.' });
+    toast.success(tp.deleted, { description: tp.deletedDetail });
   };
 
   return (
     <div className="mt-4 grid max-w-2xl gap-8">
       <section className="grid gap-3">
-        <h2>Tu progreso</h2>
+        <h2>{tp.title}</h2>
         <p className="m-0 text-sm text-muted-foreground">
-          El progreso solo se guarda en este navegador: {summary(progress)}. Para no perderlo o pasarlo a otro
-          dispositivo, expórtalo a un fichero y luego impórtalo donde quieras.
+          {tp.intro(summary(progress))}
         </p>
         <div className="flex flex-wrap gap-2">
           <Button onClick={exportProgress}>
-            <Download /> Exportar progreso
+            <Download /> {tp.export}
           </Button>
           <Button variant="outline" onClick={() => fileRef.current?.click()}>
-            <Upload /> Importar progreso…
+            <Upload /> {tp.import}
           </Button>
           <input
             ref={fileRef}
@@ -131,53 +131,51 @@ export default function ProgressTools() {
         <AlertDialog open={!!pending} onOpenChange={(open) => !open && setPending(null)}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>¿Importar este progreso?</AlertDialogTitle>
+              <AlertDialogTitle>{tp.importTitle}</AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="grid gap-2">
                   <p className="m-0">
-                    <strong className="text-foreground">El fichero tiene:</strong> {pending && summary(pending)}.
+                    {pending && <Bold text={tp.importHas(summary(pending))} strongClassName="text-foreground" />}
                   </p>
                   <p className="m-0">
-                    <strong className="text-foreground">Sustituirá tu progreso actual</strong> en este dispositivo:{' '}
-                    {summary(progress)}.
+                    <Bold text={tp.importReplaces(summary(progress))} strongClassName="text-foreground" />
                   </p>
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmImport}>Importar</AlertDialogAction>
+              <AlertDialogCancel>{tp.cancel}</AlertDialogCancel>
+              <AlertDialogAction onClick={confirmImport}>{tp.importConfirm}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
 
         <div className="mt-2 grid gap-2 border-t border-dashed border-border pt-4">
           <p className="m-0 text-sm text-muted-foreground">
-            Borrar el progreso elimina lecciones, aperturas, problemas y repasos. Los ajustes se mantienen.
+            {tp.deleteIntro}
           </p>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="outline-destructive" className="w-fit">
-                <Trash2 /> Borrar todo el progreso…
+                <Trash2 /> {tp.delete}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>¿Borrar todo el progreso?</AlertDialogTitle>
+                <AlertDialogTitle>{tp.deleteTitle}</AlertDialogTitle>
                 <AlertDialogDescription asChild>
                   <div className="grid gap-2">
-                    <p className="m-0">Se borrará todo tu progreso en este dispositivo: {summary(progress)}.</p>
+                    <p className="m-0">{tp.deleteWhat(summary(progress))}</p>
                     <p className="m-0">
-                      Tus ajustes se mantienen. <strong className="text-foreground">No se puede deshacer</strong>: si
-                      quieres conservar una copia, exporta antes el progreso.
+                      <Bold text={tp.deleteWarning} strongClassName="text-foreground" />
                     </p>
                   </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogCancel>{tp.cancel}</AlertDialogCancel>
                 <AlertDialogAction variant="destructive" onClick={resetAll}>
-                  Borrar todo
+                  {tp.deleteConfirm}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -186,14 +184,14 @@ export default function ProgressTools() {
       </section>
 
       <section className="grid gap-3">
-        <h2>Ajustes</h2>
+        <h2>{ts.title}</h2>
         <div className="divide-y divide-border rounded-lg border border-border bg-card">
           <SettingRow
-            title="Nivel"
-            description="El temario, las variantes de las aperturas y los ejercicios muestran tu nivel y los anteriores."
+            title={ts.level}
+            description={ts.levelHelp}
           >
             <RadioGroup
-              aria-label="Nivel"
+              aria-label={ts.level}
               className="flex flex-wrap gap-x-4 gap-y-2"
               value={progress.settings.level}
               onValueChange={(v) => setSetting('level', v as Level)}
@@ -201,29 +199,29 @@ export default function ProgressTools() {
               {LEVELS.map((l) => (
                 <Label key={l} className="cursor-pointer font-normal">
                   <RadioGroupItem value={l} />
-                  {LEVEL_LABEL[l]}
+                  {t.level[l]}
                 </Label>
               ))}
             </RadioGroup>
           </SettingRow>
-          <SettingRow title="Tema" description="Azul marino, gris oscuro o claro; también desde el botón de la cabecera.">
+          <SettingRow title={ts.theme} description={ts.themeHelp}>
             <RadioGroup
-              aria-label="Tema"
+              aria-label={ts.theme}
               className="flex flex-wrap gap-x-4 gap-y-2"
               value={progress.settings.theme}
               onValueChange={(v) => setSetting('theme', v as Theme)}
             >
-              {THEMES.map((t) => (
-                <Label key={t} className="cursor-pointer font-normal">
-                  <RadioGroupItem value={t} />
-                  {THEME_LABEL[t]}
+              {THEMES.map((th) => (
+                <Label key={th} className="cursor-pointer font-normal">
+                  <RadioGroupItem value={th} />
+                  {t.theme.names[th]}
                 </Label>
               ))}
             </RadioGroup>
           </SettingRow>
           <SettingRow
-            title="Coordenadas"
-            description="Letras y números de filas y columnas en el borde del tablero."
+            title={ts.coordinates}
+            description={ts.coordinatesHelp}
             htmlFor="coords"
           >
             <Switch
@@ -233,8 +231,8 @@ export default function ProgressTools() {
             />
           </SettingRow>
           <SettingRow
-            title="Tiempo de análisis"
-            description="Lo que piensa Stockfish cada jugada: más tiempo, valoraciones más precisas."
+            title={ts.engineTime}
+            description={ts.engineTimeHelp}
             htmlFor="engine-time"
           >
             <Select
@@ -245,15 +243,15 @@ export default function ProgressTools() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="500">0,5 s (rápido)</SelectItem>
-                <SelectItem value="1000">1 s</SelectItem>
-                <SelectItem value="2000">2 s (preciso)</SelectItem>
+                <SelectItem value="500">{ts.engineFast}</SelectItem>
+                <SelectItem value="1000">{ts.engineMedium}</SelectItem>
+                <SelectItem value="2000">{ts.enginePrecise}</SelectItem>
               </SelectContent>
             </Select>
           </SettingRow>
           <InstallApp
             row={(control, description) => (
-              <SettingRow title="Instalar la app" description={description}>
+              <SettingRow title={ts.install} description={description}>
                 {control}
               </SettingRow>
             )}

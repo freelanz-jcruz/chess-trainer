@@ -3,7 +3,8 @@ import { Moon, MoonStar, Sun, type LucideIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useProgress } from '@/lib/progress/store';
-import { THEME_COLOR, THEME_LABEL, THEMES, type Theme } from '@/lib/theme';
+import { useT } from '@/lib/i18n/react';
+import { THEME_COLOR, THEMES, type Theme } from '@/lib/theme';
 
 const THEME_ICON: Record<Theme, LucideIcon> = { navy: MoonStar, dark: Moon, light: Sun };
 
@@ -25,6 +26,7 @@ export function useThemeSync() {
 /** Botón de la cabecera: pasa al siguiente tema (azul marino → gris oscuro → claro → azul marino). */
 export function ThemeToggle() {
   const { progress, update } = useProgress();
+  const t = useT();
   useThemeSync();
   const theme = progress.settings.theme;
   const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
@@ -36,8 +38,8 @@ export function ThemeToggle() {
       size="icon"
       className="rounded-full bg-transparent shadow-none hover:border-primary hover:bg-transparent hover:text-primary"
       onClick={() => update((p) => ({ ...p, settings: { ...p.settings, theme: next } }))}
-      aria-label={`Cambiar a tema ${THEME_LABEL[next].toLowerCase()}`}
-      title={`Tema ${THEME_LABEL[next].toLowerCase()}`}
+      aria-label={t.theme.switchTo(t.theme.names[next])}
+      title={t.theme.title(t.theme.names[next])}
     >
       <Icon aria-hidden className="size-[18px]" strokeWidth={1.8} />
     </Button>

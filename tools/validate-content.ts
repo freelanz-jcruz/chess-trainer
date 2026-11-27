@@ -8,6 +8,7 @@
  *   jugadas dudosas del rival solo se informan. Trampas: en cada línea el rival comete un error y
  *   el usuario acaba con mate o con ventaja clara (TRAP_MIN_ADVANTAGE).
  * - Problemas: jugadas legales; con --deep, que la primera jugada de la solución sea la del motor.
+ * - Traducciones del contenido (content/i18n/): registradas, con rutas existentes y al día con el original.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -15,7 +16,7 @@ import { allLines, type LinePly } from '../lib/chess/opening-line';
 import { Chess } from 'chess.js';
 import { makeChess, movesFrom, playUci, sanToUci } from '../lib/chess/game';
 import { shortestDrill } from '../lib/chess/drill';
-import { sanToEs } from '../lib/chess/notation-es';
+import { sanToEs } from '../lib/chess/notation';
 import {
   curriculumSchema,
   lessonFileSchema,
@@ -27,9 +28,15 @@ import {
   type OpeningStep,
 } from '../lib/content/schemas';
 import { lessons as registeredLessons, openings as registeredOpenings, puzzleSets, puzzlesForSet } from '../lib/content/load';
-import { LEVEL_LABEL, type Level } from '../lib/content/levels';
+import type { Level } from '../lib/content/levels';
+import { DEFAULT_LOCALE, getMessages, LOCALES, type Locale } from '../lib/i18n';
+import { CONTENT_TRANSLATIONS } from '../content/i18n';
+import { checkPhrases, textEntries, type ContentTranslations, type Phrases } from '../lib/content/translations';
 import type { Analysis, Engine } from '../lib/engine/engine';
-import { assessMove, VERDICT_LABEL, type Verdict } from '../lib/engine/evaluate';
+import { assessMove, type Verdict } from '../lib/engine/evaluate';
+
+// Mismos nombres que en la app (en español: los mensajes del validador van en español).
+const { level: LEVEL_LABEL, verdict: VERDICT_LABEL } = getMessages('es');
 
 /**
  * Ventaja mínima (en peones) al final de una trampa. Algunas trampas clásicas (Fegatello) no ganan
@@ -326,6 +333,43 @@ async function validatePuzzles(): Promise<void> {
   ok(`${parsed.data.puzzles.length} problemas con jugadas legales${deep ? `; ${deepChecked} comprobados con Stockfish` : ''}`);
 }
 
+// ---------- Traducciones del contenido ----------
+function validateTranslations(curriculumData: unknown, lessonList: LessonFile[], openingList: Opening[]) {
+  console.log('\nTraducciones del contenido');
+  // Con un solo idioma TypeScript deduce `never`: se tipa como Locale para cuando haya más.
+  const others: Locale[] = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
+  if (!others.length) {
+    ok('Solo español: no hay traducciones que comprobar');
+    return;
+  }
+  for (const locale of others) {
+    const reg: ContentTranslations = CONTENT_TRANSLATIONS[locale] ?? {};
+    const dir = join(CONTENT, 'i18n', locale);
+    let total = 0;
+    let done = 0;
+    const check = (where: string, source: unknown, phrases: Phrases | undefined) => {
+      const all = textEntries(source).length;
+      total += all;
+      if (!phrases) return;
+      const r = checkPhrases(source, phrases);
+      done += all - r.missing.length;
+      for (const k of r.unknown) error(`${locale}/${where}: la ruta «${k}» no existe en el original`);
+      for (const k of r.outdated) warn(`${locale}/${where}: «${k}» ha cambiado en el original; revisa la traducción`);
+    };
+    check('curriculum', curriculumData, reg.curriculum);
+    for (const l of lessonList) check(`lessons/${l.id}`, l, reg.lessons?.[l.id]);
+    for (const o of openingList) check(`openings/${o.id}`, o, reg.openings?.[o.id]);
+    for (const id of Object.keys(reg.lessons ?? {})) if (!lessonList.some((l) => l.id === id)) error(`${locale}: traducción de una lección que no existe (${id})`);
+    for (const id of Object.keys(reg.openings ?? {})) if (!openingList.some((o) => o.id === id)) error(`${locale}: traducción de una apertura que no existe (${id})`);
+    // Ficheros en disco que no están registrados en content/i18n/index.ts (no se usarían).
+    const onDisk = (sub: string) => (existsSync(join(dir, sub)) ? readdirSync(join(dir, sub)).filter((f) => f.endsWith('.json')) : []);
+    if (existsSync(join(dir, 'curriculum.json')) && !reg.curriculum) error(`${locale}/curriculum.json no está registrado en content/i18n/index.ts`);
+    for (const f of onDisk('lessons')) if (!reg.lessons?.[f.replace(/\.json$/, '')]) error(`${locale}/lessons/${f} no está registrado en content/i18n/index.ts`);
+    for (const f of onDisk('openings')) if (!reg.openings?.[f.replace(/\.json$/, '')]) error(`${locale}/openings/${f} no está registrado en content/i18n/index.ts`);
+    ok(`${locale}: ${done} de ${total} frases traducidas`);
+  }
+}
+
 async function main() {
   console.log(`Validando contenido (Stockfish lite, profundidad ${depth})`);
 
@@ -369,6 +413,7 @@ async function main() {
 
   await validatePuzzles();
   validateCurriculum(openingIds, lessonIds);
+  validateTranslations(readJson(join(CONTENT, 'curriculum.json')), validLessons, valid);
   for (const op of valid) await validateOpening(op);
   for (const l of validLessons) await validateLesson(l);
 

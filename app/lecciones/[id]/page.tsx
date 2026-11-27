@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation';
 import { Note } from '@/components/Trainer';
 import LessonPlayer from '@/components/lesson/LessonPlayer';
 import { getLesson, lessons, nextLessonAfter } from '@/lib/content/load';
+import { DEFAULT_LOCALE, getMessages } from '@/lib/i18n';
+
+const t = getMessages(DEFAULT_LOCALE);
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -10,7 +13,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return { title: `${getLesson(id)?.title ?? 'Lección'} · Ajedrez Tutor` };
+  return { title: t.meta.pageTitle(getLesson(id)?.title ?? t.pages.lesson.fallback) };
 }
 
 export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
@@ -21,7 +24,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
     <>
       <h1>{lesson.title}</h1>
       <Note className="mb-3">
-        Bloque {lesson.block} · {lesson.summary}
+        {t.pages.lesson.block(lesson.block, lesson.summary)}
       </Note>
       <LessonPlayer lesson={lesson} next={nextLessonAfter(lesson.id)} />
     </>

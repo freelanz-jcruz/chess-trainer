@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { withBase } from '@/lib/base-path';
+import { useT } from '@/lib/i18n/react';
 // Empieza a escuchar el aviso de instalación desde la primera página (llega antes de abrir Ajustes).
 import '@/lib/install';
 
@@ -13,6 +14,8 @@ import '@/lib/install';
 export default function ServiceWorker() {
   const [waiting, setWaiting] = useState<ServiceWorker | null>(null);
   const [offlineReady, setOfflineReady] = useState(false);
+  const t = useT();
+  const tn = t.notices;
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production' || !('serviceWorker' in navigator)) return;
@@ -56,15 +59,15 @@ export default function ServiceWorker() {
     toast.custom(
       (id) => (
         <AppNotice
-          title="Nueva versión de Ajedrez Tutor"
-          text="Actualiza para tener las últimas mejoras. Tu progreso se conserva."
+          title={tn.updateTitle}
+          text={tn.updateText}
           actions={
             <>
               <Button size="sm" onClick={update}>
-                Actualizar
+                {tn.update}
               </Button>
               <Button size="sm" variant="ghost" onClick={() => toast.dismiss(id)}>
-                Más tarde
+                {tn.later}
               </Button>
             </>
           }
@@ -72,7 +75,7 @@ export default function ServiceWorker() {
       ),
       { id: 'sw-update', duration: Infinity },
     );
-  }, [waiting]);
+  }, [waiting, tn]);
 
   useEffect(() => {
     if (!offlineReady) return;
@@ -80,18 +83,18 @@ export default function ServiceWorker() {
     toast.custom(
       (id) => (
         <AppNotice
-          title="Ya puedes usarla sin conexión"
-          text="Se ha guardado en este dispositivo: todo funciona aunque no tengas internet, también el motor."
+          title={tn.offlineTitle}
+          text={tn.offlineText}
           actions={
             <Button size="sm" variant="outline" onClick={() => toast.dismiss(id)}>
-              Entendido
+              {t.common.understood}
             </Button>
           }
         />
       ),
       { id: 'sw-offline', duration: 12000 },
     );
-  }, [offlineReady]);
+  }, [offlineReady, tn, t.common.understood]);
 
   return null;
 }

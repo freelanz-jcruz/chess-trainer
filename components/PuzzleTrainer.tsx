@@ -8,7 +8,8 @@ import Board, { type Arrow } from './board/Board';
 import Feedback, { type FeedbackState } from './Feedback';
 import ResultDialog, { useRevealResult } from './ResultDialog';
 import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/game';
-import { sanToEs } from '@/lib/chess/notation-es';
+import { Fill } from '@/lib/i18n/bold';
+import { useSan, useT } from '@/lib/i18n/react';
 import type { Puzzle } from '@/lib/content/schemas';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
 import { LEVEL_RATING } from '@/lib/content/levels';
@@ -40,6 +41,7 @@ export default function PuzzleTrainer({
   onFinished?: () => void;
 }) {
   const { progress, update } = useProgress();
+  const msg = useT().puzzles;
   const maxRating = limitToLevel ? LEVEL_RATING[progress.settings.level].max : Infinity;
   const ordered = useMemo(
     () => puzzles.filter((p) => p.rating <= maxRating).sort((a, b) => a.rating - b.rating),
@@ -87,12 +89,10 @@ export default function PuzzleTrainer({
   if (finished)
     return (
       <Callout tone="correct" className="mt-3">
-        {dueCount > 0
-          ? `Has saltado ${dueCount === 1 ? 'el problema que quedaba' : `los ${dueCount} problemas que quedaban`}: seguirán pendientes.`
-          : 'No quedan problemas por repasar hoy. ¡Bien hecho!'}
+        {dueCount > 0 ? msg.skippedLeft(dueCount) : msg.reviewDone}
       </Callout>
     );
-  if (!puzzle) return <p className="my-3">{mounted && !ordered.length ? 'No hay ejercicios.' : 'Cargando ejercicios…'}</p>;
+  if (!puzzle) return <p className="my-3">{mounted && !ordered.length ? msg.none : msg.loading}</p>;
   return (
     <PuzzleBoard
       key={puzzle.id}
@@ -100,9 +100,8 @@ export default function PuzzleTrainer({
       header={
         <Note>
           {mode === 'review'
-            ? `${title} · quedan ${dueCount} hoy`
-            : `${title} · resueltos ${solvedCount}/${ordered.length}`}{' '}
-          · dificultad {puzzle.rating}
+            ? msg.headerReview(title, dueCount, puzzle.rating)
+            : msg.headerSet(title, solvedCount, ordered.length, puzzle.rating)}
         </Note>
       }
       onNext={() => goTo(pickNext(puzzle.id))}
@@ -145,6 +144,9 @@ function PuzzleBoard({
 }) {
   // El usuario juega el bando contrario al que mueve en el FEN original (ese primero lo hace el rival).
   const myColor = opposite(turnColor(puzzle.fen));
+  const tr = useT();
+  const msg = tr.puzzles;
+  const { san: sanToEs } = useSan();
   const isMatePuzzle = puzzle.themes.some((t) => t.startsWith('mateIn') || t === 'mate');
 
   const [fen, setFen] = useState(puzzle.fen);
@@ -152,7 +154,7 @@ function PuzzleBoard({
   const [phase, setPhase] = useState<Phase>('intro');
   const [lastMove, setLastMove] = useState<[string, string] | null>(null);
   const [arrows, setArrows] = useState<Arrow[]>([]);
-  const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle', text: 'Mira la jugada del rival…' });
+  const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle', text: msg.watchOpponent });
   const errors = useRef(0);
   const hintUsed = useRef(false);
   const reported = useRef(false);
@@ -197,7 +199,7 @@ function PuzzleBoard({
     if (phase !== 'user') return;
     preAnalyze(fen);
     setFeedback((f) =>
-      f.kind === 'verdict' ? f : { kind: 'idle', text: 'Tu turno.' },
+      f.kind === 'verdict' ? f : { kind: 'idle', text: msg.yourTurn },
     );
   }, [phase, fen, preAnalyze, myColor]);
 
@@ -218,7 +220,7 @@ function PuzzleBoard({
       if (correct) {
         cancel();
         const isLast = step + 1 >= puzzle.solution.length || played.isCheckmate;
-        setFeedback({ kind: 'verdict', verdict: 'correct', san: sanToEs(played.san), text: isLast ? '¡Resuelto!' : 'Sigue…' });
+        setFeedback({ kind: 'verdict', verdict: 'correct', san: sanToEs(played.san), text: isLast ? msg.solved : msg.keepGoing });
         if (isLast) {
           setPhase('solved');
           setDialog(true);
@@ -239,7 +241,7 @@ function PuzzleBoard({
         san: sanToEs(played.san),
         loss: result.loss,
         reason: result.reason,
-        text: result.verdict === 'good' ? 'No está mal, pero hay algo mejor. Inténtalo de nuevo.' : 'Inténtalo de nuevo.',
+        text: result.verdict === 'good' ? msg.notBad : tr.common.tryAgain,
       });
       later(() => {
         setFen(fenBefore);
@@ -270,12 +272,12 @@ function PuzzleBoard({
       {dialog && feedback.kind === 'verdict' && (
         <ResultDialog
           tone="correct"
-          title="¡Resuelto!"
-          primary={{ label: 'Siguiente', onClick: next }}
-          secondary={{ label: 'Cerrar', onClick: closeDialog }}
+          title={msg.solved}
+          primary={{ label: tr.common.next, onClick: next }}
+          secondary={{ label: tr.common.close, onClick: closeDialog }}
           onDismiss={closeDialog}
         >
-          <strong>{feedback.san}</strong> · {solvedSummary(errors.current, hintUsed.current)}
+          <strong>{feedback.san}</strong> · {msg.solvedSummary(errors.current, hintUsed.current)}
         </ResultDialog>
       )}
       <Board
@@ -291,7 +293,7 @@ function PuzzleBoard({
         <Statement className="grid gap-1">
           {/* El enunciado, fijo: el resultado de cada jugada va abajo, junto a los botones. */}
           <p className="text-lg font-medium">
-            Juegan las {myColor === 'white' ? 'blancas' : 'negras'}: encuentra la mejor jugada.
+            {msg.prompt(myColor === 'white')}
           </p>
           {header}
         </Statement>
@@ -301,33 +303,31 @@ function PuzzleBoard({
         </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={phase !== 'user'}>
-            <Lightbulb /> Pista
+            <Lightbulb /> {tr.common.hint}
           </Button>
           <Button variant={phase === 'solved' ? 'default' : 'outline'} onClick={next}>
             {phase === 'solved' ? (
               <>
-                Siguiente <ChevronRight />
+                {tr.common.next} <ChevronRight />
               </>
             ) : (
-              'Saltar'
+              msg.skip
             )}
           </Button>
         </Controls>
         <Note>
-          Problema{' '}
-          <a href={`https://lichess.org/training/${puzzle.id}`} target="_blank" rel="noreferrer">
-            #{puzzle.id}
-          </a>{' '}
-          de la base de datos de Lichess (CC0).
+          <Fill
+            text={msg.source}
+            values={{
+              link: (
+                <a href={`https://lichess.org/training/${puzzle.id}`} target="_blank" rel="noreferrer">
+                  #{puzzle.id}
+                </a>
+              ),
+            }}
+          />
         </Note>
       </Panel>
     </Trainer>
   );
-}
-
-/** Cómo se ha resuelto, para la ventana de resultado. */
-function solvedSummary(errors: number, hintUsed: boolean): string {
-  if (!errors && !hintUsed) return 'A la primera y sin pistas.';
-  const parts = [errors ? `${errors} ${errors === 1 ? 'fallo' : 'fallos'}` : '', hintUsed ? 'pista' : ''].filter(Boolean);
-  return `Resuelto con ${parts.join(' y ')}.`;
 }

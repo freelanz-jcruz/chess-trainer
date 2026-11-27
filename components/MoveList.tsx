@@ -1,5 +1,6 @@
+'use client';
 import { cn } from '@/lib/utils';
-import { sanToEs } from '@/lib/chess/notation-es';
+import { useSan, useT } from '@/lib/i18n/react';
 
 /** Lista de jugadas con números; resalta la actual y permite saltar a una. */
 export default function MoveList({
@@ -14,8 +15,10 @@ export default function MoveList({
   startPly?: number;
   onSelect?: (index: number) => void;
 }) {
+  const t = useT();
+  const { san: formatSan } = useSan();
   return (
-    <ol className="flex flex-wrap gap-x-1 gap-y-0.5 tabular-nums" aria-label="Jugadas">
+    <ol className="flex flex-wrap gap-x-1 gap-y-0.5 tabular-nums" aria-label={t.moveList.label}>
       {sans.map((san, i) => {
         const ply = startPly + i;
         const num = ply % 2 === 0 ? `${ply / 2 + 1}.` : i === 0 ? `${Math.floor(ply / 2) + 1}...` : '';
@@ -28,7 +31,7 @@ export default function MoveList({
               onClick={onSelect ? () => onSelect(i) : undefined}
               disabled={!onSelect}
             >
-              {sanToEs(san)}
+              {formatSan(san)}
             </button>
           </li>
         );

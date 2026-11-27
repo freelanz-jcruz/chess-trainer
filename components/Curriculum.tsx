@@ -4,20 +4,22 @@ import { Badge } from '@/components/ui/badge';
 import type { Curriculum as CurriculumData, Lesson } from '@/lib/content/schemas';
 import { useProgress, type Progress } from '@/lib/progress/store';
 import { lessonHref } from '@/lib/content/links';
-import { LEVEL_LABEL, levelAllows } from '@/lib/content/levels';
+import { levelAllows } from '@/lib/content/levels';
+import { useT } from '@/lib/i18n/react';
+import type { Messages } from '@/lib/i18n';
 
 
-function lessonProgress(l: Lesson, p: Progress, puzzleIds: Record<string, string[]>): string | null {
+function lessonProgress(l: Lesson, p: Progress, puzzleIds: Record<string, string[]>, t: Messages['curriculum']): string | null {
   if (l.status !== 'available') return null;
   if (l.type === 'opening') {
     const o = p.openings[l.ref];
     if (!o) return null;
-    return o.practiceRuns > 0 ? `practicada ${o.practiceRuns}×` : o.walkthroughDone ? 'vista' : null;
+    return o.practiceRuns > 0 ? t.openingPracticed(o.practiceRuns) : o.walkthroughDone ? t.openingSeen : null;
   }
   if (l.type === 'lesson') {
     const o = p.lessons[l.ref];
     if (!o) return null;
-    return o.completed ? 'completada ✓' : 'empezada';
+    return o.completed ? t.lessonCompleted : t.lessonStarted;
   }
   if (l.type === 'puzzles') {
     const ids = puzzleIds[l.id] ?? [];
@@ -36,6 +38,7 @@ export default function Curriculum({
   puzzleIds: Record<string, string[]>;
 }) {
   const { progress } = useProgress();
+  const t = useT();
   return (
     <ol className="my-4 grid gap-6">
       {curriculum.blocks.map((b) => (
@@ -49,7 +52,7 @@ export default function Curriculum({
           <ul className="mt-2">
             {b.lessons.filter((l) => levelAllows(progress.settings.level, l.level)).map((l) => {
               const href = lessonHref(l);
-              const prog = lessonProgress(l, progress, puzzleIds);
+              const prog = lessonProgress(l, progress, puzzleIds, t.curriculum);
               return (
                 <li
                   key={l.id}
@@ -57,9 +60,9 @@ export default function Curriculum({
                 >
                   <span className="flex flex-wrap items-center gap-x-2">
                     {href ? <Link className="no-underline font-medium text-[1.0rem] hover:text-(--hover) py-2" href={href}>{l.title}</Link> : <span>{l.title}</span>}
-                    {l.level !== 'principiante' && <Badge variant="muted">{LEVEL_LABEL[l.level]}</Badge>}
+                    {l.level !== 'principiante' && <Badge variant="muted">{t.level[l.level]}</Badge>}
                   </span>
-                  {href ? prog && <Badge>{prog}</Badge> : <Badge variant="muted">próximamente</Badge>}
+                  {href ? prog && <Badge>{prog}</Badge> : <Badge variant="muted">{t.curriculum.soon}</Badge>}
                 </li>
               );
             })}
@@ -73,11 +76,11 @@ export default function Curriculum({
 
 /** Pie de bloque con las lecciones ocultas por el nivel elegido, para que no pasen desapercibidas. */
 function HiddenByLevel({ count }: { count: number }) {
+  const t = useT();
   if (!count) return null;
   return (
     <li className="border-t border-border pt-2.5 pb-1 text-sm text-muted-foreground">
-      {count === 1 ? 'Una lección más' : `${count} lecciones más`} en niveles superiores ·{' '}
-      <Link href="/progreso/">cambiar el nivel</Link>
+      {t.curriculum.hiddenByLevel(count)} · <Link href="/progreso/">{t.curriculum.changeLevel}</Link>
     </li>
   );
 }

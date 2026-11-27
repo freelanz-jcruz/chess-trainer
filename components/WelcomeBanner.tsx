@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { InstallButton } from '@/components/InstallApp';
 import { Button } from '@/components/ui/button';
 import { withBase } from '@/lib/base-path';
+import { useT } from '@/lib/i18n/react';
 
 /**
  * Misma clave que la antigua ventana de bienvenida: quien ya la vio no vuelve a ver el aviso. Se guarda
@@ -36,6 +37,7 @@ function markSeen() {
  */
 export default function WelcomeBanner() {
   const [show, setShow] = useState(false);
+  const tw = useT().welcome;
   // Solo en el cliente y tras montar: en el HTML estático no se sabe si ya se vio.
   useEffect(() => {
     if (!seen()) setShow(true);
@@ -50,19 +52,19 @@ export default function WelcomeBanner() {
   // Mismo estilo que los avisos de actualización y de uso sin conexión (ServiceWorker.tsx), pero dentro de la página.
   return (
     <aside
-      aria-label="Bienvenida"
+      aria-label={tw.label}
       className="relative my-4 flex items-center gap-4 rounded-2xl border border-primary/60 bg-popover py-4 pr-12 pl-4 text-popover-foreground shadow-2xl"
     >
       <img src={withBase('/icons/icon-192.png')} alt="" width={56} height={56} className="size-14 shrink-0 rounded-xl" />
       <div className="grid min-w-0 flex-1 gap-2">
         <div>
-          <p className="m-0 font-semibold">¿Primera vez por aquí?</p>
-          <p className="m-0 text-sm text-muted-foreground">Descubre qué puedes aprender con Ajedrez Tutor y cómo instalarla en tu móvil.</p>
+          <p className="m-0 font-semibold">{tw.title}</p>
+          <p className="m-0 text-sm text-muted-foreground">{tw.text}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button asChild onClick={markSeen}>
             <Link href="/info/">
-              Conocer la app <ChevronRight />
+              {tw.learnMore} <ChevronRight />
             </Link>
           </Button>
           <InstallButton size="default" fallback={false} variant="outline" />
@@ -72,7 +74,7 @@ export default function WelcomeBanner() {
         variant="ghost"
         size="icon"
         onClick={dismiss}
-        aria-label="Cerrar el aviso"
+        aria-label={tw.close}
         className="absolute top-2 right-2 text-muted-foreground"
       >
         <X />

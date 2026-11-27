@@ -106,14 +106,19 @@ chess-trainer/
 │   └── HintButton.tsx
 ├── lib/
 │   ├── chess/
-│   │   ├── notation-es.ts        # SAN inglesa -> española
+│   │   ├── notation.ts           # SAN inglesa -> letras de cada idioma (R, D, T, A, C en español)
 │   │   └── game.ts               # utilidades sobre chess.js
 │   ├── engine/
 │   │   ├── engine-client.ts      # Cola de peticiones al Worker, promesas
 │   │   ├── uci.ts                # Parser de "info ... score cp/mate ... pv"
 │   │   └── evaluate.ts           # Cálculo de pérdida y clasificación
+│   ├── i18n/                     # Idiomas de la interfaz (sección 13)
+│   │   ├── locales.ts            # Idiomas disponibles
+│   │   ├── es.ts                 # Diccionario de la interfaz en español
+│   │   └── react.tsx             # I18nProvider, useT(), useSan()
 │   ├── content/
 │   │   ├── schemas.ts            # Esquemas zod (aperturas, problemas, temario)
+│   │   ├── translations.ts       # Frases traducidas del contenido (sección 13)
 │   │   └── load.ts               # Carga tipada de /content
 │   └── progress/
 │       └── store.ts              # localStorage versionado
@@ -433,14 +438,27 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 
 - **Direcciones:** el español sigue en la raíz (no cambian las direcciones actuales ni las apps ya instaladas) y el inglés va en `/en/`. Con la exportación estática no hay middleware ni redirecciones del servidor de Next: dos *root layouts* con grupos de rutas (`app/(es)/…` con `<html lang="es">` y `app/en/…` con `lang="en"`), y las páginas de `/en/` son envoltorios finos que reutilizan los mismos componentes con el idioma como dato.
 - **Textos de interfaz:** un diccionario tipado por idioma (`lib/i18n/es.ts`, `en.ts`) y un contexto de React con el idioma. TypeScript obliga a que los dos tengan las mismas claves, así que no se escapa un texto sin traducir. No hace falta una librería (next-intl y similares encajan peor con la exportación estática).
-- **Contenido:** las jugadas, posiciones y soluciones no se duplican. Cada lección y apertura tiene un fichero de textos por idioma con solo las frases, por clave (`content/lessons/en/piezas.json`…), y `npm run validate` comprueba que cada idioma tenga todas las claves y ninguna sobrante.
-- **Notación:** `sanToEs` (R, D, T, A, C) pasa a depender del idioma (K, Q, R, B, N en inglés). Los nombres de aperturas en inglés salen del catálogo de Lichess que ya se usa para los códigos ECO.
+- **Contenido:** las jugadas, posiciones y soluciones no se duplican. Cada lección y apertura tiene un fichero de frases por idioma (`content/i18n/en/lessons/piezas.json`…) con la ruta de cada texto, el original y la traducción, y `npm run validate` avisa de rutas que no existen y de traducciones cuyo original ha cambiado.
+- **Notación:** las letras de las piezas dependen del idioma (R, D, T, A, C en español; K, Q, R, B, N en inglés). Los nombres de aperturas en inglés salen del catálogo de Lichess que ya se usa para los códigos ECO.
 - **Elección del idioma:** la primera vez, si el navegador no está en español, se propone o se lleva a `/en/`. Hay un selector en Ajustes y un enlace en el pie, y la elección se guarda en el progreso. Se añaden `hreflang` en el HTML para los buscadores.
 - **Lo demás:** manifiesto con nombre y descripción por idioma; el progreso es el mismo en los dos idiomas; el service worker precachea las páginas de ambos (unos MB más, sin cambiar el motor); Umami separa las visitas por ruta.
 
+### 13.1 Base técnica (hecha)
+
+La app sigue solo en español y se ve igual, pero ya está preparada para traducirse:
+
+- **Interfaz:** todos los textos están en `lib/i18n/es.ts`, como frases completas (los plurales y los datos van como parámetros, nunca montados por piezas). Los componentes de cliente los leen con `useT()` (contexto `I18nProvider` en el layout) y los de servidor (páginas, metadatos, manifiesto) con `getMessages(locale)`. Las frases con negrita usan `**…**` (componente `Bold`) y las que llevan un enlace u otro elemento, huecos `{nombre}` (componente `Fill`). También están ahí el idioma de las fechas (`intlLocale`) y el `og:locale`.
+- **Notación:** `formatSan` y `formatMoveList` (`lib/chess/notation.ts`) reciben el idioma; en los componentes, `useSan()`.
+- **Contenido:** `lib/content/translations.ts` define los ficheros de frases (`content/i18n/<idioma>/…`, cada entrada `{ from, to }` por ruta), `content/i18n/index.ts` los registra y `curriculumIn`, `lessonIn` y `openingIn` (`lib/content/load.ts`) devuelven el contenido traducido, con el español donde falte o esté desfasado. `npm run i18n:template -- en` crea o completa los ficheros con todas las frases por traducir; `npm run validate` los comprueba.
+- **Fuera de la interfaz:** los mensajes del validador y de las herramientas siguen en español (son para quien edita el contenido).
+
+**Pendiente para publicar el inglés:** `en.ts` y las letras de las piezas en inglés; las rutas `/en/` (grupos de rutas con su *root layout*, que pasen el idioma a `I18nProvider`, a `getMessages` y a `…In()`); el selector de idioma y la propuesta automática; `hreflang`, sitemap y manifiesto por idioma; y traducir el contenido.
+
+**Al hacer pantallas nuevas:** ningún texto en el código, todo en `es.ts`; frases completas con parámetros; notación siempre con `useSan()`.
+
 **Traducción:** la interfaz es mecánica. El contenido conviene traducirlo con ayuda de IA y que lo revise alguien que juegue y hable inglés, porque el vocabulario de ajedrez tiene sus giros (*fork*, *pin*, *skewer*, *zugzwang*…).
 
-**Orden:** posponerlo no cierra puertas (las direcciones actuales no cambian y traducir el contenido cuesta lo mismo antes que después), pero cada pantalla nueva con textos en el código y cada frase montada por piezas añade trabajo de migración. Se puede esperar a confirmar en Umami que las visitas de fuera son personas. Si se pospone, el mejor momento para la base técnica es **entre las fases 7 y 8**: la 7 es sobre todo contenido en JSON y la 8 mucha interfaz nueva, que conviene hacer ya preparada para varios idiomas. Mientras tanto: frases del contenido siempre en los JSON, notación siempre a través de `sanToEs` y frases completas en vez de montadas por piezas en las pantallas nuevas. Una vez montado, añadir otro idioma (portugués, francés…) es solo traducir.
+**Orden:** posponerlo no cierra puertas (las direcciones actuales no cambian y traducir el contenido cuesta lo mismo antes que después), pero cada pantalla nueva con textos en el código y cada frase montada por piezas añade trabajo de migración. Se puede esperar a confirmar en Umami que las visitas de fuera son personas. Si se pospone, el mejor momento para la base técnica es **entre las fases 7 y 8**: la 7 es sobre todo contenido en JSON y la 8 mucha interfaz nueva, que conviene hacer ya preparada para varios idiomas. Una vez montado, añadir otro idioma (portugués, francés…) es solo traducir.
 
 ---
 

@@ -126,6 +126,13 @@ Todo el contenido son datos en `content/`:
 
 Los textos de las lecciones son originales.
 
+### Idiomas
+
+La app está preparada para traducirse aunque de momento solo está en español (detalle en [PLAN.md](PLAN.md#13-idiomas-fase-9)):
+
+- **Interfaz:** todos los textos están en `lib/i18n/es.ts`. En los componentes se leen con `useT()` y en las páginas con `getMessages()`; no hay textos en el código. Para un idioma nuevo: añadirlo a `lib/i18n/locales.ts`, crear su diccionario con el tipo `Messages` (TypeScript avisa de las claves que falten) y sus letras de las piezas en `lib/chess/notation.ts`.
+- **Contenido:** `npm run i18n:template -- en` crea `content/i18n/en/` con un fichero de frases por lección y apertura más el temario, con cada texto original (`from`) y su traducción (`to`, vacía al principio). Se registran en `content/i18n/index.ts` y `npm run validate` avisa si una ruta ya no existe o si el original cambió después de traducirlo. Lo no traducido se muestra en español.
+
 ## Créditos
 
 - **Problemas**: [base de datos de problemas de Lichess](https://database.lichess.org/#puzzles), publicada bajo **CC0** (dominio público). Gracias a Lichess y a su comunidad. Este proyecto no está afiliado a Lichess ni usa su marca.

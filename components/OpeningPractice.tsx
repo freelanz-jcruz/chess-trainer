@@ -10,13 +10,11 @@ import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen, type LinePly } from '@/lib/chess/opening-line';
 import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
-import { sanToEs } from '@/lib/chess/notation-es';
+import { useSan, useT } from '@/lib/i18n/react';
 import type { Opening } from '@/lib/content/schemas';
 import { openingForLevel } from '@/lib/content/levels';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
 import { currentProgress, scheduleReview, updateOpening, useProgress } from '@/lib/progress/store';
-
-const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 const OPPONENT_DELAY = 550;
 const UNDO_DELAY = 1400;
@@ -31,6 +29,9 @@ const randomLine = (opening: Opening) =>
 /** El usuario juega su bando de la apertura; la app responde con el libro y valora cada jugada. */
 export default function OpeningPractice({ opening: fullOpening }: { opening: Opening }) {
   const { progress, update } = useProgress();
+  const t = useT();
+  const tx = t.openingPractice;
+  const { san: sanToEs } = useSan();
   // Solo las variantes del nivel elegido (y anteriores); las ramas al azar salen de estas.
   const opening = useMemo(() => openingForLevel(fullOpening, progress.settings.level), [fullOpening, progress.settings.level]);
   const myColor = opening.side;
@@ -41,7 +42,7 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
   const [ply, setPly] = useState(0); // próximo medio movimiento de la línea
   const [fen, setFen] = useState(startFen);
   const [lastMove, setLastMove] = useState<[string, string] | null>(null);
-  const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle', text: 'Te toca. Juega la primera jugada de la apertura.' });
+  const [feedback, setFeedback] = useState<FeedbackState>({ kind: 'idle', text: tx.start });
   const [locked, setLocked] = useState(false);
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [failsHere, setFailsHere] = useState(0);
@@ -91,7 +92,7 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
     if (!done || finished) return;
     setFinished(true);
     const clean = stats.current.errors === 0 && stats.current.hints === 0;
-    const what = opening.kind === 'trap' ? 'Trampa' : 'Apertura';
+    const trap = opening.kind === 'trap';
     update((p) =>
       scheduleReview(
         updateOpening(p, opening.id, (o) => ({
@@ -107,10 +108,10 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
     setFeedback({
       kind: 'done',
       text: clean
-        ? `¡${what} completada sin fallos!`
-        : `${what} completada con ${count(stats.current.errors, 'fallo', 'fallos')} y ${count(stats.current.hints, 'pista', 'pistas')}.`,
+        ? tx.doneClean(trap)
+        : tx.doneWith(trap, stats.current.errors, stats.current.hints),
     });
-  }, [done, finished, opening.id, opening.kind, update]);
+  }, [done, finished, opening.id, opening.kind, update, tx]);
 
   const onMove = useCallback(
     async (from: string, to: string, promotion?: string) => {
@@ -134,7 +135,7 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
           san: sanToEs(played.san),
           text: isBook
             ? expected.note
-            : `También se juega, pero en esta línea seguimos con ${sanToEs(expected.san)}.`,
+            : tx.alternative(sanToEs(expected.san)),
         });
         if (isAlternative) {
           setFen(expected.fenAfter);
@@ -153,10 +154,10 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
       setFailsHere(fails);
       const text =
         result.verdict === 'good'
-          ? 'Es jugable, pero en esta apertura se juega otra cosa. Inténtalo de nuevo.'
+          ? tx.playableButNotBook
           : fails >= 2
-            ? 'Te marco la jugada de la apertura con una flecha.'
-            : 'Inténtalo de nuevo.';
+            ? tx.arrowShown
+            : t.common.tryAgain;
       setFeedback({
         kind: 'verdict',
         verdict: result.verdict,
@@ -175,7 +176,7 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
         setLocked(false);
       }, UNDO_DELAY);
     },
-    [myTurn, locked, fen, expected, cancel, evaluate, failsHere, ply, line],
+    [myTurn, locked, fen, expected, cancel, evaluate, failsHere, ply, line, sanToEs, tx, t],
   );
 
   const showHint = () => {
@@ -198,7 +199,7 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
     setFailsHere(0);
     setFinished(false);
     setLocked(false);
-    setFeedback({ kind: 'idle', text: 'Te toca. Juega la primera jugada de la apertura.' });
+    setFeedback({ kind: 'idle', text: tx.start });
   };
 
   const sans = useMemo(() => line.slice(0, ply).map((p) => p.san), [line, ply]);
@@ -222,25 +223,23 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
         </Statement>
         <Controls>
           <Button variant="outline" onClick={showHint} disabled={!myTurn || locked}>
-            <Lightbulb /> Pista
+            <Lightbulb /> {t.common.hint}
           </Button>
           <Button variant="outline" onClick={restart}>
-            <RotateCcw /> Empezar de nuevo
+            <RotateCcw /> {t.common.restart}
           </Button>
         </Controls>
-        <PanelExtras title="Jugadas" label={`Jugadas · ${sans.length}`}>
+        <PanelExtras title={t.common.moves} label={t.common.movesCount(sans.length)}>
           <MoveList sans={sans} current={sans.length - 1} />
           {runs && runs.practiceRuns > 0 && (
-            <Note>
-              Prácticas completadas: {runs.practiceRuns} · sin fallos: {runs.cleanRuns}
-            </Note>
+            <Note>{tx.runs(runs.practiceRuns, runs.cleanRuns)}</Note>
           )}
         </PanelExtras>
-        {done && <Note>Línea: {branchNames(line).join(' › ') || 'principal'}</Note>}
+        {done && <Note>{tx.line(branchNames(line))}</Note>}
         {done && (
           <p className="flex flex-wrap items-center gap-2.5">
-            <Button onClick={restart}>Otra vez</Button>
-            <Link href={`/aperturas/${opening.id}/`}>Repasar el recorrido</Link>
+            <Button onClick={restart}>{t.common.again}</Button>
+            <Link href={`/aperturas/${opening.id}/`}>{tx.reviewWalkthrough}</Link>
           </p>
         )}
       </Panel>

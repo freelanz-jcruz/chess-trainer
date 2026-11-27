@@ -3,6 +3,7 @@ import { ListChecks, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Board from '../board/Board';
 import Callout from '../Callout';
+import { useT } from '@/lib/i18n/react';
 import ResultDialog from '../ResultDialog';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
@@ -44,7 +45,9 @@ export function TextPageView({ page, coordinates, nav }: PageProps<TextPage>) {
   );
 }
 
-export function QuizPageView({ page, onComplete, completed, coordinates, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<QuizPage>) {
+export function QuizPageView({ page, onComplete, completed, coordinates, nav, onNext, nextLabel, finishTitle }: PageProps<QuizPage>) {
+  const tr = useT();
+  const tl = tr.lesson;
   const [chosen, setChosen] = useState<number | null>(completed ? page.answer : null);
   // En móvil (con tablero) las opciones están en un panel lateral y el resultado sale en una ventana
   // centrada en la pantalla; al cerrarla, el acierto queda en el texto.
@@ -68,10 +71,10 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav, on
   }, [sheet, pending]);
   const result = right ? (
     <>
-      <strong>¡Correcto!</strong> {page.explain}
+      <strong>{tl.correct}</strong> {page.explain}
     </>
   ) : (
-    'No es esa. Prueba otra vez.'
+    tl.wrongAnswer
   );
 
   const pick = (i: number, fromSheet: boolean) => {
@@ -111,15 +114,15 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav, on
         (right ? (
           <ResultDialog
             tone="correct"
-            title={finishTitle ?? '¡Correcto!'}
-            primary={onNext ? { label: nextLabel, onClick: onNext } : { label: 'Entendido', onClick: closePopup }}
-            secondary={onNext ? { label: 'Cerrar', onClick: closePopup } : undefined}
+            title={finishTitle ?? tl.correct}
+            primary={onNext ? { label: nextLabel ?? tr.common.next, onClick: onNext } : { label: tr.common.understood, onClick: closePopup }}
+            secondary={onNext ? { label: tr.common.close, onClick: closePopup } : undefined}
             onDismiss={closePopup}
           >
             {page.explain}
           </ResultDialog>
         ) : (
-          <ResultDialog tone="mistake" title="No es esa" primary={{ label: 'Probar otra vez', onClick: retry }} onDismiss={retry} />
+          <ResultDialog tone="mistake" title={tl.wrongTitle} primary={{ label: tl.tryAnother, onClick: retry }} onDismiss={retry} />
         ))}
       <Panel>
         <Statement className="prose">
@@ -136,12 +139,12 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav, on
               onOpenChange={setSheet}
             >
               <Button variant={right ? 'outline' : 'default'} className="w-full mb-2 text-base" onClick={() => setSheet(true)}>
-                <ListChecks /> {right ? 'Ver las respuestas' : 'Ver respuestas'}
+                <ListChecks /> {right ? tl.seeAnswersAgain : tl.seeAnswers}
               </Button>
               <DrawerContent side="right" overlayClassName="bg-black/30">
                 <DrawerHeader className="flex-row items-start justify-between gap-2 pt-4">
                   <div className="grid gap-1">
-                    <DrawerTitle className="mb-5">Respuestas</DrawerTitle>
+                    <DrawerTitle className="mb-5">{tl.answers}</DrawerTitle>
                     <DrawerDescription asChild>
                       <div className="prose text-sm">
                         <RichText text={page.body} />
@@ -149,7 +152,7 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav, on
                     </DrawerDescription>
                   </div>
                   <DrawerClose asChild>
-                    <Button variant="ghost" size="icon" className="-mt-1 -mr-2 shrink-0" aria-label="Cerrar">
+                    <Button variant="ghost" size="icon" className="-mt-1 -mr-2 shrink-0" aria-label={tr.common.close}>
                       <X />
                     </Button>
                   </DrawerClose>
