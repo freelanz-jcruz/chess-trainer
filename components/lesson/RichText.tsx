@@ -9,9 +9,9 @@ export default function RichText({ text }: { text: string }) {
         const lines = block.split('\n');
         if (lines.every((l) => l.startsWith('- '))) {
           return (
-            <ul key={i}>
+            <ul className="pb-2" key={i}>
               {lines.map((l, j) => (
-                <li key={j}>{inline(l.slice(2))}</li>
+                <li className="text-lg" key={j}>{inline(l.slice(2))}</li>
               ))}
             </ul>
           );
