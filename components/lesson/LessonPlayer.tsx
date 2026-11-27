@@ -1,12 +1,14 @@
 'use client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { LessonFile, LessonPage } from '@/lib/content/schemas';
 import { updateLesson, useProgress } from '@/lib/progress/store';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Note } from '../Trainer';
+import ResultDialog, { TWO_COLUMNS } from '../ResultDialog';
 import { QuizPageView, TextPageView } from './StaticPages';
 import MovePageView from './MovePageView';
 import DrillPageView from './DrillPageView';
@@ -25,6 +27,7 @@ const KIND_LABEL: Record<LessonPage['kind'], string> = {
 
 export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; next?: { href: string; title: string } }) {
   const { progress, update } = useProgress();
+  const router = useRouter();
   const saved = progress.lessons[lesson.id];
   const [index, setIndex] = useState(0);
   const [done, setDone] = useState<Set<number>>(() => new Set());
@@ -95,18 +98,59 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
       {isLast && pageDone && (
         <span className="inline-flex flex-wrap items-center gap-2.5">
           <strong>¡Lección completada!</strong>
-          <Button asChild>
-            {next ? <Link href={next.href}>Siguiente: {next.title}</Link> : <Link href="/">Volver al temario</Link>}
+          <Button asChild className="h-auto min-h-9 max-w-64 py-1.5 whitespace-normal">
+            {next ? (
+              <Link href={next.href}>
+                <NextLessonLabel title={next.title} />
+              </Link>
+            ) : (
+              <Link href="/">Volver al temario</Link>
+            )}
           </Button>
         </span>
       )}
     </>
   );
 
+  // Al terminar la lección, la ventana de resultado (móvil) ofrece ir a la siguiente lección.
+  const nextHref = next?.href ?? '/';
+  const nextLabel = next ? <NextLessonLabel title={next.title} /> : 'Volver al temario';
+  const goNextLesson = useCallback(() => router.push(nextHref), [router, nextHref]);
+
+  // Si la última página es de texto (un resumen), no hay ventana de resultado: se abre una al llegar al
+  // final del resumen, una vez por visita.
+  const endRef = useRef<HTMLDivElement>(null);
+  const [finishOpen, setFinishOpen] = useState(false);
+  const finishShown = useRef(false);
+  const lastIsText = isLast && autoComplete(page);
+  useEffect(() => {
+    const end = endRef.current;
+    if (!lastIsText || finishShown.current || !end || window.matchMedia(TWO_COLUMNS).matches) return;
+    let timer = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      window.clearTimeout(timer);
+      if (!entry.isIntersecting) return;
+      // Tiempo para leer el resumen antes de taparlo (suele caber entero en la pantalla).
+      timer = window.setTimeout(() => {
+        finishShown.current = true;
+        setFinishOpen(true);
+        observer.disconnect();
+      }, 4000);
+    });
+    observer.observe(end);
+    return () => {
+      window.clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [lastIsText, index]);
+  const closeFinish = useCallback(() => setFinishOpen(false), []);
+
   const common = {
     nav: <div className="mt-1 hidden flex-wrap items-center gap-2 border-t border-border pt-3 trainer:flex">{navButtons}</div>,
     onComplete: complete,
-    onNext: isLast ? undefined : () => go(index + 1),
+    onNext: isLast ? goNextLesson : () => go(index + 1),
+    nextLabel: isLast ? nextLabel : undefined,
+    finishTitle: isLast ? '¡Lección completada!' : undefined,
     completed: pageDone,
     coordinates: progress.settings.showCoordinates,
     engineTimeMs: progress.settings.engineTimeMs,
@@ -142,6 +186,19 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
         {page.kind === 'drill' && <DrillPageView page={page} {...common} />}
         {page.kind === 'play' && <PlayPageView page={page} {...common} />}
       </div>
+      {/* Final de la página: al verlo en la última página de texto se abre la ventana de lección completada. */}
+      <div ref={endRef} aria-hidden />
+      {finishOpen && (
+        <ResultDialog
+          tone="correct"
+          title="¡Lección completada!"
+          primary={{ label: nextLabel, onClick: goNextLesson }}
+          secondary={{ label: 'Cerrar', onClick: closeFinish }}
+          onDismiss={closeFinish}
+        >
+          Has terminado «{lesson.title}».
+        </ResultDialog>
+      )}
 
       {/* Móvil: fija abajo, sobre la barra de pestañas, con un degradado para no cortar el contenido en seco.
           En dos columnas va dentro del panel (ver `nav`), para no tapar la parte baja del tablero. */}
@@ -149,5 +206,15 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
         {navButtons}
       </div>
     </div>
+  );
+}
+
+/** «Siguiente lección» y, debajo, su título (como mucho dos líneas, para títulos largos). */
+function NextLessonLabel({ title }: { title: string }) {
+  return (
+    <span className="grid min-w-0 text-center leading-tight">
+      <span>Siguiente lección</span>
+      <span className="line-clamp-2 text-xs font-normal opacity-85">{title}</span>
+    </span>
   );
 }

@@ -44,7 +44,7 @@ export function TextPageView({ page, coordinates, nav }: PageProps<TextPage>) {
   );
 }
 
-export function QuizPageView({ page, onComplete, completed, coordinates, nav, onNext }: PageProps<QuizPage>) {
+export function QuizPageView({ page, onComplete, completed, coordinates, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<QuizPage>) {
   const [chosen, setChosen] = useState<number | null>(completed ? page.answer : null);
   // En móvil (con tablero) las opciones están en un panel lateral y el resultado sale en una ventana
   // centrada en la pantalla; al cerrarla, el acierto queda en el texto.
@@ -111,8 +111,8 @@ export function QuizPageView({ page, onComplete, completed, coordinates, nav, on
         (right ? (
           <ResultDialog
             tone="correct"
-            title="¡Correcto!"
-            primary={onNext ? { label: 'Siguiente', onClick: onNext } : { label: 'Entendido', onClick: closePopup }}
+            title={finishTitle ?? '¡Correcto!'}
+            primary={onNext ? { label: nextLabel, onClick: onNext } : { label: 'Entendido', onClick: closePopup }}
             secondary={onNext ? { label: 'Cerrar', onClick: closePopup } : undefined}
             onDismiss={closePopup}
           >

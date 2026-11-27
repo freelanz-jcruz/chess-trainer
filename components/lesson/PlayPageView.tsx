@@ -30,7 +30,7 @@ function stillWinning(score: Score): boolean {
 type Phase = 'intro' | 'user' | 'checking' | 'opponent' | 'won' | 'lost';
 
 /** Jugar contra Stockfish desde una posición hasta dar mate (o coronar). */
-export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext }: PageProps<PlayPage>) {
+export default function PlayPageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<PlayPage>) {
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [lastMove, setLastMove] = useState<[string, string] | null>(null);
@@ -184,8 +184,8 @@ export default function PlayPageView({ page, onComplete, coordinates, engineTime
       {dialog && phase === 'won' && (
         <ResultDialog
           tone="correct"
-          title="¡Conseguido!"
-          primary={onNext ? { label: 'Siguiente', onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
+          title={finishTitle ?? '¡Conseguido!'}
+          primary={onNext ? { label: nextLabel, onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
           secondary={onNext && { label: 'Cerrar', onClick: closeDialog }}
           onDismiss={closeDialog}
         >

@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 /** Mismo punto que la variante `trainer:` (tablero y panel en dos columnas). */
-const TWO_COLUMNS = '(min-width: 51.25rem)';
+export const TWO_COLUMNS = '(min-width: 51.25rem)';
 
-type Action = { label: string; onClick: () => void };
+type Action = { label: React.ReactNode; onClick: () => void };
 
 /**
  * Resultado de un ejercicio o una pregunta en una ventana modal centrada en la pantalla, para verlo sin
@@ -68,7 +68,8 @@ export default function ResultDialog({
         </h2>
         {children && <div className="m-0">{children}</div>}
         <div className="grid gap-2">
-          <Button ref={button} className="w-full" onClick={primary.onClick}>
+          {/* Altura libre: la etiqueta puede ocupar dos líneas (p. ej. el título de la lección siguiente). */}
+          <Button ref={button} className="h-auto min-h-9 w-full py-2 whitespace-normal" onClick={primary.onClick}>
             {primary.label}
           </Button>
           {secondary && (

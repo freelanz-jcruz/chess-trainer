@@ -17,7 +17,7 @@ import type { PageProps } from './types';
 const stripSuffix = (san: string) => san.replace(/[+#]$/, '');
 
 /** Encontrar una jugada: de una lista, cualquier buena según Stockfish o cualquier mate. */
-export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext }: PageProps<MovePage>) {
+export default function MovePageView({ page, onComplete, coordinates, engineTimeMs, nav, onNext, nextLabel = 'Siguiente', finishTitle }: PageProps<MovePage>) {
   const myColor = page.opponentMove ? opposite(turnColor(page.fen)) : turnColor(page.fen);
   const [fen, setFen] = useState(page.fen);
   const [startFen, setStartFen] = useState(page.fen);
@@ -126,8 +126,8 @@ export default function MovePageView({ page, onComplete, coordinates, engineTime
       {dialog && feedback.kind === 'verdict' && (
         <ResultDialog
           tone="correct"
-          title="¡Correcto!"
-          primary={onNext ? { label: 'Siguiente', onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
+          title={finishTitle ?? '¡Correcto!'}
+          primary={onNext ? { label: nextLabel, onClick: onNext } : { label: 'Continuar', onClick: closeDialog }}
           secondary={onNext && { label: 'Cerrar', onClick: closeDialog }}
           onDismiss={closeDialog}
         >
