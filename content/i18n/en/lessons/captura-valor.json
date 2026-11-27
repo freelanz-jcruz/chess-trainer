@@ -1,0 +1,106 @@
+{
+  "title": {
+    "from": "Capturar y el valor de las piezas",
+    "to": "Capturing and piece values"
+  },
+  "summary": {
+    "from": "Qué es capturar, cuánto vale cada pieza y cómo detectar piezas sin defensa.",
+    "to": "What capturing is, how much each piece is worth and how to spot undefended pieces."
+  },
+  "pages.0.title": {
+    "from": "Capturar",
+    "to": "Capturing"
+  },
+  "pages.0.body": {
+    "from": "**Capturar** es quitar una pieza rival del tablero ocupando su casilla. Todas las piezas capturan igual que se mueven, salvo el peón, que captura en diagonal.\n\nCapturar no es obligatorio: decides tú.",
+    "to": "**Capturing** means removing an enemy piece from the board by moving onto its square. All pieces capture the same way they move, except the pawn, which captures diagonally.\n\nCapturing is not compulsory: it is your choice."
+  },
+  "pages.1.title": {
+    "from": "¿Cuánto vale cada pieza?",
+    "to": "How much is each piece worth?"
+  },
+  "pages.1.body": {
+    "from": "Para saber si un cambio te conviene, se usa este valor aproximado:\n\n- Peón: **1**\n- Caballo: **3**\n- Alfil: **3**\n- Torre: **5**\n- Dama: **9**\n- Rey: no tiene precio, porque perderlo es perder la partida\n\nEs una guía, no una regla: a veces la posición importa más que los puntos.",
+    "to": "To know whether a trade is good for you, use these approximate values:\n\n- Pawn: **1**\n- Knight: **3**\n- Bishop: **3**\n- Rook: **5**\n- Queen: **9**\n- King: priceless, because losing it means losing the game\n\nIt is a guide, not a rule: sometimes the position matters more than the points."
+  },
+  "pages.2.body": {
+    "from": "Puedes capturar un caballo, pero a cambio pierdes tu torre. ¿Te conviene?",
+    "to": "You can capture a knight, but you lose your rook in return. Is it worth it?"
+  },
+  "pages.2.options.0": {
+    "from": "Sí, gano una pieza",
+    "to": "Yes, I win a piece"
+  },
+  "pages.2.options.1": {
+    "from": "No: doy 5 puntos y recibo 3",
+    "to": "No: I give 5 points and get 3"
+  },
+  "pages.2.options.2": {
+    "from": "Da igual: valen lo mismo",
+    "to": "It makes no difference: they are worth the same"
+  },
+  "pages.2.explain": {
+    "from": "La torre (5) vale más que el caballo (3).",
+    "to": "The rook (5) is worth more than the knight (3)."
+  },
+  "pages.3.body": {
+    "from": "¿Qué vale más: dos alfiles o una torre?",
+    "to": "Which is worth more: two bishops or one rook?"
+  },
+  "pages.3.options.0": {
+    "from": "Dos alfiles",
+    "to": "Two bishops"
+  },
+  "pages.3.options.1": {
+    "from": "Una torre",
+    "to": "One rook"
+  },
+  "pages.3.options.2": {
+    "from": "Valen lo mismo",
+    "to": "They are worth the same"
+  },
+  "pages.3.explain": {
+    "from": "Dos piezas menores suman 6 puntos; la torre, 5.",
+    "to": "Two minor pieces add up to 6 points; the rook, 5."
+  },
+  "pages.4.title": {
+    "from": "Piezas colgadas",
+    "to": "Hanging pieces"
+  },
+  "pages.4.body": {
+    "from": "Una pieza está **colgada** cuando está atacada y nadie la defiende: el rival puede capturarla gratis.\n\nAntes de cada jugada, pregúntate: ¿hay alguna pieza rival sin defender? ¿Y alguna mía?",
+    "to": "A piece is **hanging** when it is attacked and nobody defends it: your opponent can capture it for free.\n\nBefore every move, ask yourself: is there an undefended enemy piece? And one of mine?"
+  },
+  "pages.5.body": {
+    "from": "Hay una pieza negra sin defensa. Captúrala.",
+    "to": "There is an undefended black piece. Capture it."
+  },
+  "pages.5.success": {
+    "from": "¡Bien! Un caballo gratis.",
+    "to": "Nice! A free knight."
+  },
+  "pages.6.body": {
+    "from": "Puedes capturar un peón o una torre. Elige la mejor captura.",
+    "to": "You can capture a pawn or a rook. Choose the best capture."
+  },
+  "pages.6.hint": {
+    "from": "Compara lo que vale cada pieza.",
+    "to": "Compare what each piece is worth."
+  },
+  "pages.7.body": {
+    "from": "El caballo blanco puede capturar el peón de d5. ¿Es buena idea?",
+    "to": "The white knight can capture the pawn on d5. Is it a good idea?"
+  },
+  "pages.7.options.0": {
+    "from": "Sí: gano un peón",
+    "to": "Yes: I win a pawn"
+  },
+  "pages.7.options.1": {
+    "from": "No: el peón está defendido y perdería el caballo",
+    "to": "No: the pawn is defended and I would lose the knight"
+  },
+  "pages.7.explain": {
+    "from": "El peón de e6 defiende d5: darías 3 puntos por 1.",
+    "to": "The pawn on e6 defends d5: you would give 3 points for 1."
+  }
+}

@@ -3,29 +3,26 @@ import { BookOpen, ChartColumn, History, Puzzle, type LucideIcon } from 'lucide-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useT } from '@/lib/i18n/react';
+import { useHref, useT } from '@/lib/i18n/react';
+import { navSection, parseRoute, type Route } from '@/lib/i18n/routes';
 import type { Messages } from '@/lib/i18n';
 import { useDueCount } from './ReviewPage';
 
-type NavItem = { href: string; label: keyof Omit<Messages['nav'], 'label' | 'pending'>; icon: LucideIcon; match: (path: string) => boolean };
+type Section = 'home' | 'review' | 'puzzles' | 'progress';
+type NavItem = { section: Section; route: Route; label: keyof Omit<Messages['nav'], 'label' | 'pending'>; icon: LucideIcon };
 
+// Las lecciones y aperturas cuentan como «Temario»: se abren desde él (ver navSection).
 const NAV: NavItem[] = [
-  {
-    href: '/',
-    label: 'curriculum',
-    icon: BookOpen,
-    // Las lecciones y aperturas se abren desde el temario.
-    match: (p) => p === '/' || p.startsWith('/lecciones/') || p.startsWith('/aperturas/'),
-  },
-  { href: '/repaso/', label: 'review', icon: History, match: (p) => p.startsWith('/repaso/') },
-  { href: '/ejercicios/todos/', label: 'puzzles', icon: Puzzle, match: (p) => p.startsWith('/ejercicios/') },
-  { href: '/progreso/', label: 'progress', icon: ChartColumn, match: (p) => p.startsWith('/progreso/') },
+  { section: 'home', route: { name: 'home' }, label: 'curriculum', icon: BookOpen },
+  { section: 'review', route: { name: 'review' }, label: 'review', icon: History },
+  { section: 'puzzles', route: { name: 'puzzles', id: 'todos' }, label: 'puzzles', icon: Puzzle },
+  { section: 'progress', route: { name: 'progress' }, label: 'progress', icon: ChartColumn },
 ];
 
-/** Ruta actual sin basePath y siempre con barra final, para comparar. */
-function useCurrentPath() {
-  const path = usePathname() ?? '/';
-  return path.endsWith('/') ? path : `${path}/`;
+/** Sección de la página actual (en cualquier idioma). */
+function useCurrentSection(): Section | null {
+  const parsed = parseRoute(usePathname() ?? '/');
+  return parsed && navSection(parsed.route);
 }
 
 function DueBadge({ count, className }: { count: number | null; className?: string }) {
@@ -46,13 +43,15 @@ function DueBadge({ count, className }: { count: number | null; className?: stri
 
 /** Enlaces de la cabecera en pantallas medianas y grandes. */
 export function DesktopNav() {
-  const path = useCurrentPath();
+  const current = useCurrentSection();
   const due = useDueCount();
   const tn = useT().nav;
+  const toHref = useHref();
   return (
     <nav aria-label={tn.label} className="hidden items-center gap-1 md:flex">
-      {NAV.map(({ href, label, match }) => {
-        const active = match(path);
+      {NAV.map(({ section, route, label }) => {
+        const active = current === section;
+        const href = toHref(route);
         return (
           <Link
             key={href}
@@ -64,7 +63,7 @@ export function DesktopNav() {
             )}
           >
             {tn[label]}
-            {href === '/repaso/' && <DueBadge count={due} />}
+            {section === 'review' && <DueBadge count={due} />}
           </Link>
         );
       })}
@@ -74,17 +73,19 @@ export function DesktopNav() {
 
 /** Barra de pestañas fija abajo en móvil, al alcance del pulgar. */
 export function MobileTabBar() {
-  const path = useCurrentPath();
+  const current = useCurrentSection();
   const due = useDueCount();
   const tn = useT().nav;
+  const toHref = useHref();
   return (
     <nav
       aria-label={tn.label}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 px-[env(safe-area-inset-left)] pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
       <ul className="m-0 grid h-14 list-none grid-cols-4 p-0">
-        {NAV.map(({ href, label, icon: Icon, match }) => {
-          const active = match(path);
+        {NAV.map(({ section, route, label, icon: Icon }) => {
+          const active = current === section;
+          const href = toHref(route);
           return (
             <li key={href} className="flex">
               <Link
@@ -97,7 +98,7 @@ export function MobileTabBar() {
               >
                 <span className="relative">
                   <Icon aria-hidden size={22} strokeWidth={active ? 2.2 : 1.8} />
-                  {href === '/repaso/' && <DueBadge count={due} className="absolute -top-1.5 -right-2.5" />}
+                  {section === 'review' && <DueBadge count={due} className="absolute -top-1.5 -right-2.5" />}
                 </span>
                 {tn[label]}
               </Link>

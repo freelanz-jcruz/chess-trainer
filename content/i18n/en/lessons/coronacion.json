@@ -1,0 +1,50 @@
+{
+  "title": {
+    "from": "Coronación",
+    "to": "Promotion"
+  },
+  "summary": {
+    "from": "Qué pasa cuando un peón llega al final.",
+    "to": "What happens when a pawn reaches the end."
+  },
+  "pages.0.title": {
+    "from": "Coronar",
+    "to": "Promoting"
+  },
+  "pages.0.body": {
+    "from": "Cuando un peón llega a la **última fila** se **corona**: se cambia por una dama, una torre, un alfil o un caballo, a tu elección.\n\nCasi siempre se elige la **dama**, la pieza más fuerte. Por eso los peones avanzados son tan peligrosos.",
+    "to": "When a pawn reaches the **last rank** it **promotes**: it is exchanged for a queen, a rook, a bishop or a knight, whichever you choose.\n\nYou almost always choose the **queen**, the strongest piece. That is why advanced pawns are so dangerous."
+  },
+  "pages.1.body": {
+    "from": "Corona el peón y elige **dama**.",
+    "to": "Promote the pawn and choose a **queen**."
+  },
+  "pages.2.body": {
+    "from": "Corona dando **jaque mate**.",
+    "to": "Promote with **checkmate**."
+  },
+  "pages.3.body": {
+    "from": "A veces conviene coronar a **caballo**. Corona dando jaque y atacando a la vez al rey y a la dama.",
+    "to": "Sometimes it is better to promote to a **knight**. Promote with check, attacking the king and the queen at the same time."
+  },
+  "pages.3.hint": {
+    "from": "El caballo ataca en forma de L.",
+    "to": "The knight attacks in an L shape."
+  },
+  "pages.3.success": {
+    "from": "¡Ataque doble! Ganarás la dama.",
+    "to": "A fork! You will win the queen."
+  },
+  "pages.4.body": {
+    "from": "¿Puede un peón coronarse en rey?",
+    "to": "Can a pawn promote to a king?"
+  },
+  "pages.4.options.0": {
+    "from": "Sí",
+    "to": "Yes"
+  },
+  "pages.4.options.1": {
+    "from": "No: solo en dama, torre, alfil o caballo",
+    "to": "No: only to a queen, rook, bishop or knight"
+  }
+}

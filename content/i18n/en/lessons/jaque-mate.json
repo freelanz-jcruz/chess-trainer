@@ -1,0 +1,78 @@
+{
+  "title": {
+    "from": "Jaque y jaque mate",
+    "to": "Check and checkmate"
+  },
+  "summary": {
+    "from": "Qué es el jaque, las tres formas de salir de él y qué es el jaque mate.",
+    "to": "What check is, the three ways out of it and what checkmate is."
+  },
+  "pages.0.title": {
+    "from": "El jaque",
+    "to": "Check"
+  },
+  "pages.0.body": {
+    "from": "Un rey está en **jaque** cuando una pieza rival lo ataca.\n\nEl jaque **hay que resolverlo enseguida**: no se puede hacer ninguna jugada que deje al propio rey atacado.",
+    "to": "A king is in **check** when an enemy piece attacks it.\n\nCheck **must be dealt with straight away**: you cannot make any move that leaves your own king under attack."
+  },
+  "pages.1.title": {
+    "from": "Salir del jaque",
+    "to": "Getting out of check"
+  },
+  "pages.1.body": {
+    "from": "Hay tres formas de salir del jaque:\n\n- **Mover el rey** a una casilla segura.\n- **Capturar** la pieza que da jaque.\n- **Tapar** el jaque poniendo una pieza en medio.\n\nSi no hay ninguna de las tres, es **jaque mate** y la partida termina.",
+    "to": "There are three ways to get out of check:\n\n- **Move the king** to a safe square.\n- **Capture** the piece giving check.\n- **Block** the check by putting a piece in between.\n\nIf none of the three is possible, it is **checkmate** and the game is over."
+  },
+  "pages.2.body": {
+    "from": "Estás en jaque. Sal del jaque **moviendo el rey**.",
+    "to": "You are in check. Get out of check **by moving the king**."
+  },
+  "pages.2.hint": {
+    "from": "La torre ataca toda la columna e: busca una casilla fuera de ella.",
+    "to": "The rook attacks the whole e-file: look for a square off it."
+  },
+  "pages.3.body": {
+    "from": "Ahora sal del jaque **capturando** la pieza que lo da.",
+    "to": "Now get out of check **by capturing** the piece giving it."
+  },
+  "pages.3.hint": {
+    "from": "Tu peón puede capturar en diagonal.",
+    "to": "Your pawn can capture diagonally."
+  },
+  "pages.4.body": {
+    "from": "Ahora **tapa** el jaque con una pieza.",
+    "to": "Now **block** the check with a piece."
+  },
+  "pages.4.hint": {
+    "from": "Pon una pieza entre la torre y tu rey.",
+    "to": "Put a piece between the rook and your king."
+  },
+  "pages.5.title": {
+    "from": "Jaque mate",
+    "to": "Checkmate"
+  },
+  "pages.5.body": {
+    "from": "Esto es **jaque mate**: el rey negro está en jaque y no puede escapar a ninguna casilla, ni capturar la torre, ni tapar el jaque.\n\nDar jaque mate es el **objetivo** de la partida.",
+    "to": "This is **checkmate**: the black king is in check and cannot escape to any square, capture the rook or block the check.\n\nDelivering checkmate is the **goal** of the game."
+  },
+  "pages.6.body": {
+    "from": "Da jaque mate en una jugada.",
+    "to": "Deliver checkmate in one move."
+  },
+  "pages.6.hint": {
+    "from": "Los peones negros encierran a su propio rey.",
+    "to": "The black pawns box in their own king."
+  },
+  "pages.7.body": {
+    "from": "Da jaque mate con la dama.",
+    "to": "Deliver checkmate with the queen."
+  },
+  "pages.7.hint": {
+    "from": "Tu rey ya vigila las casillas a7 y b7.",
+    "to": "Your king already covers a7 and b7."
+  },
+  "pages.8.body": {
+    "from": "Juegas con negras. Da jaque mate.",
+    "to": "You are playing Black. Deliver checkmate."
+  }
+}

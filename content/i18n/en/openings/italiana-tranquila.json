@@ -1,0 +1,114 @@
+{
+  "name": {
+    "from": "Apertura Italiana: Giuoco Pianissimo",
+    "to": "Italian Game: Giuoco Pianissimo"
+  },
+  "summary": {
+    "from": "Desarrollo tranquilo y sólido: sacar las piezas, enrocar y preparar el centro sin prisas.",
+    "to": "Quiet, solid development: bring the pieces out, castle and prepare the centre without hurrying."
+  },
+  "steps.0.note": {
+    "from": "Un peón al centro: controla casillas clave y abre camino al alfil y a la dama.",
+    "to": "A pawn to the centre: it controls key squares and opens the way for the bishop and the queen."
+  },
+  "steps.1.note": {
+    "from": "Las negras responden igual y también reclaman su parte del centro.",
+    "to": "Black replies in the same way and also claims a share of the centre."
+  },
+  "steps.2.note": {
+    "from": "Se desarrolla una pieza y, de paso, se ataca el peón de e5.",
+    "to": "A piece is developed and, at the same time, the pawn on e5 is attacked."
+  },
+  "steps.3.note": {
+    "from": "Defender desarrollando: el caballo protege e5 y sale hacia el centro.",
+    "to": "Defending while developing: the knight protects e5 and comes out towards the centre."
+  },
+  "steps.4.note": {
+    "from": "El alfil mira hacia f7, la casilla más delicada del rey negro al principio.",
+    "to": "The bishop aims at f7, the black king’s most sensitive square at the start."
+  },
+  "steps.5.note": {
+    "from": "Las negras colocan su alfil en la diagonal equivalente, apuntando a f2.",
+    "to": "Black puts their bishop on the matching diagonal, aiming at f2."
+  },
+  "steps.5.branches.0.name": {
+    "from": "3...Cf6: Dos Caballos",
+    "to": "3...Nf6: Two Knights"
+  },
+  "steps.5.branches.0.steps.0.note": {
+    "from": "Las negras desarrollan el otro caballo y atacan e4.",
+    "to": "Black develops the other knight and attacks e4."
+  },
+  "steps.5.branches.0.steps.1.note": {
+    "from": "Defiendes e4 con calma. Cg5 es más agresivo (ver la trampa Fegatello), pero d3 es más sencillo.",
+    "to": "You calmly defend e4. Ng5 is more aggressive (see the Fried Liver trap), but d3 is simpler."
+  },
+  "steps.5.branches.0.steps.2.note": {
+    "from": "Las negras desarrollan sin prisas.",
+    "to": "Black develops without hurrying."
+  },
+  "steps.5.branches.0.steps.3.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.5.branches.0.steps.4.note": {
+    "from": "Las negras también enrocan.",
+    "to": "Black castles too."
+  },
+  "steps.5.branches.0.steps.5.note": {
+    "from": "La torre apoya e4.",
+    "to": "The rook supports e4."
+  },
+  "steps.5.branches.0.steps.6.note": {
+    "from": "Las negras sostienen e5.",
+    "to": "Black holds e5."
+  },
+  "steps.5.branches.0.steps.7.note": {
+    "from": "Preparas d4 y das una casilla de retirada al alfil.",
+    "to": "You prepare d4 and give the bishop a retreat square."
+  },
+  "steps.6.note": {
+    "from": "Preparar d4 más adelante y dar al alfil una casilla de retirada.",
+    "to": "Preparing d4 for later and giving the bishop a retreat square."
+  },
+  "steps.7.note": {
+    "from": "Otra pieza menor fuera, presionando el peón de e4.",
+    "to": "Another minor piece out, putting pressure on the e4 pawn."
+  },
+  "steps.8.note": {
+    "from": "Defender e4 con calma. Es la idea de la versión tranquila: primero, terminar el desarrollo.",
+    "to": "Calmly defending e4. That is the idea of the quiet version: first, finish developing."
+  },
+  "steps.9.note": {
+    "from": "Las negras hacen lo mismo: sostienen e5 y abren paso al alfil de casillas blancas.",
+    "to": "Black does the same: holds e5 and opens the way for the light-squared bishop."
+  },
+  "steps.10.note": {
+    "from": "Enrocar pronto pone al rey a salvo y conecta la torre con el juego.",
+    "to": "Castling early puts the king in safety and connects the rook with the game."
+  },
+  "steps.11.note": {
+    "from": "Las negras también ponen su rey a salvo.",
+    "to": "Black also puts their king in safety."
+  },
+  "steps.12.note": {
+    "from": "La torre se coloca detrás del peón de e4, en la columna donde puede abrirse el juego.",
+    "to": "The rook goes behind the e4 pawn, on the file where the game may open up."
+  },
+  "steps.13.note": {
+    "from": "Prepara una retirada para el alfil y la posibilidad de avanzar ...b5.",
+    "to": "It prepares a retreat for the bishop and the option of advancing ...b5."
+  },
+  "steps.14.note": {
+    "from": "El alfil se aparta antes de que lo molesten, sin dejar de mirar a f7.",
+    "to": "The bishop steps back before it is harassed, still aiming at f7."
+  },
+  "steps.15.note": {
+    "from": "El alfil negro también se pone a salvo en su diagonal.",
+    "to": "The black bishop also gets to safety on its diagonal."
+  },
+  "steps.16.note": {
+    "from": "Una casilla de escape para el rey y se impide que un alfil o caballo rival se instale en g4.",
+    "to": "An escape square for the king, and it stops an enemy bishop or knight from settling on g4."
+  }
+}

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import type { Puzzle } from '@/lib/content/schemas';
 import { dueItems, INTERVALS, MAX_BOX, nextDueDay } from '@/lib/progress/review';
 import { today, useProgress } from '@/lib/progress/store';
-import { useT } from '@/lib/i18n/react';
+import { useHref, useT } from '@/lib/i18n/react';
 
 type OpeningMeta = { id: string; name: string; side: 'white' | 'black' };
 
@@ -19,6 +19,7 @@ const formatDay = (day: string, intlLocale: string) =>
 export default function ReviewPage({ openings, puzzles }: { openings: OpeningMeta[]; puzzles: Puzzle[] }) {
   const { progress } = useProgress();
   const t = useT();
+  const href = useHref();
   const tr = t.review;
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -48,7 +49,7 @@ export default function ReviewPage({ openings, puzzles }: { openings: OpeningMet
         <ul className="my-3.5 list-disc pl-5">
           {dueOpenings.map((o) => (
             <li key={o.id} className="my-1">
-              <Link href={`/aperturas/${o.id}/practica/`}>{o.name}</Link>{' '}
+              <Link href={href({ name: 'practice', id: o.id })}>{o.name}</Link>{' '}
               <span className="text-sm text-muted-foreground">
                 {tr.openingMeta(o.side === 'white', o.box, MAX_BOX)}
               </span>

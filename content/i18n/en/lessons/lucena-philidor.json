@@ -1,0 +1,138 @@
+{
+  "title": {
+    "from": "Finales de torre: Lucena y Philidor",
+    "to": "Rook endgames: Lucena and Philidor"
+  },
+  "summary": {
+    "from": "Las dos posiciones clave de torre y peón contra torre: cómo ganar construyendo un puente y cómo hacer tablas con la torre en la sexta fila.",
+    "to": "The two key positions of rook and pawn against rook: how to win by building a bridge and how to draw with the rook on the sixth rank."
+  },
+  "pages.0.title": {
+    "from": "La posición de Lucena",
+    "to": "The Lucena position"
+  },
+  "pages.0.body": {
+    "from": "Tu peón está en la séptima, tu rey delante de él y tu torre **corta al rey rival** por la columna f. Parece fácil, pero el rey no puede salir: en cuanto se aparta, la torre negra lo persigue con jaques.\n\nEsta posición se gana siempre, si conoces el método.",
+    "to": "Your pawn is on the seventh rank, your king in front of it and your rook **cuts off the enemy king** along the f-file. It looks easy, but the king cannot get out: as soon as it steps aside, the black rook chases it with checks.\n\nThis position is always a win, if you know the method."
+  },
+  "pages.1.body": {
+    "from": "¿Qué pasa si sacas ya el rey a e7, sin preparar nada?",
+    "to": "What happens if you bring the king out to e7 right away, without preparing anything?"
+  },
+  "pages.1.options.0": {
+    "from": "La torre negra empieza a dar jaques y el rey no encuentra refugio",
+    "to": "The black rook starts giving checks and the king finds no shelter"
+  },
+  "pages.1.options.1": {
+    "from": "El peón queda clavado y se pierde",
+    "to": "The pawn is pinned and lost"
+  },
+  "pages.1.options.2": {
+    "from": "Es ahogado y la partida acaba en tablas",
+    "to": "It is stalemate and the game ends in a draw"
+  },
+  "pages.1.explain": {
+    "from": "El rey blanco tendría que volver a d8 o alejarse mucho del peón. Hace falta un escudo contra los jaques.",
+    "to": "The white king would have to go back to d8 or move far away from the pawn. It needs a shield against the checks."
+  },
+  "pages.2.title": {
+    "from": "Construir el puente",
+    "to": "Building the bridge"
+  },
+  "pages.2.body": {
+    "from": "El método se llama **construir el puente**:\n\n- Primero, la torre sube a la **cuarta fila**.\n- Después, el rey sale de delante del peón.\n- Cuando lleguen los jaques, el rey baja hasta la quinta fila y la torre **se interpone**. Los jaques se acaban y el peón corona.",
+    "to": "The method is called **building the bridge**:\n\n- First, the rook goes up to the **fourth rank**.\n- Then the king steps out from in front of the pawn.\n- When the checks come, the king goes down to the fifth rank and the rook **interposes**. The checks run out and the pawn promotes."
+  },
+  "pages.3.body": {
+    "from": "Primer paso del puente: **lleva la torre a la cuarta fila**, sin dejar de cortar al rey negro.",
+    "to": "First step of the bridge: **take the rook to the fourth rank**, while still cutting off the black king."
+  },
+  "pages.3.hint": {
+    "from": "La torre sigue en la columna f, pero más arriba.",
+    "to": "The rook stays on the f-file, but higher up."
+  },
+  "pages.3.success": {
+    "from": "Ahora el rey puede salir: la torre servirá de escudo.",
+    "to": "Now the king can come out: the rook will act as a shield."
+  },
+  "pages.4.body": {
+    "from": "Tu rey ha salido y ha bajado esquivando jaques. Llega otro: **interpón la torre**.",
+    "to": "Your king has come out and walked down dodging checks. Another one comes: **interpose the rook**."
+  },
+  "pages.4.hint": {
+    "from": "La torre de la cuarta fila tapa la columna d.",
+    "to": "The rook on the fourth rank blocks the d-file."
+  },
+  "pages.4.success": {
+    "from": "Se acabaron los jaques: el peón corona.",
+    "to": "No more checks: the pawn promotes."
+  },
+  "pages.5.body": {
+    "from": "Ahora entero, contra la defensa de Stockfish. **Corona el peón** construyendo el puente.",
+    "to": "Now the whole thing, against Stockfish’s defence. **Promote the pawn** by building the bridge."
+  },
+  "pages.5.hint": {
+    "from": "Tf4, saca el rey por e7 y baja hasta la quinta fila. Cuando te den jaque en la columna d, Td4.",
+    "to": "Rf4, bring the king out via e7 and walk down to the fifth rank. When you get checked on the d-file, Rd4."
+  },
+  "pages.6.title": {
+    "from": "La posición de Philidor",
+    "to": "The Philidor position"
+  },
+  "pages.6.body": {
+    "from": "Ahora defiendes tú, con negras. Tu rey está **delante del peón** y tu torre en la **sexta fila**, que corta el paso al rey blanco.\n\nMientras el peón no avance, la torre no se mueve de esa fila. Si el peón llega a la sexta, la torre se va **atrás del todo** y da jaques desde lejos.",
+    "to": "Now you are defending, with Black. Your king is **in front of the pawn** and your rook on the **sixth rank**, which blocks the white king’s path.\n\nAs long as the pawn does not advance, the rook stays on that rank. If the pawn reaches the sixth, the rook goes **all the way back** and gives checks from a distance."
+  },
+  "pages.7.body": {
+    "from": "Tu torre está pasiva en h1. **Colócala en la sexta fila** para frenar al rey blanco.",
+    "to": "Your rook is passive on h1. **Put it on the sixth rank** to hold back the white king."
+  },
+  "pages.7.hint": {
+    "from": "Sube por la columna h.",
+    "to": "Go up the h-file."
+  },
+  "pages.7.success": {
+    "from": "El rey blanco ya no puede pasar a la sexta fila.",
+    "to": "The white king can no longer cross to the sixth rank."
+  },
+  "pages.8.body": {
+    "from": "Las blancas avanzan el peón a la sexta. **Es el momento de cambiar de plan.**",
+    "to": "White advances the pawn to the sixth. **Time to change plans.**"
+  },
+  "pages.8.hint": {
+    "from": "Lleva la torre lejos, abajo, para dar jaques por detrás.",
+    "to": "Take the rook far away, to the bottom, to give checks from behind."
+  },
+  "pages.8.success": {
+    "from": "El rey blanco ya no tiene dónde esconderse de los jaques: son tablas.",
+    "to": "The white king has nowhere left to hide from the checks: it is a draw."
+  },
+  "pages.9.body": {
+    "from": "¿Por qué la torre se va atrás justo cuando el peón llega a la sexta?",
+    "to": "Why does the rook go back just when the pawn reaches the sixth rank?"
+  },
+  "pages.9.options.0": {
+    "from": "Porque el rey blanco ya no puede usar la sexta fila y no tiene refugio contra los jaques",
+    "to": "Because the white king can no longer use the sixth rank and has no shelter from the checks"
+  },
+  "pages.9.options.1": {
+    "from": "Porque en la sexta fila la torre quedaría clavada",
+    "to": "Because on the sixth rank the rook would be pinned"
+  },
+  "pages.9.options.2": {
+    "from": "Para dar mate al rey blanco",
+    "to": "To checkmate the white king"
+  },
+  "pages.9.explain": {
+    "from": "Con el peón en e6, el rey blanco no puede ponerse delante de él para cubrirse. La torre lo persigue desde lejos y no puede librarse de los jaques.",
+    "to": "With the pawn on e6, the white king cannot stand in front of it for cover. The rook chases it from afar and it cannot escape the checks."
+  },
+  "pages.10.title": {
+    "from": "Resumen",
+    "to": "Summary"
+  },
+  "pages.10.body": {
+    "from": "- **Lucena (ganar)**: torre a la cuarta fila, rey fuera, y la torre se interpone cuando llegan los jaques.\n- **Philidor (tablas)**: rey delante del peón y torre en la sexta fila. Cuando el peón llega a la sexta, la torre va atrás y da jaques.",
+    "to": "- **Lucena (winning)**: rook to the fourth rank, king out, and the rook interposes when the checks come.\n- **Philidor (drawing)**: king in front of the pawn and rook on the sixth rank. When the pawn reaches the sixth, the rook goes back and gives checks."
+  }
+}

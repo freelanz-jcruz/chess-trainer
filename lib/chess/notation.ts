@@ -1,18 +1,19 @@
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locales';
 
 /**
- * Letras de las piezas por idioma (rey, dama, torre, alfil, caballo). Internamente todo va en SAN inglesa
- * (la de chess.js); esto solo cambia lo que se muestra. En inglés serían las mismas: K, Q, R, B, N.
+ * Letras de las piezas por idioma (rey, dama, torre, alfil, caballo) y forma de escribir el enroque.
+ * Internamente todo va en SAN inglesa (la de chess.js); esto solo cambia lo que se muestra.
  */
-const PIECE_LETTERS: Record<Locale, Record<'K' | 'Q' | 'R' | 'B' | 'N', string>> = {
-  es: { K: 'R', Q: 'D', R: 'T', B: 'A', N: 'C' },
+const NOTATION: Record<Locale, { letters: Record<'K' | 'Q' | 'R' | 'B' | 'N', string>; castle: string }> = {
+  es: { letters: { K: 'R', Q: 'D', R: 'T', B: 'A', N: 'C' }, castle: '0' },
+  en: { letters: { K: 'K', Q: 'Q', R: 'R', B: 'B', N: 'N' }, castle: 'O' },
 };
 
-/** SAN inglesa → notación del idioma, p. ej. «Nf3» → «Cf3» y «O-O» → «0-0». Solo para mostrar. */
+/** SAN inglesa → notación del idioma, p. ej. en español «Nf3» → «Cf3» y «O-O» → «0-0». Solo para mostrar. */
 export function formatSan(san: string, locale: Locale = DEFAULT_LOCALE): string {
-  const letters = PIECE_LETTERS[locale];
-  if (san.startsWith('O-O-O')) return '0-0-0' + san.slice(5);
-  if (san.startsWith('O-O')) return '0-0' + san.slice(3);
+  const { letters, castle: c } = NOTATION[locale];
+  if (san.startsWith('O-O-O')) return `${c}-${c}-${c}` + san.slice(5);
+  if (san.startsWith('O-O')) return `${c}-${c}` + san.slice(3);
   // Pieza inicial y pieza de coronación (=Q).
   return san
     .replace(/^[KQRBN]/, (p) => letters[p as keyof typeof letters])

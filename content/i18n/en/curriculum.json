@@ -1,0 +1,234 @@
+{
+  "blocks.0.title": {
+    "from": "Fundamentos",
+    "to": "Fundamentals"
+  },
+  "blocks.0.description": {
+    "from": "Las piezas y cómo se mueven, capturar, el valor de cada pieza, jaque, mate y tablas.",
+    "to": "The pieces and how they move, capturing, the value of each piece, check, mate and draws."
+  },
+  "blocks.0.lessons.0.title": {
+    "from": "El tablero",
+    "to": "The board"
+  },
+  "blocks.0.lessons.1.title": {
+    "from": "Cómo se mueven las piezas",
+    "to": "How the pieces move"
+  },
+  "blocks.0.lessons.2.title": {
+    "from": "Capturar y el valor de las piezas",
+    "to": "Capturing and piece values"
+  },
+  "blocks.0.lessons.3.title": {
+    "from": "Jaque y jaque mate",
+    "to": "Check and checkmate"
+  },
+  "blocks.0.lessons.4.title": {
+    "from": "Ahogado y tablas",
+    "to": "Stalemate and draws"
+  },
+  "blocks.1.title": {
+    "from": "Movimientos especiales",
+    "to": "Special moves"
+  },
+  "blocks.1.description": {
+    "from": "Enroque, captura al paso y coronación.",
+    "to": "Castling, en passant and promotion."
+  },
+  "blocks.1.lessons.0.title": {
+    "from": "El enroque",
+    "to": "Castling"
+  },
+  "blocks.1.lessons.1.title": {
+    "from": "Captura al paso",
+    "to": "En passant"
+  },
+  "blocks.1.lessons.2.title": {
+    "from": "Coronación",
+    "to": "Promotion"
+  },
+  "blocks.2.title": {
+    "from": "Mates comunes",
+    "to": "Common mates"
+  },
+  "blocks.2.description": {
+    "from": "Patrones de mate que conviene reconocer y saber ejecutar.",
+    "to": "Mating patterns worth recognising and knowing how to deliver."
+  },
+  "blocks.2.lessons.0.title": {
+    "from": "Mate del pastor y cómo evitarlo",
+    "to": "Scholar’s mate and how to avoid it"
+  },
+  "blocks.2.lessons.1.title": {
+    "from": "Mate del pasillo",
+    "to": "Back-rank mate"
+  },
+  "blocks.2.lessons.2.title": {
+    "from": "Mate de la coz",
+    "to": "Smothered mate"
+  },
+  "blocks.2.lessons.3.title": {
+    "from": "Dama y rey contra rey",
+    "to": "Queen and king against king"
+  },
+  "blocks.2.lessons.4.title": {
+    "from": "Torre y rey contra rey",
+    "to": "Rook and king against king"
+  },
+  "blocks.2.lessons.5.title": {
+    "from": "Mate en 1",
+    "to": "Mate in 1"
+  },
+  "blocks.2.lessons.6.title": {
+    "from": "Mate en 2",
+    "to": "Mate in 2"
+  },
+  "blocks.2.lessons.7.title": {
+    "from": "Mate en 3",
+    "to": "Mate in 3"
+  },
+  "blocks.2.lessons.8.title": {
+    "from": "Mate en la última fila",
+    "to": "Mate on the last rank"
+  },
+  "blocks.2.lessons.9.title": {
+    "from": "Mates en 3 y 4",
+    "to": "Mates in 3 and 4"
+  },
+  "blocks.3.title": {
+    "from": "Principios de apertura",
+    "to": "Opening principles"
+  },
+  "blocks.3.description": {
+    "from": "Centro, desarrollo, enroque y otros consejos para las primeras jugadas.",
+    "to": "Centre, development, castling and other advice for the first moves."
+  },
+  "blocks.3.lessons.0.title": {
+    "from": "Los cinco principios",
+    "to": "The five principles"
+  },
+  "blocks.3.lessons.1.title": {
+    "from": "Aplica los principios",
+    "to": "Apply the principles"
+  },
+  "blocks.4.title": {
+    "from": "Repertorio",
+    "to": "Repertoire"
+  },
+  "blocks.4.description": {
+    "from": "Las aperturas que vas a jugar, paso a paso.",
+    "to": "The openings you are going to play, step by step."
+  },
+  "blocks.4.lessons.0.title": {
+    "from": "Italiana tranquila (blancas)",
+    "to": "Quiet Italian (White)"
+  },
+  "blocks.4.lessons.1.title": {
+    "from": "Española (blancas)",
+    "to": "Ruy Lopez (White)"
+  },
+  "blocks.4.lessons.2.title": {
+    "from": "Española del cambio (blancas)",
+    "to": "Ruy Lopez Exchange (White)"
+  },
+  "blocks.4.lessons.3.title": {
+    "from": "1...e5 contra 1.e4 (negras)",
+    "to": "1...e5 against 1.e4 (Black)"
+  },
+  "blocks.4.lessons.4.title": {
+    "from": "Gambito de Dama rehusado (negras)",
+    "to": "Queen’s Gambit Declined (Black)"
+  },
+  "blocks.4.lessons.5.title": {
+    "from": "Contra 1.Cf3 y 1.c4 (negras)",
+    "to": "Against 1.Nf3 and 1.c4 (Black)"
+  },
+  "blocks.4.lessons.6.title": {
+    "from": "Trampa: ataque Fegatello",
+    "to": "Trap: Fried Liver Attack"
+  },
+  "blocks.4.lessons.7.title": {
+    "from": "Trampa: mate de Légal",
+    "to": "Trap: Légal’s mate"
+  },
+  "blocks.5.title": {
+    "from": "Táctica",
+    "to": "Tactics"
+  },
+  "blocks.5.description": {
+    "from": "Golpes tácticos básicos para ganar material.",
+    "to": "Basic tactical blows to win material."
+  },
+  "blocks.5.lessons.0.title": {
+    "from": "Pieza colgada",
+    "to": "Hanging piece"
+  },
+  "blocks.5.lessons.1.title": {
+    "from": "Ataque doble",
+    "to": "Fork"
+  },
+  "blocks.5.lessons.2.title": {
+    "from": "Clavada",
+    "to": "Pin"
+  },
+  "blocks.5.lessons.3.title": {
+    "from": "Ataque a la descubierta",
+    "to": "Discovered attack"
+  },
+  "blocks.5.lessons.4.title": {
+    "from": "Enfilada, desviación y rayos X",
+    "to": "Skewer, deflection and X-ray"
+  },
+  "blocks.5.lessons.5.title": {
+    "from": "Enfilada",
+    "to": "Skewer"
+  },
+  "blocks.5.lessons.6.title": {
+    "from": "Desviación",
+    "to": "Deflection"
+  },
+  "blocks.5.lessons.7.title": {
+    "from": "Atracción",
+    "to": "Attraction"
+  },
+  "blocks.5.lessons.8.title": {
+    "from": "Táctica intermedia",
+    "to": "Intermediate tactics"
+  },
+  "blocks.5.lessons.9.title": {
+    "from": "Rayos X",
+    "to": "X-ray"
+  },
+  "blocks.5.lessons.10.title": {
+    "from": "Interferencia",
+    "to": "Interference"
+  },
+  "blocks.5.lessons.11.title": {
+    "from": "Jugada tranquila",
+    "to": "Quiet move"
+  },
+  "blocks.5.lessons.12.title": {
+    "from": "Táctica avanzada",
+    "to": "Advanced tactics"
+  },
+  "blocks.6.title": {
+    "from": "Finales básicos",
+    "to": "Basic endgames"
+  },
+  "blocks.6.description": {
+    "from": "Rey y peón contra rey, y la oposición.",
+    "to": "King and pawn against king, and the opposition."
+  },
+  "blocks.6.lessons.0.title": {
+    "from": "Rey y peón contra rey",
+    "to": "King and pawn against king"
+  },
+  "blocks.6.lessons.1.title": {
+    "from": "La oposición",
+    "to": "The opposition"
+  },
+  "blocks.6.lessons.2.title": {
+    "from": "Finales de torre: Lucena y Philidor",
+    "to": "Rook endgames: Lucena and Philidor"
+  }
+}

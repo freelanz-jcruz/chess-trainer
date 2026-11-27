@@ -1,0 +1,50 @@
+{
+  "title": {
+    "from": "Mate del pasillo",
+    "to": "Back-rank mate"
+  },
+  "summary": {
+    "from": "El rey encerrado detrás de sus peones.",
+    "to": "The king trapped behind its own pawns."
+  },
+  "pages.0.title": {
+    "from": "El mate del pasillo",
+    "to": "Back-rank mate"
+  },
+  "pages.0.body": {
+    "from": "El rey, detrás de sus propios peones, no tiene **casilla de escape**: una torre o una dama en la última fila le da mate.\n\nPara evitarlo, a veces conviene abrirle una **salida** al rey moviendo un peón (por ejemplo, h3 o h6).",
+    "to": "The king, behind its own pawns, has no **escape square**: a rook or a queen on the last rank mates it.\n\nTo avoid it, it is sometimes worth giving the king an **escape route** by moving a pawn (for example, h3 or h6)."
+  },
+  "pages.1.body": {
+    "from": "Da mate del pasillo.",
+    "to": "Deliver back-rank mate."
+  },
+  "pages.2.body": {
+    "from": "Juegas con negras. Da mate del pasillo.",
+    "to": "You are playing Black. Deliver back-rank mate."
+  },
+  "pages.3.body": {
+    "from": "**Mate en 2.** La torre negra defiende la última fila, pero solo puede defenderla una vez.",
+    "to": "**Mate in 2.** The black rook defends the last rank, but it can only defend it once."
+  },
+  "pages.4.body": {
+    "from": "¿Qué jugada le da una salida al rey blanco?",
+    "to": "Which move gives the white king an escape route?"
+  },
+  "pages.4.options.0": {
+    "from": "h3",
+    "to": "h3"
+  },
+  "pages.4.options.1": {
+    "from": "a4",
+    "to": "a4"
+  },
+  "pages.4.options.2": {
+    "from": "Rf1",
+    "to": "Kf1"
+  },
+  "pages.4.explain": {
+    "from": "Tras h3, el rey puede escapar a h2.",
+    "to": "After h3, the king can escape to h2."
+  }
+}

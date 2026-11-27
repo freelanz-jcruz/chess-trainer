@@ -10,7 +10,7 @@ import PanelExtras from './PanelExtras';
 import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen } from '@/lib/chess/opening-line';
-import { useSan, useT } from '@/lib/i18n/react';
+import { useHref, useSan, useT } from '@/lib/i18n/react';
 import { uciToSquares } from '@/lib/chess/game';
 import type { Opening } from '@/lib/content/schemas';
 import { openingForLevel } from '@/lib/content/levels';
@@ -19,6 +19,7 @@ import { updateOpening, useProgress } from '@/lib/progress/store';
 /** Recorrido paso a paso de una apertura con una frase breve por jugada. */
 export default function OpeningWalkthrough({ opening: fullOpening }: { opening: Opening }) {
   const t = useT();
+  const href = useHref();
   const tw = t.walkthrough;
   const { san: sanToEs } = useSan();
   const { progress, update } = useProgress();
@@ -134,7 +135,7 @@ export default function OpeningWalkthrough({ opening: fullOpening }: { opening: 
           <p className="flex flex-wrap items-center gap-2.5">
             {tw.seenAll}
             <Button asChild>
-              <Link href={`/aperturas/${opening.id}/practica/`}>{tw.practiceNow}</Link>
+              <Link href={href({ name: 'practice', id: opening.id })}>{tw.practiceNow}</Link>
             </Button>
           </p>
         )}

@@ -1,0 +1,46 @@
+{
+  "title": {
+    "from": "Captura al paso",
+    "to": "En passant"
+  },
+  "summary": {
+    "from": "Una captura especial de peón que solo existe un instante.",
+    "to": "A special pawn capture that only exists for a moment."
+  },
+  "pages.0.title": {
+    "from": "Al paso",
+    "to": "En passant"
+  },
+  "pages.0.body": {
+    "from": "Cuando un peón avanza **dos casillas** y queda **justo al lado** de un peón rival, ese peón rival puede capturarlo **como si hubiera avanzado solo una**.\n\nSolo se puede hacer en la **jugada inmediatamente siguiente**; después, se pierde la ocasión.",
+    "to": "When a pawn advances **two squares** and lands **right next to** an enemy pawn, that enemy pawn can capture it **as if it had advanced only one**.\n\nIt can only be done on the **very next move**; after that, the chance is gone."
+  },
+  "pages.1.body": {
+    "from": "Mira la jugada de las negras y captura **al paso**.",
+    "to": "Watch Black’s move and capture **en passant**."
+  },
+  "pages.1.hint": {
+    "from": "Tu peón de e5 va a d6 y el peón de d5 desaparece.",
+    "to": "Your pawn on e5 goes to d6 and the pawn on d5 disappears."
+  },
+  "pages.2.body": {
+    "from": "Ahora juegas con negras. Captura al paso.",
+    "to": "Now you are playing Black. Capture en passant."
+  },
+  "pages.2.hint": {
+    "from": "Tu peón de f4 va a e3.",
+    "to": "Your pawn on f4 goes to e3."
+  },
+  "pages.3.body": {
+    "from": "Las blancas acaban de avanzar su peón de e3 a e4, **una** casilla. ¿Puede el peón negro de f4 capturarlo al paso?",
+    "to": "White has just moved their pawn from e3 to e4, **one** square. Can the black pawn on f4 capture it en passant?"
+  },
+  "pages.3.options.0": {
+    "from": "Sí",
+    "to": "Yes"
+  },
+  "pages.3.options.1": {
+    "from": "No: solo vale tras un avance de dos casillas",
+    "to": "No: it only applies after a two-square advance"
+  }
+}

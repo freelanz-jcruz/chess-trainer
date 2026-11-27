@@ -1,0 +1,182 @@
+{
+  "name": {
+    "from": "Apertura Española: variante del Cambio",
+    "to": "Ruy Lopez: Exchange Variation"
+  },
+  "summary": {
+    "from": "Cambias el alfil por el caballo de c6 para doblar los peones negros. Luego cambias damas y juegas un final en el que tu mayoría de peones en el flanco de rey vale más.",
+    "to": "You trade your bishop for the c6 knight to double Black’s pawns. Then you trade queens and play an endgame in which your kingside pawn majority counts for more."
+  },
+  "steps.0.note": {
+    "from": "Un peón al centro.",
+    "to": "A pawn to the centre."
+  },
+  "steps.1.note": {
+    "from": "Las negras responden igual.",
+    "to": "Black replies in the same way."
+  },
+  "steps.2.note": {
+    "from": "Desarrollas atacando e5.",
+    "to": "You develop, attacking e5."
+  },
+  "steps.3.note": {
+    "from": "Las negras lo defienden.",
+    "to": "Black defends it."
+  },
+  "steps.4.note": {
+    "from": "El alfil presiona al defensor de e5.",
+    "to": "The bishop puts pressure on the defender of e5."
+  },
+  "steps.5.note": {
+    "from": "Las negras preguntan al alfil.",
+    "to": "Black challenges the bishop."
+  },
+  "steps.6.note": {
+    "from": "Cambias: los peones negros quedan doblados en la columna c.",
+    "to": "You exchange: Black’s pawns are left doubled on the c-file."
+  },
+  "steps.7.note": {
+    "from": "Las negras capturan hacia fuera y abren líneas para sus alfiles.",
+    "to": "Black captures away from the centre and opens lines for their bishops."
+  },
+  "steps.7.branches.0.name": {
+    "from": "4...bxc6",
+    "to": "4...bxc6"
+  },
+  "steps.7.branches.0.steps.0.note": {
+    "from": "Las negras capturan hacia el centro.",
+    "to": "Black captures towards the centre."
+  },
+  "steps.7.branches.0.steps.1.note": {
+    "from": "Abres el centro: e5 ya no tiene defensor.",
+    "to": "You open the centre: e5 no longer has a defender."
+  },
+  "steps.7.branches.0.steps.2.note": {
+    "from": "Las negras cambian.",
+    "to": "Black exchanges."
+  },
+  "steps.7.branches.0.steps.3.note": {
+    "from": "La dama recupera el peón y ataca g7.",
+    "to": "The queen wins the pawn back and attacks g7."
+  },
+  "steps.7.branches.0.steps.4.note": {
+    "from": "Las negras desarrollan y atacan e4.",
+    "to": "Black develops and attacks e4."
+  },
+  "steps.7.branches.0.steps.5.note": {
+    "from": "Echas al caballo ganando espacio.",
+    "to": "You chase the knight away, gaining space."
+  },
+  "steps.7.branches.0.steps.6.note": {
+    "from": "El peón ataca a tu dama.",
+    "to": "The pawn attacks your queen."
+  },
+  "steps.7.branches.0.steps.7.note": {
+    "from": "La dama se aparta y vigila d5: tienes más espacio y peones más sanos.",
+    "to": "The queen steps aside and watches d5: you have more space and healthier pawns."
+  },
+  "steps.8.note": {
+    "from": "Enrocas antes de nada: ahora sí amenazas ganar e5.",
+    "to": "You castle first: now you really do threaten to win e5."
+  },
+  "steps.9.note": {
+    "from": "Las negras sostienen e5 con un peón.",
+    "to": "Black holds e5 with a pawn."
+  },
+  "steps.9.branches.0.name": {
+    "from": "5...Ag4",
+    "to": "5...Bg4"
+  },
+  "steps.9.branches.0.steps.0.note": {
+    "from": "Las negras clavan tu caballo.",
+    "to": "Black pins your knight."
+  },
+  "steps.9.branches.0.steps.1.note": {
+    "from": "Preguntas al alfil.",
+    "to": "You challenge the bishop."
+  },
+  "steps.9.branches.0.steps.2.note": {
+    "from": "Las negras lo dejan ahí: si tomas, abren la columna h contra tu rey.",
+    "to": "Black leaves it there: if you take, they open the h-file against your king."
+  },
+  "steps.9.branches.0.steps.3.note": {
+    "from": "No tomas en g4: defiendes e4 y desarrollas sin riesgos.",
+    "to": "You do not take on g4: you defend e4 and develop without risk."
+  },
+  "steps.9.branches.0.steps.4.note": {
+    "from": "La dama negra presiona tu caballo clavado.",
+    "to": "The black queen puts pressure on your pinned knight."
+  },
+  "steps.9.branches.0.steps.5.note": {
+    "from": "Desarrollas y preparas Te1 y Cc4.",
+    "to": "You develop and prepare Re1 and Nc4."
+  },
+  "steps.9.branches.0.steps.6.note": {
+    "from": "El caballo negro va hacia g6.",
+    "to": "The black knight heads for g6."
+  },
+  "steps.9.branches.0.steps.7.note": {
+    "from": "La torre sostiene e4.",
+    "to": "The rook holds e4."
+  },
+  "steps.9.branches.0.steps.8.note": {
+    "from": "El caballo llega a g6, mirando a f4.",
+    "to": "The knight reaches g6, eyeing f4."
+  },
+  "steps.9.branches.0.steps.9.note": {
+    "from": "Golpeas el centro.",
+    "to": "You strike at the centre."
+  },
+  "steps.10.note": {
+    "from": "Abres el centro para cambiar damas.",
+    "to": "You open the centre to trade queens."
+  },
+  "steps.11.note": {
+    "from": "Las negras cambian.",
+    "to": "Black exchanges."
+  },
+  "steps.12.note": {
+    "from": "El caballo recupera el peón en el centro.",
+    "to": "The knight wins the pawn back in the centre."
+  },
+  "steps.13.note": {
+    "from": "Las negras echan a tu caballo.",
+    "to": "Black chases your knight away."
+  },
+  "steps.14.note": {
+    "from": "El caballo se retira y ofrece cambiar damas.",
+    "to": "The knight retreats and offers a queen trade."
+  },
+  "steps.15.note": {
+    "from": "Las negras cambian damas.",
+    "to": "Black trades queens."
+  },
+  "steps.16.note": {
+    "from": "Recuperas con la torre, que domina la columna d.",
+    "to": "You recapture with the rook, which controls the d-file."
+  },
+  "steps.17.note": {
+    "from": "El alfil ataca tu torre.",
+    "to": "The bishop attacks your rook."
+  },
+  "steps.18.note": {
+    "from": "Echas al alfil y defiendes e4.",
+    "to": "You chase the bishop away and defend e4."
+  },
+  "steps.19.note": {
+    "from": "El alfil se retira y ataca tu caballo.",
+    "to": "The bishop retreats and attacks your knight."
+  },
+  "steps.20.note": {
+    "from": "Desarrollas: el plan es cambiar piezas y llegar a un final de peones.",
+    "to": "You develop: the plan is to trade pieces and reach a pawn endgame."
+  },
+  "steps.21.note": {
+    "from": "Las negras desarrollan.",
+    "to": "Black develops."
+  },
+  "steps.22.note": {
+    "from": "Tu alfil ataca el peón de c5.",
+    "to": "Your bishop attacks the pawn on c5."
+  }
+}

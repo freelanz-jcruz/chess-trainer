@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { promptInstall, useInstallState } from '@/lib/install';
 import { Bold, Fill } from '@/lib/i18n/bold';
-import { useT } from '@/lib/i18n/react';
+import { useHref, useT } from '@/lib/i18n/react';
 import type { Messages } from '@/lib/i18n';
 
 async function install(ti: Messages['install']) {
@@ -104,6 +104,7 @@ export function InstallButton({
 }) {
   const state = useInstallState();
   const ti = useT().install;
+  const href = useHref();
   if (state === 'prompt') {
     return (
       <Button size={size} variant={variant} onClick={() => install(ti)}>
@@ -125,7 +126,7 @@ export function InstallButton({
   if (!fallback) return null;
   return (
     <Button size={size} variant={variant} asChild>
-      <Link href="/">{ti.startNow}</Link>
+      <Link href={href({ name: 'home' })}>{ti.startNow}</Link>
     </Button>
   );
 }

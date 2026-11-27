@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatMoveList, sanToEs } from '@/lib/chess/notation';
+import { formatMoveList, formatSan, sanToEs } from '@/lib/chess/notation';
 
 describe('sanToEs', () => {
   it('traduce piezas, enroques y coronaciones', () => {
@@ -16,5 +16,14 @@ describe('sanToEs', () => {
   it('formatea listas con números de jugada', () => {
     expect(formatMoveList(['e4', 'e5', 'Nf3'])).toBe('1.e4 e5 2.Cf3');
     expect(formatMoveList(['Nc6', 'Bc4'], 3)).toBe('2...Cc6 3.Ac4');
+  });
+});
+
+describe('notación en inglés', () => {
+  it('deja la SAN tal cual', () => {
+    expect(formatSan('Nf3', 'en')).toBe('Nf3');
+    expect(formatSan('exd8=Q+', 'en')).toBe('exd8=Q+');
+    expect(formatSan('O-O-O', 'en')).toBe('O-O-O');
+    expect(formatMoveList(['e4', 'e5', 'Nf3'], 0, 'en')).toBe('1.e4 e5 2.Nf3');
   });
 });

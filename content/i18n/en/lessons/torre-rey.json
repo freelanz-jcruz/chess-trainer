@@ -1,0 +1,30 @@
+{
+  "title": {
+    "from": "Torre y rey contra rey",
+    "to": "Rook and king against king"
+  },
+  "summary": {
+    "from": "El mate con torre: la caja que se va cerrando.",
+    "to": "Mating with the rook: the box that keeps shrinking."
+  },
+  "pages.0.title": {
+    "from": "La caja",
+    "to": "The box"
+  },
+  "pages.0.body": {
+    "from": "Con torre y rey contra rey también se puede dar mate, con un poco más de paciencia:\n\n- La **torre** corta al rey rival una fila o una columna: es una **caja** de la que no puede salir.\n- Tu **rey** se acerca y la caja se va haciendo más pequeña.\n- El mate llega en el borde: los dos reyes enfrentados y la torre da jaque por la fila del borde.\n\nSi el rey rival ataca tu torre, aléjala por el otro lado.",
+    "to": "With rook and king against king you can also deliver mate, with a little more patience:\n\n- The **rook** cuts the enemy king off along a rank or a file: it is a **box** the king cannot leave.\n- Your **king** comes closer and the box gets smaller and smaller.\n- Mate comes on the edge: the two kings face each other and the rook gives check along the edge rank.\n\nIf the enemy king attacks your rook, move it away to the other side."
+  },
+  "pages.1.body": {
+    "from": "Los reyes están enfrentados. Da mate.",
+    "to": "The kings face each other. Deliver mate."
+  },
+  "pages.2.body": {
+    "from": "Ahora contra Stockfish: da mate con torre y rey.",
+    "to": "Now against Stockfish: deliver mate with rook and king."
+  },
+  "pages.2.hint": {
+    "from": "Corta al rey con la torre y acerca tu rey; da jaque solo cuando los reyes estén enfrentados.",
+    "to": "Cut the king off with the rook and bring your king closer; only give check when the kings face each other."
+  }
+}

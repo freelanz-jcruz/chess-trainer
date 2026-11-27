@@ -1,0 +1,34 @@
+{
+  "title": {
+    "from": "Mate de la coz",
+    "to": "Smothered mate"
+  },
+  "summary": {
+    "from": "Un caballo da mate a un rey rodeado de sus propias piezas.",
+    "to": "A knight mates a king surrounded by its own pieces."
+  },
+  "pages.0.title": {
+    "from": "El mate de la coz",
+    "to": "Smothered mate"
+  },
+  "pages.0.body": {
+    "from": "En el **mate de la coz** (también llamado mate ahogado), el rey está rodeado por **sus propias piezas** y un caballo le da jaque. Como el caballo salta, no se puede tapar.",
+    "to": "In a **smothered mate**, the king is surrounded by **its own pieces** and a knight gives check. Since the knight jumps, the check cannot be blocked."
+  },
+  "pages.1.body": {
+    "from": "Da mate con el caballo.",
+    "to": "Deliver mate with the knight."
+  },
+  "pages.2.body": {
+    "from": "**Mate en 2.** Sacrifica la dama para que el rey quede encerrado y remata con el caballo.",
+    "to": "**Mate in 2.** Sacrifice the queen so that the king is boxed in, and finish with the knight."
+  },
+  "pages.3.title": {
+    "from": "Rodeado",
+    "to": "Surrounded"
+  },
+  "pages.3.body": {
+    "from": "Así acaba esa combinación: la torre negra tuvo que capturar la dama en g8 y el rey quedó sin casillas. Es una de las combinaciones más famosas del ajedrez.",
+    "to": "This is how that combination ends: the black rook had to capture the queen on g8 and the king was left with no squares. It is one of the most famous combinations in chess."
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "title": {
+    "from": "Los cinco principios de la apertura",
+    "to": "The five opening principles"
+  },
+  "summary": {
+    "from": "Cinco reglas sencillas para empezar bien cualquier partida, aunque no conozcas la apertura.",
+    "to": "Five simple rules to start any game well, even if you do not know the opening."
+  },
+  "pages.0.title": {
+    "from": "Para qué sirven",
+    "to": "What they are for"
+  },
+  "pages.0.body": {
+    "from": "Al principio de la partida no hace falta memorizar jugadas: basta con seguir cinco principios.\n\n- **Controla el centro** con peones.\n- **Desarrolla** las piezas menores (caballos y alfiles).\n- **Enroca pronto** para poner el rey a salvo.\n- **No saques la dama demasiado pronto**.\n- **No muevas dos veces la misma pieza** sin un buen motivo.\n\nSi dudas en una apertura, elige la jugada que cumple más principios.",
+    "to": "At the start of the game you do not need to memorise moves: following five principles is enough.\n\n- **Control the centre** with pawns.\n- **Develop** the minor pieces (knights and bishops).\n- **Castle early** to put the king in safety.\n- **Do not bring the queen out too early**.\n- **Do not move the same piece twice** without a good reason.\n\nIf you are unsure in an opening, choose the move that follows the most principles."
+  },
+  "pages.1.title": {
+    "from": "1. El centro",
+    "to": "1. The centre"
+  },
+  "pages.1.body": {
+    "from": "Las cuatro casillas del centro (**d4, e4, d5 y e5**) son las más valiosas: una pieza en el centro llega a más casillas y puede ir rápido a cualquier lado del tablero.\n\nPor eso las primeras jugadas suelen ser peones centrales que ocupan o vigilan esas casillas.",
+    "to": "The four central squares (**d4, e4, d5 and e5**) are the most valuable: a piece in the centre reaches more squares and can quickly go to either side of the board.\n\nThat is why the first moves are usually central pawns that occupy or watch those squares."
+  },
+  "pages.2.body": {
+    "from": "Empieza la partida con un **peón que ocupe el centro**.",
+    "to": "Start the game with a **pawn that occupies the centre**."
+  },
+  "pages.2.hint": {
+    "from": "Los peones de d y de e pueden avanzar dos casillas hasta el centro.",
+    "to": "The d- and e-pawns can advance two squares to the centre."
+  },
+  "pages.2.success": {
+    "from": "Ese peón ocupa el centro y abre camino a otras piezas.",
+    "to": "That pawn occupies the centre and opens the way for other pieces."
+  },
+  "pages.3.title": {
+    "from": "2. El desarrollo",
+    "to": "2. Development"
+  },
+  "pages.3.body": {
+    "from": "**Desarrollar** es sacar las piezas de su casilla inicial para que participen en el juego. Primero van las piezas menores: caballos y alfiles.\n\nUn caballo en el centro ataca hasta ocho casillas; en el borde, como mucho cuatro. Por eso se dice que **el caballo en el borde es triste**.",
+    "to": "**Developing** means bringing pieces out of their starting squares so that they take part in the game. The minor pieces go first: knights and bishops.\n\nA knight in the centre attacks up to eight squares; on the edge, four at most. That is why they say **a knight on the rim is dim**."
+  },
+  "pages.4.body": {
+    "from": "Desarrolla un **caballo** hacia el centro.",
+    "to": "Develop a **knight** towards the centre."
+  },
+  "pages.4.hint": {
+    "from": "Desde f3 o c3 el caballo vigila las casillas centrales.",
+    "to": "From f3 or c3 the knight watches the central squares."
+  },
+  "pages.4.success": {
+    "from": "Pieza desarrollada y mirando al centro.",
+    "to": "Piece developed and facing the centre."
+  },
+  "pages.5.body": {
+    "from": "¿Cuál de estas jugadas desarrolla **mejor** el caballo de g1?",
+    "to": "Which of these moves develops the g1 knight **best**?"
+  },
+  "pages.5.options.0": {
+    "from": "Ch3",
+    "to": "Nh3"
+  },
+  "pages.5.options.1": {
+    "from": "Cf3",
+    "to": "Nf3"
+  },
+  "pages.5.options.2": {
+    "from": "Ce2",
+    "to": "Ne2"
+  },
+  "pages.5.explain": {
+    "from": "En f3 el caballo controla el centro y ataca e5. En h3 está en el borde, y en e2 tapa al alfil.",
+    "to": "On f3 the knight controls the centre and attacks e5. On h3 it is on the edge, and on e2 it blocks the bishop."
+  },
+  "pages.6.title": {
+    "from": "3. El enroque",
+    "to": "3. Castling"
+  },
+  "pages.6.body": {
+    "from": "En el centro el rey corre peligro cuando se abren las columnas. **Enrocar pronto** lo pone a salvo detrás de sus peones y, de paso, saca la torre al juego.\n\nPara poder enrocar hay que apartar antes las piezas que hay entre el rey y la torre: otra razón para desarrollar rápido.",
+    "to": "In the centre the king is in danger when files open up. **Castling early** puts it safely behind its pawns and, along the way, brings the rook into play.\n\nTo be able to castle you first have to move away the pieces between the king and the rook: another reason to develop quickly."
+  },
+  "pages.7.body": {
+    "from": "Ya tienes el caballo y el alfil fuera. **Pon el rey a salvo**.",
+    "to": "Your knight and bishop are already out. **Put the king in safety**."
+  },
+  "pages.7.hint": {
+    "from": "Enroque corto: el rey va de e1 a g1.",
+    "to": "Kingside castling: the king goes from e1 to g1."
+  },
+  "pages.7.success": {
+    "from": "Rey a salvo y torre lista para entrar en juego.",
+    "to": "King safe and rook ready to come into play."
+  },
+  "pages.8.title": {
+    "from": "4. La dama, sin prisas",
+    "to": "4. The queen, no hurry"
+  },
+  "pages.8.body": {
+    "from": "La dama es la pieza más valiosa. Si sale muy pronto, el rival la ataca con piezas menores y **se desarrolla ganando tiempo** mientras ella huye.\n\nAquí las blancas sacaron la dama a h5 y luego tuvieron que moverla otra vez a f3. Las negras, en cambio, han sacado dos piezas.",
+    "to": "The queen is the most valuable piece. If she comes out too soon, your opponent attacks her with minor pieces and **develops while gaining time** as she runs away.\n\nHere White brought the queen out to h5 and then had to move her again to f3. Black, on the other hand, has developed two pieces."
+  },
+  "pages.9.body": {
+    "from": "Las blancas sacan la dama muy pronto y atacan el peón de e5. **Defiéndelo desarrollando una pieza**.",
+    "to": "White brings the queen out very early and attacks the pawn on e5. **Defend it by developing a piece**."
+  },
+  "pages.9.hint": {
+    "from": "Un caballo puede defender e5 y salir al juego a la vez.",
+    "to": "A knight can defend e5 and come into play at the same time."
+  },
+  "pages.9.success": {
+    "from": "Defiendes e5 y desarrollas. Vigila f7: la dama y un alfil pueden atacarlo.",
+    "to": "You defend e5 and develop. Watch f7: the queen and a bishop can attack it."
+  },
+  "pages.10.title": {
+    "from": "5. Cada pieza, una vez",
+    "to": "5. Each piece, once"
+  },
+  "pages.10.body": {
+    "from": "En la apertura cada jugada cuenta. Mover dos veces la misma pieza sin motivo deja otras piezas en casa y regala tiempo al rival.\n\nHay buenos motivos para hacerlo: capturar, escapar de un ataque o aprovechar un error del rival. Si no hay ninguno, saca una pieza nueva.",
+    "to": "In the opening every move counts. Moving the same piece twice for no reason leaves other pieces at home and gives your opponent time.\n\nThere are good reasons to do it: capturing, escaping an attack or taking advantage of an opponent’s mistake. If there is none, bring out a new piece."
+  },
+  "pages.11.body": {
+    "from": "Las blancas ya tienen el caballo en f3. ¿Qué jugada sigue los principios?",
+    "to": "White already has the knight on f3. Which move follows the principles?"
+  },
+  "pages.11.options.0": {
+    "from": "Cg5, otra vez el caballo",
+    "to": "Ng5, the knight again"
+  },
+  "pages.11.options.1": {
+    "from": "Ac4, una pieza nueva",
+    "to": "Bc4, a new piece"
+  },
+  "pages.11.options.2": {
+    "from": "h4, un peón del borde",
+    "to": "h4, an edge pawn"
+  },
+  "pages.11.explain": {
+    "from": "Ac4 desarrolla otra pieza y deja el enroque preparado.",
+    "to": "Bc4 develops another piece and prepares castling."
+  },
+  "pages.12.title": {
+    "from": "Resumen",
+    "to": "Summary"
+  },
+  "pages.12.body": {
+    "from": "- Peones al **centro**.\n- **Caballos y alfiles** fuera, mirando al centro.\n- **Enroca** pronto.\n- La **dama**, más tarde.\n- **Una pieza nueva** en cada jugada, salvo que haya un motivo.\n\nEn la siguiente lección los aplicarás en posiciones reales.",
+    "to": "- Pawns to the **centre**.\n- **Knights and bishops** out, facing the centre.\n- **Castle** early.\n- The **queen**, later.\n- **A new piece** every move, unless there is a reason.\n\nIn the next lesson you will apply them in real positions."
+  }
+}

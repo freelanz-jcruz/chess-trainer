@@ -1,0 +1,114 @@
+{
+  "title": {
+    "from": "Cómo se mueven las piezas",
+    "to": "How the pieces move"
+  },
+  "summary": {
+    "from": "Torre, alfil, dama, rey, caballo y peón, con ejercicios para practicar.",
+    "to": "Rook, bishop, queen, king, knight and pawn, with exercises to practise."
+  },
+  "pages.0.title": {
+    "from": "La torre",
+    "to": "The rook"
+  },
+  "pages.0.body": {
+    "from": "La **torre** se mueve en línea recta, hacia delante, hacia atrás o hacia los lados, tantas casillas como quiera.\n\nNo puede saltar por encima de otras piezas. Si en su camino hay una pieza rival, puede **capturarla** ocupando su casilla.",
+    "to": "The **rook** moves in a straight line, forwards, backwards or sideways, as many squares as it likes.\n\nIt cannot jump over other pieces. If an enemy piece is in its path, it can **capture** it by taking its square."
+  },
+  "pages.1.body": {
+    "from": "Lleva la torre a la casilla marcada. ¿Cuántas jugadas necesitas?",
+    "to": "Take the rook to the marked square. How many moves do you need?"
+  },
+  "pages.2.body": {
+    "from": "Captura todos los peones negros con la torre. Aquí los peones no se mueven: juegas tú todas las veces.",
+    "to": "Capture all the black pawns with the rook. Here the pawns do not move: you play every move."
+  },
+  "pages.3.title": {
+    "from": "El alfil",
+    "to": "The bishop"
+  },
+  "pages.3.body": {
+    "from": "El **alfil** se mueve en diagonal, tantas casillas como quiera, sin saltar.\n\nComo siempre va en diagonal, **nunca cambia de color**: cada bando tiene un alfil de casillas claras y otro de casillas oscuras.",
+    "to": "The **bishop** moves diagonally, as many squares as it likes, without jumping.\n\nBecause it always moves diagonally, it **never changes colour**: each side has a light-squared bishop and a dark-squared bishop."
+  },
+  "pages.4.body": {
+    "from": "Captura todos los peones con el alfil.",
+    "to": "Capture all the pawns with the bishop."
+  },
+  "pages.5.title": {
+    "from": "La dama",
+    "to": "The queen"
+  },
+  "pages.5.body": {
+    "from": "La **dama** es la pieza más poderosa: se mueve como la torre **y** como el alfil, en línea recta o en diagonal, tantas casillas como quiera.",
+    "to": "The **queen** is the most powerful piece: she moves like the rook **and** like the bishop, in a straight line or diagonally, as many squares as she likes."
+  },
+  "pages.6.body": {
+    "from": "Captura todos los peones con la dama.",
+    "to": "Capture all the pawns with the queen."
+  },
+  "pages.7.title": {
+    "from": "El rey",
+    "to": "The king"
+  },
+  "pages.7.body": {
+    "from": "El **rey** se mueve una sola casilla en cualquier dirección.\n\nEs la pieza más importante: si queda atrapado, se pierde la partida. Por eso **nunca puede ir a una casilla atacada** por una pieza rival.",
+    "to": "The **king** moves just one square in any direction.\n\nIt is the most important piece: if it is trapped, you lose the game. That is why it **can never move to a square attacked** by an enemy piece."
+  },
+  "pages.8.title": {
+    "from": "El caballo",
+    "to": "The knight"
+  },
+  "pages.8.body": {
+    "from": "El **caballo** se mueve en forma de **L**: dos casillas en una dirección y una más hacia un lado.\n\nEs la **única pieza que salta** por encima de las demás. Fíjate: cada vez que salta, cambia de color de casilla.",
+    "to": "The **knight** moves in an **L** shape: two squares in one direction and then one more to the side.\n\nIt is the **only piece that jumps** over the others. Notice that every time it jumps, it changes square colour."
+  },
+  "pages.9.body": {
+    "from": "Lleva el caballo a la casilla marcada con el menor número de saltos.",
+    "to": "Take the knight to the marked square in as few jumps as possible."
+  },
+  "pages.10.body": {
+    "from": "Captura todos los peones con el caballo.",
+    "to": "Capture all the pawns with the knight."
+  },
+  "pages.11.title": {
+    "from": "El peón",
+    "to": "The pawn"
+  },
+  "pages.11.body": {
+    "from": "El **peón** avanza **una casilla** hacia delante. En su primera jugada puede avanzar **una o dos**.\n\nEs la única pieza que **captura de forma distinta a como se mueve**: captura en **diagonal**, una casilla hacia delante. Nunca retrocede.\n\nSi llega a la última fila, se **corona**: lo verás en el bloque 2.",
+    "to": "The **pawn** moves **one square** forwards. On its first move it can advance **one or two** squares.\n\nIt is the only piece that **captures differently from how it moves**: it captures **diagonally**, one square forwards. It never moves backwards.\n\nIf it reaches the last rank, it **promotes**: you will see this in block 2."
+  },
+  "pages.12.body": {
+    "from": "Captura el peón negro con tu peón.",
+    "to": "Capture the black pawn with your pawn."
+  },
+  "pages.12.hint": {
+    "from": "Los peones capturan en diagonal, hacia delante.",
+    "to": "Pawns capture diagonally, forwards."
+  },
+  "pages.13.body": {
+    "from": "¿Qué pieza puede saltar por encima de las demás?",
+    "to": "Which piece can jump over the others?"
+  },
+  "pages.13.options.0": {
+    "from": "El alfil",
+    "to": "The bishop"
+  },
+  "pages.13.options.1": {
+    "from": "El caballo",
+    "to": "The knight"
+  },
+  "pages.13.options.2": {
+    "from": "La dama",
+    "to": "The queen"
+  },
+  "pages.13.options.3": {
+    "from": "La torre",
+    "to": "The rook"
+  },
+  "pages.13.explain": {
+    "from": "Solo el caballo salta.",
+    "to": "Only the knight jumps."
+  }
+}

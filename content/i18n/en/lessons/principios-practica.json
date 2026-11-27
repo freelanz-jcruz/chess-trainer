@@ -1,0 +1,122 @@
+{
+  "title": {
+    "from": "Aplica los principios",
+    "to": "Apply the principles"
+  },
+  "summary": {
+    "from": "Posiciones de apertura en las que eliges la jugada que cumple los principios.",
+    "to": "Opening positions where you choose the move that follows the principles."
+  },
+  "pages.0.body": {
+    "from": "En cada posición te diré qué principio aplicar. Puede haber más de una jugada correcta: cualquiera que cumpla el principio vale.",
+    "to": "In each position I will tell you which principle to apply. There may be more than one correct move: any move that follows the principle is fine."
+  },
+  "pages.1.body": {
+    "from": "Las negras responden a 1.e4. **Ocupa tú también el centro** con un peón.",
+    "to": "Black replies to 1.e4. **Occupy the centre too** with a pawn."
+  },
+  "pages.1.hint": {
+    "from": "Los peones de d y de e de las negras pueden avanzar dos casillas.",
+    "to": "Black’s d- and e-pawns can advance two squares."
+  },
+  "pages.1.success": {
+    "from": "Tu peón también reclama el centro.",
+    "to": "Your pawn claims the centre too."
+  },
+  "pages.2.body": {
+    "from": "Las blancas atacan tu peón de e5. **Defiéndelo con una pieza**, no con un peón.",
+    "to": "White attacks your pawn on e5. **Defend it with a piece**, not with a pawn."
+  },
+  "pages.2.hint": {
+    "from": "El caballo de b8 llega a una casilla desde la que defiende e5.",
+    "to": "The b8 knight can reach a square from which it defends e5."
+  },
+  "pages.2.success": {
+    "from": "Defiendes y desarrollas con la misma jugada.",
+    "to": "You defend and develop with the same move."
+  },
+  "pages.3.body": {
+    "from": "**Desarrolla una pieza menor** que todavía no haya salido.",
+    "to": "**Develop a minor piece** that has not come out yet."
+  },
+  "pages.3.hint": {
+    "from": "Un caballo hacia el centro, o el alfil de c1, que ya tiene la diagonal abierta.",
+    "to": "A knight towards the centre, or the c1 bishop, whose diagonal is already open."
+  },
+  "pages.3.success": {
+    "from": "Una pieza más en juego.",
+    "to": "One more piece in play."
+  },
+  "pages.4.body": {
+    "from": "El caballo ya ha salido. **Saca el alfil** a una casilla activa.",
+    "to": "The knight is already out. **Bring the bishop out** to an active square."
+  },
+  "pages.4.hint": {
+    "from": "El alfil de f1 puede ir a c4, mirando a f7, o a b5, presionando el caballo.",
+    "to": "The f1 bishop can go to c4, aiming at f7, or to b5, putting pressure on the knight."
+  },
+  "pages.4.success": {
+    "from": "Alfil fuera y enroque corto preparado.",
+    "to": "Bishop out and kingside castling ready."
+  },
+  "pages.5.body": {
+    "from": "Las negras han sacado el alfil a c5. ¿Qué jugada de las blancas **no** sigue los principios?",
+    "to": "Black has brought the bishop out to c5. Which White move does **not** follow the principles?"
+  },
+  "pages.5.options.0": {
+    "from": "0-0",
+    "to": "O-O"
+  },
+  "pages.5.options.1": {
+    "from": "Cc3",
+    "to": "Nc3"
+  },
+  "pages.5.options.2": {
+    "from": "De2 y luego Dd3",
+    "to": "Qe2 and then Qd3"
+  },
+  "pages.5.explain": {
+    "from": "Pasear la dama pierde tiempo. Enrocar o sacar el otro caballo ponen más piezas en juego.",
+    "to": "Walking the queen around wastes time. Castling or bringing out the other knight puts more pieces into play."
+  },
+  "pages.6.body": {
+    "from": "Caballo y alfil desarrollados en el flanco de rey. **Enroca**.",
+    "to": "Knight and bishop developed on the kingside. **Castle**."
+  },
+  "pages.6.hint": {
+    "from": "No queda nada entre el rey y la torre de h1.",
+    "to": "There is nothing left between the king and the h1 rook."
+  },
+  "pages.6.success": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "pages.7.body": {
+    "from": "Ahora con negras, en el Gambito de Dama. **Pon el rey a salvo**.",
+    "to": "Now with Black, in the Queen’s Gambit. **Put the king in safety**."
+  },
+  "pages.7.hint": {
+    "from": "Enroque corto de las negras: el rey va de e8 a g8.",
+    "to": "Black castles kingside: the king goes from e8 to g8."
+  },
+  "pages.7.success": {
+    "from": "Rey a salvo y la torre se acerca al centro.",
+    "to": "King safe and the rook comes closer to the centre."
+  },
+  "pages.8.body": {
+    "from": "El caballo de g5 y el alfil de c4 atacan f7. Responde con un **peón central que corte la diagonal del alfil**.",
+    "to": "The knight on g5 and the bishop on c4 attack f7. Respond with a **central pawn that cuts the bishop’s diagonal**."
+  },
+  "pages.8.hint": {
+    "from": "El peón de d7 puede avanzar dos casillas y tapar la diagonal del alfil.",
+    "to": "The d7 pawn can advance two squares and block the bishop’s diagonal."
+  },
+  "pages.8.success": {
+    "from": "Defiendes f7 cortando la diagonal del alfil y luchando por el centro.",
+    "to": "You defend f7 by cutting the bishop’s diagonal and fighting for the centre."
+  },
+  "pages.9.body": {
+    "from": "¡Bien hecho! Con estos principios puedes jugar una apertura razonable sin conocerla. En el bloque siguiente verás las aperturas de tu repertorio, que los siguen jugada a jugada.",
+    "to": "Well done! With these principles you can play a reasonable opening without knowing it. In the next block you will see the openings in your repertoire, which follow them move by move."
+  }
+}

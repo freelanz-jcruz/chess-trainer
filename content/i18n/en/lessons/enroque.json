@@ -1,0 +1,74 @@
+{
+  "title": {
+    "from": "El enroque",
+    "to": "Castling"
+  },
+  "summary": {
+    "from": "La jugada especial del rey y la torre, y cuándo está permitida.",
+    "to": "The special move of the king and rook, and when it is allowed."
+  },
+  "pages.0.title": {
+    "from": "El enroque",
+    "to": "Castling"
+  },
+  "pages.0.body": {
+    "from": "El **enroque** es la única jugada en la que se mueven dos piezas a la vez: el rey avanza **dos casillas** hacia una torre y esa torre salta al otro lado del rey.\n\n- **Enroque corto** (0-0): hacia la torre de h.\n- **Enroque largo** (0-0-0): hacia la torre de a.\n\nSirve para poner el rey a salvo y sacar la torre al juego.",
+    "to": "**Castling** is the only move in which two pieces move at once: the king moves **two squares** towards a rook and that rook jumps to the other side of the king.\n\n- **Kingside castling** (O-O): towards the h-rook.\n- **Queenside castling** (O-O-O): towards the a-rook.\n\nIt puts the king in safety and brings the rook into play."
+  },
+  "pages.1.body": {
+    "from": "Haz el **enroque corto**: mueve el rey dos casillas hacia la torre de h.",
+    "to": "**Castle kingside**: move the king two squares towards the h-rook."
+  },
+  "pages.1.hint": {
+    "from": "Mueve el rey de e1 a g1; la torre se coloca sola.",
+    "to": "Move the king from e1 to g1; the rook moves by itself."
+  },
+  "pages.2.body": {
+    "from": "Ahora el **enroque largo**.",
+    "to": "Now **castle queenside**."
+  },
+  "pages.2.hint": {
+    "from": "Mueve el rey de e1 a c1.",
+    "to": "Move the king from e1 to c1."
+  },
+  "pages.3.title": {
+    "from": "Condiciones",
+    "to": "Conditions"
+  },
+  "pages.3.body": {
+    "from": "Solo se puede enrocar si:\n\n- Ni el rey ni esa torre **se han movido** antes.\n- **No hay piezas** entre el rey y la torre.\n- El rey **no está en jaque**.\n- El rey **no pasa ni termina** en una casilla atacada.\n\nLa torre, en cambio, sí puede estar atacada o pasar por una casilla atacada.",
+    "to": "You can only castle if:\n\n- Neither the king nor that rook **has moved** before.\n- There are **no pieces** between the king and the rook.\n- The king is **not in check**.\n- The king does **not pass through or land on** an attacked square.\n\nThe rook, on the other hand, may be attacked or pass through an attacked square."
+  },
+  "pages.4.body": {
+    "from": "¿Pueden las blancas enrocar corto?",
+    "to": "Can White castle kingside?"
+  },
+  "pages.4.options.0": {
+    "from": "Sí",
+    "to": "Yes"
+  },
+  "pages.4.options.1": {
+    "from": "No: el rey pasaría por f1, que está atacada",
+    "to": "No: the king would pass through f1, which is attacked"
+  },
+  "pages.4.explain": {
+    "from": "El alfil de c4 vigila f1.",
+    "to": "The bishop on c4 covers f1."
+  },
+  "pages.5.body": {
+    "from": "El alfil negro ataca b1. ¿Pueden las blancas enrocar largo?",
+    "to": "The black bishop attacks b1. Can White castle queenside?"
+  },
+  "pages.5.options.0": {
+    "from": "Sí: el rey solo pasa por d1 y c1",
+    "to": "Yes: the king only passes through d1 and c1"
+  },
+  "pages.5.options.1": {
+    "from": "No: b1 está atacada",
+    "to": "No: b1 is attacked"
+  },
+  "pages.5.explain": {
+    "from": "Solo importan las casillas del rey; por b1 pasa la torre.",
+    "to": "Only the king’s squares matter; the rook is the one that passes b1."
+  }
+}

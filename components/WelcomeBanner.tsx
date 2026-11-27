@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { InstallButton } from '@/components/InstallApp';
 import { Button } from '@/components/ui/button';
 import { withBase } from '@/lib/base-path';
-import { useT } from '@/lib/i18n/react';
+import { useHref, useT } from '@/lib/i18n/react';
 
 /**
  * Misma clave que la antigua ventana de bienvenida: quien ya la vio no vuelve a ver el aviso. Se guarda
@@ -38,6 +38,7 @@ function markSeen() {
 export default function WelcomeBanner() {
   const [show, setShow] = useState(false);
   const tw = useT().welcome;
+  const href = useHref();
   // Solo en el cliente y tras montar: en el HTML estático no se sabe si ya se vio.
   useEffect(() => {
     if (!seen()) setShow(true);
@@ -63,7 +64,7 @@ export default function WelcomeBanner() {
         </div>
         <div className="flex flex-wrap gap-2">
           <Button asChild onClick={markSeen}>
-            <Link href="/info/">
+            <Link href={href({ name: 'info' })}>
               {tw.learnMore} <ChevronRight />
             </Link>
           </Button>

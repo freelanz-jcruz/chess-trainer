@@ -38,6 +38,8 @@ const nextConfig: NextConfig = {
   basePath: basePath || undefined,
   env: { NEXT_PUBLIC_BASE_PATH: basePath, NEXT_PUBLIC_APP_VERSION: version, NEXT_PUBLIC_APP_COMMIT: gitCommit() },
   allowedDevOrigins: lanAddresses,
+  // Un layout raíz por idioma (app/(es) y app/en): la página 404 común es app/global-not-found.tsx.
+  experimental: { globalNotFound: true },
 };
 
 export default nextConfig;

@@ -1,0 +1,102 @@
+{
+  "title": {
+    "from": "Ahogado y tablas",
+    "to": "Stalemate and draws"
+  },
+  "summary": {
+    "from": "Cuándo termina una partida sin ganador.",
+    "to": "When a game ends with no winner."
+  },
+  "pages.0.title": {
+    "from": "El ahogado",
+    "to": "Stalemate"
+  },
+  "pages.0.body": {
+    "from": "Si al bando que le toca mover **no está en jaque** pero **no tiene ninguna jugada legal**, la partida termina en **tablas por ahogado**: nadie gana.\n\nCuidado cuando tengas mucha ventaja: ahogar al rival es regalarle el empate.",
+    "to": "If the side to move **is not in check** but **has no legal move**, the game ends in a **draw by stalemate**: nobody wins.\n\nBe careful when you are well ahead: stalemating your opponent hands them a draw."
+  },
+  "pages.1.body": {
+    "from": "Juegan las negras. ¿Qué ha pasado?",
+    "to": "Black to move. What has happened?"
+  },
+  "pages.1.options.0": {
+    "from": "Jaque mate",
+    "to": "Checkmate"
+  },
+  "pages.1.options.1": {
+    "from": "Ahogado (tablas)",
+    "to": "Stalemate (draw)"
+  },
+  "pages.1.options.2": {
+    "from": "Solo jaque",
+    "to": "Just check"
+  },
+  "pages.1.explain": {
+    "from": "La dama da jaque, está protegida por el rey y el rey negro no tiene escapatoria.",
+    "to": "The queen gives check, is protected by the king, and the black king has no escape."
+  },
+  "pages.2.body": {
+    "from": "Juegan las negras. ¿Y ahora?",
+    "to": "Black to move. And now?"
+  },
+  "pages.2.options.0": {
+    "from": "Jaque mate",
+    "to": "Checkmate"
+  },
+  "pages.2.options.1": {
+    "from": "Ahogado (tablas)",
+    "to": "Stalemate (draw)"
+  },
+  "pages.2.options.2": {
+    "from": "Solo jaque",
+    "to": "Just check"
+  },
+  "pages.2.explain": {
+    "from": "El rey negro no está en jaque, pero todas sus casillas están atacadas.",
+    "to": "The black king is not in check, but all its squares are attacked."
+  },
+  "pages.3.body": {
+    "from": "Juegan las negras. ¿Y en esta?",
+    "to": "Black to move. And in this one?"
+  },
+  "pages.3.options.0": {
+    "from": "Jaque mate",
+    "to": "Checkmate"
+  },
+  "pages.3.options.1": {
+    "from": "Ahogado (tablas)",
+    "to": "Stalemate (draw)"
+  },
+  "pages.3.options.2": {
+    "from": "Solo jaque",
+    "to": "Just check"
+  },
+  "pages.3.explain": {
+    "from": "El rey está en jaque, pero puede escapar a b8.",
+    "to": "The king is in check, but it can escape to b8."
+  },
+  "pages.4.title": {
+    "from": "Otras tablas",
+    "to": "Other draws"
+  },
+  "pages.4.body": {
+    "from": "La partida también termina en **tablas** cuando:\n\n- Se repite **tres veces** la misma posición.\n- No queda **material suficiente** para dar mate (rey contra rey, o rey y alfil o caballo contra rey).\n- Pasan **50 jugadas** de cada bando sin capturas ni movimientos de peón.\n- Los dos jugadores **acuerdan** el empate.",
+    "to": "The game is also a **draw** when:\n\n- The same position occurs **three times**.\n- There is **not enough material** left to deliver mate (king against king, or king and bishop or knight against king).\n- **50 moves** go by on each side with no captures and no pawn moves.\n- Both players **agree** to a draw."
+  },
+  "pages.5.body": {
+    "from": "¿Se puede dar mate con rey y caballo contra el rey solo?",
+    "to": "Can you deliver mate with king and knight against a lone king?"
+  },
+  "pages.5.options.0": {
+    "from": "Sí",
+    "to": "Yes"
+  },
+  "pages.5.options.1": {
+    "from": "No: es material insuficiente",
+    "to": "No: it is insufficient material"
+  },
+  "pages.5.explain": {
+    "from": "Con un solo caballo (o un solo alfil) no se puede forzar el mate.",
+    "to": "With a single knight (or a single bishop) mate cannot be forced."
+  }
+}

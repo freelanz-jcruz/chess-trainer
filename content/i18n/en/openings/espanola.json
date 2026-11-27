@@ -1,0 +1,326 @@
+{
+  "name": {
+    "from": "Apertura Española: variante Cerrada",
+    "to": "Ruy Lopez: Closed Variation"
+  },
+  "summary": {
+    "from": "La Española con blancas: presión duradera sobre el caballo que defiende e5, enroque rápido y centro con c3 y d4. Las ramas cubren las defensas más habituales de las negras.",
+    "to": "The Ruy Lopez with White: lasting pressure on the knight that defends e5, quick castling and a centre built with c3 and d4. The branches cover Black’s most common defences."
+  },
+  "steps.0.note": {
+    "from": "Un peón al centro: abre camino al alfil y a la dama.",
+    "to": "A pawn to the centre: it opens the way for the bishop and the queen."
+  },
+  "steps.1.note": {
+    "from": "Las negras también reclaman el centro.",
+    "to": "Black also claims the centre."
+  },
+  "steps.2.note": {
+    "from": "Desarrollas atacando el peón de e5.",
+    "to": "You develop, attacking the pawn on e5."
+  },
+  "steps.3.note": {
+    "from": "Las negras lo defienden con el caballo.",
+    "to": "Black defends it with the knight."
+  },
+  "steps.4.note": {
+    "from": "La Española: el alfil presiona al caballo que defiende e5.",
+    "to": "The Ruy Lopez: the bishop puts pressure on the knight that defends e5."
+  },
+  "steps.5.note": {
+    "from": "Las negras preguntan al alfil qué piensa hacer.",
+    "to": "Black asks the bishop what it intends to do."
+  },
+  "steps.5.branches.0.name": {
+    "from": "3...Cf6: Berlinesa",
+    "to": "3...Nf6: Berlin Defence"
+  },
+  "steps.5.branches.0.steps.0.note": {
+    "from": "Las negras contraatacan e4 en lugar de echar al alfil.",
+    "to": "Black counter-attacks e4 instead of chasing the bishop away."
+  },
+  "steps.5.branches.0.steps.1.note": {
+    "from": "Defiendes e4 con calma y evitas el final que surge tras 4.0-0 Cxe4.",
+    "to": "You calmly defend e4 and avoid the endgame that arises after 4.O-O Nxe4."
+  },
+  "steps.5.branches.0.steps.2.note": {
+    "from": "El alfil negro sale a su mejor diagonal.",
+    "to": "The black bishop comes out to its best diagonal."
+  },
+  "steps.5.branches.0.steps.3.note": {
+    "from": "Preparas d4 y das una casilla de retirada al alfil.",
+    "to": "You prepare d4 and give the bishop a retreat square."
+  },
+  "steps.5.branches.0.steps.4.note": {
+    "from": "Las negras enrocan.",
+    "to": "Black castles."
+  },
+  "steps.5.branches.0.steps.5.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.5.branches.0.steps.6.note": {
+    "from": "Las negras sostienen e5.",
+    "to": "Black holds e5."
+  },
+  "steps.5.branches.0.steps.7.note": {
+    "from": "Impides ...Ag4, que clavaría tu caballo.",
+    "to": "You prevent ...Bg4, which would pin your knight."
+  },
+  "steps.5.branches.0.steps.8.note": {
+    "from": "Ahora sí preguntan al alfil.",
+    "to": "Now they do challenge the bishop."
+  },
+  "steps.5.branches.0.steps.9.note": {
+    "from": "Conservas el alfil y la presión sobre c6.",
+    "to": "You keep the bishop and the pressure on c6."
+  },
+  "steps.6.note": {
+    "from": "Te retiras sin cambiar: mantienes la presión sobre el caballo.",
+    "to": "You retreat without exchanging: you keep the pressure on the knight."
+  },
+  "steps.7.note": {
+    "from": "Las negras desarrollan y atacan e4.",
+    "to": "Black develops and attacks e4."
+  },
+  "steps.8.note": {
+    "from": "Enrocas y dejas e4 como cebo: si lo toman, recuperas con la torre en e1.",
+    "to": "You castle and leave e4 as bait: if they take it, you win it back with the rook on e1."
+  },
+  "steps.9.note": {
+    "from": "Las negras desarrollan con calma: es la variante Cerrada.",
+    "to": "Black develops calmly: this is the Closed Variation."
+  },
+  "steps.9.branches.0.name": {
+    "from": "5...Cxe4: Abierta",
+    "to": "5...Nxe4: Open Variation"
+  },
+  "steps.9.branches.0.steps.0.note": {
+    "from": "Las negras aceptan el peón de e4.",
+    "to": "Black accepts the e4 pawn."
+  },
+  "steps.9.branches.0.steps.1.note": {
+    "from": "Abres el centro de inmediato, con el rey negro aún sin enrocar.",
+    "to": "You open the centre straight away, with the black king still uncastled."
+  },
+  "steps.9.branches.0.steps.2.note": {
+    "from": "Las negras echan al alfil antes de nada.",
+    "to": "Black chases the bishop away first."
+  },
+  "steps.9.branches.0.steps.3.note": {
+    "from": "El alfil apunta a d5 y f7.",
+    "to": "The bishop aims at d5 and f7."
+  },
+  "steps.9.branches.0.steps.4.note": {
+    "from": "Las negras sostienen su caballo con un peón.",
+    "to": "Black supports their knight with a pawn."
+  },
+  "steps.9.branches.0.steps.5.note": {
+    "from": "Recuperas el peón y ganas espacio.",
+    "to": "You win the pawn back and gain space."
+  },
+  "steps.9.branches.0.steps.6.note": {
+    "from": "Las negras refuerzan d5.",
+    "to": "Black reinforces d5."
+  },
+  "steps.9.branches.0.steps.7.note": {
+    "from": "Das al alfil una casilla de retirada en c2.",
+    "to": "You give the bishop a retreat square on c2."
+  },
+  "steps.9.branches.0.steps.8.note": {
+    "from": "Las negras desarrollan y preparan el enroque.",
+    "to": "Black develops and prepares to castle."
+  },
+  "steps.9.branches.0.steps.9.note": {
+    "from": "Desarrollas y atacas al caballo de e4.",
+    "to": "You develop and attack the knight on e4."
+  },
+  "steps.9.branches.0.steps.10.note": {
+    "from": "Las negras enrocan.",
+    "to": "Black castles."
+  },
+  "steps.9.branches.0.steps.11.note": {
+    "from": "El alfil apunta al enroque negro.",
+    "to": "The bishop aims at Black’s castled king."
+  },
+  "steps.10.note": {
+    "from": "La torre defiende e4 y vuelve a amenazar ganar e5.",
+    "to": "The rook defends e4 and once again threatens to win e5."
+  },
+  "steps.11.note": {
+    "from": "Las negras echan al alfil para liberar a su caballo.",
+    "to": "Black chases the bishop away to free their knight."
+  },
+  "steps.12.note": {
+    "from": "El alfil se coloca en la diagonal que mira a f7.",
+    "to": "The bishop settles on the diagonal aiming at f7."
+  },
+  "steps.13.note": {
+    "from": "Las negras sostienen e5.",
+    "to": "Black holds e5."
+  },
+  "steps.13.branches.0.name": {
+    "from": "7...0-0 y 8...d5: Gambito Marshall",
+    "to": "7...O-O and 8...d5: Marshall Attack"
+  },
+  "steps.13.branches.0.steps.0.note": {
+    "from": "Las negras enrocan antes de jugar ...d6.",
+    "to": "Black castles before playing ...d6."
+  },
+  "steps.13.branches.0.steps.1.note": {
+    "from": "Preparas d4, como siempre.",
+    "to": "You prepare d4, as always."
+  },
+  "steps.13.branches.0.steps.2.note": {
+    "from": "El Gambito Marshall: las negras dan un peón para atacar tu rey.",
+    "to": "The Marshall Attack: Black gives up a pawn to attack your king."
+  },
+  "steps.13.branches.0.steps.3.note": {
+    "from": "Aceptas el peón.",
+    "to": "You accept the pawn."
+  },
+  "steps.13.branches.0.steps.4.note": {
+    "from": "Las negras recuperan con el caballo.",
+    "to": "Black recaptures with the knight."
+  },
+  "steps.13.branches.0.steps.5.note": {
+    "from": "Tomas otro peón.",
+    "to": "You take another pawn."
+  },
+  "steps.13.branches.0.steps.6.note": {
+    "from": "Las negras cambian caballos.",
+    "to": "Black exchanges knights."
+  },
+  "steps.13.branches.0.steps.7.note": {
+    "from": "La torre recupera: tienes un peón de más, pero vienen a por tu rey.",
+    "to": "The rook recaptures: you are a pawn up, but they are coming for your king."
+  },
+  "steps.13.branches.0.steps.8.note": {
+    "from": "Las negras sostienen su caballo y preparan ...Ad6.",
+    "to": "Black supports their knight and prepares ...Bd6."
+  },
+  "steps.13.branches.0.steps.9.note": {
+    "from": "Desarrollas el alfil de c1 y controlas e5.",
+    "to": "You develop the c1 bishop and control e5."
+  },
+  "steps.13.branches.0.steps.10.note": {
+    "from": "El alfil echa a la torre y apunta a h2.",
+    "to": "The bishop drives the rook away and aims at h2."
+  },
+  "steps.13.branches.0.steps.11.note": {
+    "from": "La torre vuelve a casa.",
+    "to": "The rook goes back home."
+  },
+  "steps.13.branches.0.steps.12.note": {
+    "from": "La dama negra amenaza mate en h2.",
+    "to": "The black queen threatens mate on h2."
+  },
+  "steps.13.branches.0.steps.13.note": {
+    "from": "Cierras el paso a la dama.",
+    "to": "You block the queen’s path."
+  },
+  "steps.13.branches.0.steps.14.note": {
+    "from": "La dama se instala junto a tu rey.",
+    "to": "The queen settles next to your king."
+  },
+  "steps.13.branches.0.steps.15.note": {
+    "from": "Desarrollas y tapas la columna e.",
+    "to": "You develop and block the e-file."
+  },
+  "steps.13.branches.0.steps.16.note": {
+    "from": "Otra pieza negra al ataque.",
+    "to": "Another black piece joins the attack."
+  },
+  "steps.13.branches.0.steps.17.note": {
+    "from": "La dama defiende y prepara Cd2 y Af1.",
+    "to": "The queen defends and prepares Nd2 and Bf1."
+  },
+  "steps.13.branches.0.steps.18.note": {
+    "from": "Las negras traen la última torre.",
+    "to": "Black brings in the last rook."
+  },
+  "steps.13.branches.0.steps.19.note": {
+    "from": "Desarrollas el caballo: el peón de más compensa la presión.",
+    "to": "You develop the knight: the extra pawn makes up for the pressure."
+  },
+  "steps.14.note": {
+    "from": "Preparas d4 y das al alfil una casilla en c2.",
+    "to": "You prepare d4 and give the bishop a square on c2."
+  },
+  "steps.15.note": {
+    "from": "Las negras ponen el rey a salvo.",
+    "to": "Black puts the king in safety."
+  },
+  "steps.16.note": {
+    "from": "Impides ...Ag4 antes de jugar d4.",
+    "to": "You prevent ...Bg4 before playing d4."
+  },
+  "steps.17.note": {
+    "from": "La defensa Chigorin: el caballo echa a tu alfil.",
+    "to": "The Chigorin Defence: the knight chases your bishop away."
+  },
+  "steps.17.branches.0.name": {
+    "from": "9...Cb8: Breyer",
+    "to": "9...Nb8: Breyer Variation"
+  },
+  "steps.17.branches.0.steps.0.note": {
+    "from": "El caballo vuelve para ir a d7 y dejar libre el peón de c.",
+    "to": "The knight goes back to head for d7 and free the c-pawn."
+  },
+  "steps.17.branches.0.steps.1.note": {
+    "from": "Ocupas el centro.",
+    "to": "You occupy the centre."
+  },
+  "steps.17.branches.0.steps.2.note": {
+    "from": "El caballo sostiene e5.",
+    "to": "The knight holds e5."
+  },
+  "steps.17.branches.0.steps.3.note": {
+    "from": "Tu caballo va camino de f1 y g3.",
+    "to": "Your knight is on its way to f1 and g3."
+  },
+  "steps.17.branches.0.steps.4.note": {
+    "from": "El alfil presiona e4.",
+    "to": "The bishop puts pressure on e4."
+  },
+  "steps.17.branches.0.steps.5.note": {
+    "from": "Defiendes e4 por segunda vez.",
+    "to": "You defend e4 a second time."
+  },
+  "steps.17.branches.0.steps.6.note": {
+    "from": "Las negras preparan ...Af8 para defender su rey.",
+    "to": "Black prepares ...Bf8 to defend their king."
+  },
+  "steps.17.branches.0.steps.7.note": {
+    "from": "El caballo sigue su camino.",
+    "to": "The knight continues on its way."
+  },
+  "steps.17.branches.0.steps.8.note": {
+    "from": "El alfil defiende el enroque.",
+    "to": "The bishop defends the castled king."
+  },
+  "steps.17.branches.0.steps.9.note": {
+    "from": "El caballo llega a g3, mirando a f5.",
+    "to": "The knight reaches g3, eyeing f5."
+  },
+  "steps.18.note": {
+    "from": "El alfil se retira y sigue defendiendo e4.",
+    "to": "The bishop retreats and keeps defending e4."
+  },
+  "steps.19.note": {
+    "from": "Las negras ganan espacio en el flanco de dama.",
+    "to": "Black gains space on the queenside."
+  },
+  "steps.20.note": {
+    "from": "Ahora sí: el centro con dos peones.",
+    "to": "Now is the time: the centre with two pawns."
+  },
+  "steps.21.note": {
+    "from": "La dama negra sostiene e5.",
+    "to": "The black queen holds e5."
+  },
+  "steps.22.note": {
+    "from": "El caballo irá a f1 y g3, como en tantas líneas de la Española.",
+    "to": "The knight will go to f1 and g3, as in so many Ruy Lopez lines."
+  }
+}

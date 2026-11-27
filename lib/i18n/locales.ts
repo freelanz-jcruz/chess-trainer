@@ -3,6 +3,6 @@
  * con el tipo `Messages`: TypeScript obliga a traducir todas las claves), sus letras de las piezas
  * (lib/chess/notation.ts) y, para el contenido, sus ficheros de frases (ver lib/content/translations.ts).
  */
-export const LOCALES = ['es'] as const;
+export const LOCALES = ['es', 'en'] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'es';

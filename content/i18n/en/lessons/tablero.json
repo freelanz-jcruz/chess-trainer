@@ -1,0 +1,98 @@
+{
+  "title": {
+    "from": "El tablero",
+    "to": "The board"
+  },
+  "summary": {
+    "from": "Casillas, columnas, filas y la posición inicial.",
+    "to": "Squares, files, ranks and the starting position."
+  },
+  "pages.0.title": {
+    "from": "Casillas, columnas y filas",
+    "to": "Squares, files and ranks"
+  },
+  "pages.0.body": {
+    "from": "El tablero tiene **64 casillas**, claras y oscuras, en 8 filas y 8 columnas.\n\nLas **columnas** se nombran con letras, de la **a** a la **h**, y las **filas** con números, del **1** al **8**. Cada casilla se llama por su columna y su fila: la casilla marcada en el centro es **e4**.\n\nAl colocar el tablero, la casilla de la esquina inferior derecha debe ser **clara** (aquí, h1).",
+    "to": "The board has **64 squares**, light and dark, in 8 ranks and 8 files.\n\nThe **files** are named with letters, from **a** to **h**, and the **ranks** with numbers, from **1** to **8**. Each square is named by its file and its rank: the square marked in the centre is **e4**.\n\nWhen you set up the board, the bottom right-hand corner square must be **light** (here, h1)."
+  },
+  "pages.1.body": {
+    "from": "¿Cómo se llama la casilla marcada?",
+    "to": "What is the name of the marked square?"
+  },
+  "pages.1.options.0": {
+    "from": "f3",
+    "to": "f3"
+  },
+  "pages.1.options.1": {
+    "from": "c6",
+    "to": "c6"
+  },
+  "pages.1.options.2": {
+    "from": "f6",
+    "to": "f6"
+  },
+  "pages.1.options.3": {
+    "from": "e3",
+    "to": "e3"
+  },
+  "pages.1.explain": {
+    "from": "Columna f, fila 3.",
+    "to": "File f, rank 3."
+  },
+  "pages.2.body": {
+    "from": "¿Y esta?",
+    "to": "And this one?"
+  },
+  "pages.2.options.0": {
+    "from": "c3",
+    "to": "c3"
+  },
+  "pages.2.options.1": {
+    "from": "f6",
+    "to": "f6"
+  },
+  "pages.2.options.2": {
+    "from": "c6",
+    "to": "c6"
+  },
+  "pages.2.options.3": {
+    "from": "b6",
+    "to": "b6"
+  },
+  "pages.2.explain": {
+    "from": "Columna c, fila 6.",
+    "to": "File c, rank 6."
+  },
+  "pages.3.title": {
+    "from": "La posición inicial",
+    "to": "The starting position"
+  },
+  "pages.3.body": {
+    "from": "Cada bando empieza con **16 piezas**: 8 peones, 2 torres, 2 caballos, 2 alfiles, la dama y el rey.\n\nLas torres van en las esquinas; a su lado, los caballos, y después los alfiles. La **dama** ocupa la casilla de su color (la dama blanca, d1, que es clara) y el **rey** se coloca a su lado.\n\nEmpiezan siempre las **blancas** y después se juega por turnos: una jugada cada uno.",
+    "to": "Each side starts with **16 pieces**: 8 pawns, 2 rooks, 2 knights, 2 bishops, the queen and the king.\n\nThe rooks go in the corners; next to them, the knights, and then the bishops. The **queen** goes on the square of her own colour (the white queen on d1, which is light) and the **king** stands next to her.\n\n**White** always moves first, and then the players take turns: one move each."
+  },
+  "pages.4.body": {
+    "from": "En la posición inicial, ¿en qué casilla está el rey blanco?",
+    "to": "In the starting position, on which square is the white king?"
+  },
+  "pages.4.options.0": {
+    "from": "d1",
+    "to": "d1"
+  },
+  "pages.4.options.1": {
+    "from": "e1",
+    "to": "e1"
+  },
+  "pages.4.options.2": {
+    "from": "e8",
+    "to": "e8"
+  },
+  "pages.4.options.3": {
+    "from": "f1",
+    "to": "f1"
+  },
+  "pages.4.explain": {
+    "from": "El rey blanco empieza en e1, al lado de la dama.",
+    "to": "The white king starts on e1, next to the queen."
+  }
+}

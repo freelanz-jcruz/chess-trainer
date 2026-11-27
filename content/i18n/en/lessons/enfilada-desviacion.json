@@ -1,0 +1,134 @@
+{
+  "title": {
+    "from": "Enfilada, desviación y rayos X",
+    "to": "Skewer, deflection and X-ray"
+  },
+  "summary": {
+    "from": "Tres golpes tácticos de nivel intermedio: atacar a través de una pieza, apartar a un defensor y apoyar una casilla desde detrás.",
+    "to": "Three intermediate tactical blows: attacking through a piece, removing a defender and backing up a square from behind."
+  },
+  "pages.0.title": {
+    "from": "La enfilada",
+    "to": "The skewer"
+  },
+  "pages.0.body": {
+    "from": "La enfilada se parece a la clavada, pero al revés: la pieza **más valiosa está delante**. Cuando se aparta, la que estaba detrás queda a tiro.\n\nAquí la torre da jaque en a6. El rey tiene que salir de la fila y la dama de g6 cae.",
+    "to": "The skewer is like a pin in reverse: the **more valuable piece is in front**. When it moves away, the piece behind it is exposed.\n\nHere the rook gives check on a6. The king has to leave the rank and the queen on g6 falls."
+  },
+  "pages.1.body": {
+    "from": "¿Qué diferencia hay entre una clavada y una enfilada?",
+    "to": "What is the difference between a pin and a skewer?"
+  },
+  "pages.1.options.0": {
+    "from": "En la clavada la pieza valiosa está detrás; en la enfilada, delante",
+    "to": "In a pin the valuable piece is behind; in a skewer, in front"
+  },
+  "pages.1.options.1": {
+    "from": "Son lo mismo con distinto nombre",
+    "to": "They are the same thing with different names"
+  },
+  "pages.1.options.2": {
+    "from": "La enfilada solo la pueden hacer los alfiles",
+    "to": "Only bishops can make a skewer"
+  },
+  "pages.1.explain": {
+    "from": "En la clavada, la pieza de delante no puede moverse sin dejar expuesta la de detrás. En la enfilada, la de delante tiene que moverse y la de detrás se pierde.",
+    "to": "In a pin, the front piece cannot move without exposing the one behind. In a skewer, the front piece has to move and the one behind is lost."
+  },
+  "pages.2.body": {
+    "from": "El rey negro se ha colocado en la misma columna que su dama. **Gana la dama** con una enfilada.",
+    "to": "The black king has stepped onto the same file as its queen. **Win the queen** with a skewer."
+  },
+  "pages.2.hint": {
+    "from": "Da jaque por la columna d.",
+    "to": "Give check along the d-file."
+  },
+  "pages.2.success": {
+    "from": "El rey tiene que apartarse y la dama de d8 queda indefensa.",
+    "to": "The king has to step aside and the queen on d8 is left defenceless."
+  },
+  "pages.3.body": {
+    "from": "Juegas con negras. El rey blanco y su dama están en la misma fila. **Aprovéchalo.**",
+    "to": "You are playing Black. The white king and queen are on the same rank. **Take advantage of it.**"
+  },
+  "pages.3.hint": {
+    "from": "Un jaque por la octava fila.",
+    "to": "A check along the eighth rank."
+  },
+  "pages.3.success": {
+    "from": "El rey se aparta y la torre se come la dama de h8.",
+    "to": "The king steps aside and the rook takes the queen on h8."
+  },
+  "pages.4.title": {
+    "from": "La desviación",
+    "to": "Deflection"
+  },
+  "pages.4.body": {
+    "from": "A veces una pieza **sostiene algo importante**: defiende otra pieza, vigila una casilla o frena un peón.\n\nSi la obligas a moverse con un jaque, una captura o una amenaza, deja de cumplir su función. Aquí el jaque en g6 aparta al rey blanco de la torre de h2.",
+    "to": "Sometimes a piece **is holding something important**: it defends another piece, guards a square or stops a pawn.\n\nIf you force it to move with a check, a capture or a threat, it stops doing its job. Here the check on g6 drags the white king away from the rook on h2."
+  },
+  "pages.5.body": {
+    "from": "La torre negra de d5 está atacada por tu rey, pero la defiende el rey negro. **Aparta a ese defensor.**",
+    "to": "The black rook on d5 is attacked by your king, but the black king defends it. **Remove that defender.**"
+  },
+  "pages.5.hint": {
+    "from": "Un jaque obliga al rey negro a moverse.",
+    "to": "A check forces the black king to move."
+  },
+  "pages.5.success": {
+    "from": "Después del jaque, el rey negro ya no defiende d5 y tu rey se come la torre.",
+    "to": "After the check, the black king no longer defends d5 and your king takes the rook."
+  },
+  "pages.6.body": {
+    "from": "Juegas con negras. El caballo blanco vigila g1, la casilla donde quieres coronar. **Desvíalo.**",
+    "to": "You are playing Black. The white knight guards g1, the square where you want to promote. **Deflect it.**"
+  },
+  "pages.6.hint": {
+    "from": "Ofrece el otro peón.",
+    "to": "Offer the other pawn."
+  },
+  "pages.6.success": {
+    "from": "Si el caballo toma en h4, ya no vigila g1 y coronas.",
+    "to": "If the knight takes on h4, it no longer guards g1 and you promote."
+  },
+  "pages.7.title": {
+    "from": "Rayos X",
+    "to": "X-ray"
+  },
+  "pages.7.body": {
+    "from": "Una pieza puede **actuar a través de otra**. Aquí, la torre de d1 apoya a la de d2 por detrás: si se cambian piezas en la columna d, la de atrás entra en juego.\n\nEl truco funciona igual con piezas rivales: una torre o un alfil defienden una casilla aunque haya una pieza enemiga en medio, porque esa pieza puede desaparecer en un cambio.",
+    "to": "A piece can **act through another one**. Here, the rook on d1 backs up the one on d2 from behind: if pieces are exchanged on the d-file, the rear one comes into play.\n\nThe trick works the same way with enemy pieces: a rook or a bishop defends a square even with an enemy piece in between, because that piece may disappear in an exchange."
+  },
+  "pages.8.body": {
+    "from": "Juegas con negras. La dama blanca de d8 parece defendida por la torre de e8. **Cuenta bien los atacantes** y gana material.",
+    "to": "You are playing Black. The white queen on d8 seems to be defended by the rook on e8. **Count the attackers carefully** and win material."
+  },
+  "pages.8.hint": {
+    "from": "Tu torre de f8 ve d8 a través de la torre blanca de e8.",
+    "to": "Your rook on f8 sees d8 through the white rook on e8."
+  },
+  "pages.8.success": {
+    "from": "Si Txd8, tu torre de f8 recupera por rayos X: has cambiado la dama por la dama y una torre.",
+    "to": "If Rxd8, your rook on f8 recaptures by X-ray: you have traded your queen for the queen and a rook."
+  },
+  "pages.9.body": {
+    "from": "Tu alfil de b2 mira hacia g7 a través del alfil negro. **Corona** con ayuda de los rayos X.",
+    "to": "Your bishop on b2 looks towards g7 through the black bishop. **Promote** with the help of the X-ray."
+  },
+  "pages.9.hint": {
+    "from": "Avanza el peón aunque parezca que se lo comen.",
+    "to": "Advance the pawn even though it looks as if it will be taken."
+  },
+  "pages.9.success": {
+    "from": "Si el alfil negro toma en g7, tu alfil lo captura por la diagonal larga. Si no, el peón corona.",
+    "to": "If the black bishop takes on g7, your bishop captures it along the long diagonal. If not, the pawn promotes."
+  },
+  "pages.10.title": {
+    "from": "Resumen",
+    "to": "Summary"
+  },
+  "pages.10.body": {
+    "from": "- **Enfilada**: ataque a una pieza valiosa que, al apartarse, deja otra a tiro detrás.\n- **Desviación**: obliga a un defensor a moverse para que deje de proteger algo.\n- **Rayos X**: una pieza actúa a través de otra, propia o rival.\n\nEn Ejercicios tienes conjuntos de cada tema para practicarlos.",
+    "to": "- **Skewer**: an attack on a valuable piece that, when it moves away, leaves another one exposed behind it.\n- **Deflection**: forces a defender to move so that it stops protecting something.\n- **X-ray**: a piece acts through another, its own or the opponent’s.\n\nIn Puzzles you will find sets for each theme to practise them."
+  }
+}

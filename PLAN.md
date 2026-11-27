@@ -440,19 +440,28 @@ Todo acceso envuelto en `try/catch` (modo privado o almacenamiento bloqueado →
 - **Textos de interfaz:** un diccionario tipado por idioma (`lib/i18n/es.ts`, `en.ts`) y un contexto de React con el idioma. TypeScript obliga a que los dos tengan las mismas claves, así que no se escapa un texto sin traducir. No hace falta una librería (next-intl y similares encajan peor con la exportación estática).
 - **Contenido:** las jugadas, posiciones y soluciones no se duplican. Cada lección y apertura tiene un fichero de frases por idioma (`content/i18n/en/lessons/piezas.json`…) con la ruta de cada texto, el original y la traducción, y `npm run validate` avisa de rutas que no existen y de traducciones cuyo original ha cambiado.
 - **Notación:** las letras de las piezas dependen del idioma (R, D, T, A, C en español; K, Q, R, B, N en inglés). Los nombres de aperturas en inglés salen del catálogo de Lichess que ya se usa para los códigos ECO.
-- **Elección del idioma:** la primera vez, si el navegador no está en español, se propone o se lleva a `/en/`. Hay un selector en Ajustes y un enlace en el pie, y la elección se guarda en el progreso. Se añaden `hreflang` en el HTML para los buscadores.
-- **Lo demás:** manifiesto con nombre y descripción por idioma; el progreso es el mismo en los dos idiomas; el service worker precachea las páginas de ambos (unos MB más, sin cambiar el motor); Umami separa las visitas por ruta.
+- **Elección del idioma:** la primera vez, si el navegador no está en español, se propone cambiar a `/en/`. Hay un selector en Ajustes y un enlace en el pie, y la elección se guarda en el dispositivo. Se añaden `hreflang` en el HTML para los buscadores.
+- **Lo demás:** manifiesto con nombre y descripción por idioma; el progreso es el mismo en los dos idiomas; el service worker precachea solo las páginas del idioma elegido; Umami separa las visitas por ruta.
 
 ### 13.1 Base técnica (hecha)
 
-La app sigue solo en español y se ve igual, pero ya está preparada para traducirse:
+Lo que permite traducir la app:
 
 - **Interfaz:** todos los textos están en `lib/i18n/es.ts`, como frases completas (los plurales y los datos van como parámetros, nunca montados por piezas). Los componentes de cliente los leen con `useT()` (contexto `I18nProvider` en el layout) y los de servidor (páginas, metadatos, manifiesto) con `getMessages(locale)`. Las frases con negrita usan `**…**` (componente `Bold`) y las que llevan un enlace u otro elemento, huecos `{nombre}` (componente `Fill`). También están ahí el idioma de las fechas (`intlLocale`) y el `og:locale`.
 - **Notación:** `formatSan` y `formatMoveList` (`lib/chess/notation.ts`) reciben el idioma; en los componentes, `useSan()`.
 - **Contenido:** `lib/content/translations.ts` define los ficheros de frases (`content/i18n/<idioma>/…`, cada entrada `{ from, to }` por ruta), `content/i18n/index.ts` los registra y `curriculumIn`, `lessonIn` y `openingIn` (`lib/content/load.ts`) devuelven el contenido traducido, con el español donde falte o esté desfasado. `npm run i18n:template -- en` crea o completa los ficheros con todas las frases por traducir; `npm run validate` los comprueba.
 - **Fuera de la interfaz:** los mensajes del validador y de las herramientas siguen en español (son para quien edita el contenido).
 
-**Pendiente para publicar el inglés:** `en.ts` y las letras de las piezas en inglés; las rutas `/en/` (grupos de rutas con su *root layout*, que pasen el idioma a `I18nProvider`, a `getMessages` y a `…In()`); el selector de idioma y la propuesta automática; `hreflang`, sitemap y manifiesto por idioma; y traducir el contenido.
+### 13.2 Inglés (hecho)
+
+- **Direcciones:** el español sigue en la raíz y el inglés en `/en/`, con los segmentos traducidos (`lib/i18n/routes.ts`: `/en/lessons/<id>/`, `/en/openings/<id>/practice/`, `/en/puzzles/<id>/`, `/en/review/`, `/en/progress/`, `/en/about/`, `/en/credits/`). Los ids son los mismos en los dos idiomas (también son las claves del progreso). Los enlaces internos se montan con `routeHref(locale, route)` o, en los componentes, `useHref()`; nunca a mano.
+- **Páginas:** cada página es un módulo compartido en `components/pages/` que recibe el idioma; `app/(es)/…` y `app/en/…` son envoltorios finos con su *root layout* (`<html lang>`). La 404 (`app/global-not-found.tsx`) es bilingüe.
+- **Contenido:** las 1.038 frases de lecciones, aperturas y temario están en `content/i18n/en/` (traducidas con IA; conviene que las revise alguien que juegue y hable inglés). Notación inglesa (K, Q, R, B, N y O-O).
+- **Elección del idioma:** sin redirección automática. Si el navegador está en otro idioma de la app, un aviso (escrito en ese idioma) ofrece cambiar. Hay un selector en Ajustes y un enlace en el pie. La elección se guarda en el dispositivo (`chess-trainer:lang`, aparte del progreso) y, si existe, la portada del otro idioma lleva a la elegida, para que la app instalada la respete.
+- **SEO:** canónica y `hreflang` en cada página (`x-default`: español), sitemap con alternativas, `og:locale` y `og:locale:alternate`; robots excluye progreso y repaso en los dos idiomas.
+- **Manifiesto:** uno por idioma (`/manifest.webmanifest` y `/en/manifest.webmanifest`) con el mismo `id`, así que es la misma app instalada; cambia la portada de inicio.
+- **Sin conexión:** el service worker se registra con el idioma (`/sw.js?lang=en`) y precachea solo las páginas de ese idioma más lo común (unos 11,5 MB en lugar de 20). Las del otro idioma se guardan al visitarlas. Al cambiar de idioma se reinstala y se activa solo, sin el aviso de nueva versión.
+- **Otro idioma:** añadirlo a `locales.ts`, su diccionario, sus segmentos en `routes.ts`, sus letras en `notation.ts`, sus ficheros de frases (`npm run i18n:template -- xx`), los envoltorios de `app/xx/` y su manifiesto; y generalizar el filtro de `sw/sw.ts`, que hoy distingue solo español e inglés.
 
 **Al hacer pantallas nuevas:** ningún texto en el código, todo en `es.ts`; frases completas con parámetros; notación siempre con `useSan()`.
 

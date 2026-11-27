@@ -1,0 +1,70 @@
+{
+  "name": {
+    "from": "Trampa: mate de Légal",
+    "to": "Trap: Légal’s mate"
+  },
+  "summary": {
+    "from": "Si las negras clavan tu caballo y se descuidan, puedes entregar la dama y dar mate con tres piezas menores.",
+    "to": "If Black pins your knight and gets careless, you can give up your queen and mate with three minor pieces."
+  },
+  "steps.0.note": {
+    "from": "Peón al centro.",
+    "to": "Pawn to the centre."
+  },
+  "steps.2.note": {
+    "from": "Desarrollas atacando e5.",
+    "to": "You develop, attacking e5."
+  },
+  "steps.3.note": {
+    "from": "Las negras defienden e5 con un peón: es la Defensa Philidor.",
+    "to": "Black defends e5 with a pawn: this is the Philidor Defence."
+  },
+  "steps.4.note": {
+    "from": "El alfil apunta a f7.",
+    "to": "The bishop aims at f7."
+  },
+  "steps.5.note": {
+    "from": "El alfil negro clava tu caballo contra la dama.",
+    "to": "The black bishop pins your knight to the queen."
+  },
+  "steps.6.note": {
+    "from": "Desarrollas otra pieza: este caballo será clave para el mate.",
+    "to": "You develop another piece: this knight will be key to the mate."
+  },
+  "steps.7.note": {
+    "from": "El error: las negras pierden un tiempo y no vigilan e5.",
+    "to": "The mistake: Black wastes a move and does not watch e5."
+  },
+  "steps.8.note": {
+    "from": "¡Rompes la clavada! Si te comen la dama, hay mate.",
+    "to": "You break the pin! If they take your queen, there is mate."
+  },
+  "steps.9.note": {
+    "from": "Las negras se llevan la dama…",
+    "to": "Black takes the queen…"
+  },
+  "steps.9.branches.0.name": {
+    "from": "5...dxe5: no comen la dama",
+    "to": "5...dxe5: they do not take the queen"
+  },
+  "steps.9.branches.0.steps.0.note": {
+    "from": "Las negras capturan el caballo en lugar de la dama.",
+    "to": "Black captures the knight instead of the queen."
+  },
+  "steps.9.branches.0.steps.1.note": {
+    "from": "Recuperas la pieza y quedas con un peón más y mejor posición.",
+    "to": "You win the piece back and are left a pawn up with the better position."
+  },
+  "steps.10.note": {
+    "from": "Jaque con el alfil: el rey solo puede ir a e7.",
+    "to": "Check with the bishop: the king can only go to e7."
+  },
+  "steps.11.note": {
+    "from": "Única casilla.",
+    "to": "The only square."
+  },
+  "steps.12.note": {
+    "from": "Mate: tres piezas menores contra la dama.",
+    "to": "Mate: three minor pieces against the queen."
+  }
+}

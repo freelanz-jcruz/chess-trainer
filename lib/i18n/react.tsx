@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext } from 'react';
 import { formatMoveList, formatSan } from '@/lib/chess/notation';
 import { getMessages, type Messages } from './index';
 import { DEFAULT_LOCALE, type Locale } from './locales';
+import { routeHref, type Route } from './routes';
 
 const LocaleContext = createContext<Locale>(DEFAULT_LOCALE);
 
@@ -29,4 +30,10 @@ export function useSan() {
   const san = useCallback((s: string) => formatSan(s, locale), [locale]);
   const moveList = useCallback((sans: string[], startPly = 0) => formatMoveList(sans, startPly, locale), [locale]);
   return { san, moveList };
+}
+
+/** Enlaces internos en el idioma de la página: `href({ name: 'lesson', id })`. */
+export function useHref() {
+  const locale = useLocale();
+  return useCallback((route: Route) => routeHref(locale, route), [locale]);
 }

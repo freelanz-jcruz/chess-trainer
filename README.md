@@ -128,10 +128,12 @@ Los textos de las lecciones son originales.
 
 ### Idiomas
 
-La app está preparada para traducirse aunque de momento solo está en español (detalle en [PLAN.md](PLAN.md#13-idiomas-fase-9)):
+La app está en español (en la raíz) e inglés (en `/en/`, con los segmentos traducidos: `/en/lessons/…`, `/en/openings/…`, `/en/puzzles/…`). Detalle en [PLAN.md](PLAN.md#13-idiomas-fase-9):
 
-- **Interfaz:** todos los textos están en `lib/i18n/es.ts`. En los componentes se leen con `useT()` y en las páginas con `getMessages()`; no hay textos en el código. Para un idioma nuevo: añadirlo a `lib/i18n/locales.ts`, crear su diccionario con el tipo `Messages` (TypeScript avisa de las claves que falten) y sus letras de las piezas en `lib/chess/notation.ts`.
-- **Contenido:** `npm run i18n:template -- en` crea `content/i18n/en/` con un fichero de frases por lección y apertura más el temario, con cada texto original (`from`) y su traducción (`to`, vacía al principio). Se registran en `content/i18n/index.ts` y `npm run validate` avisa si una ruta ya no existe o si el original cambió después de traducirlo. Lo no traducido se muestra en español.
+- **Interfaz:** los textos están en `lib/i18n/es.ts` y `en.ts`. En los componentes se leen con `useT()` y en las páginas con `getMessages()`; no hay textos en el código. Los enlaces internos se montan con `useHref()` / `routeHref()` (`lib/i18n/routes.ts`).
+- **Contenido:** `content/i18n/en/` tiene un fichero de frases por lección y apertura más el temario, con cada texto original (`from`) y su traducción (`to`). Se registran en `content/i18n/index.ts` y `npm run validate` avisa si una ruta ya no existe o si el original cambió después de traducirlo; lo no traducido se muestra en español. `npm run i18n:template -- en` añade las frases nuevas por traducir.
+- **Cambio de idioma:** selector en Ajustes, enlace en el pie y, si el navegador está en el otro idioma, un aviso que ofrece cambiar (sin redirigir solo). El progreso es el mismo en los dos.
+- **Otro idioma:** añadirlo a `lib/i18n/locales.ts`, crear su diccionario con el tipo `Messages` (TypeScript avisa de las claves que falten), sus segmentos en `routes.ts`, sus letras en `lib/chess/notation.ts`, sus frases y las páginas de `app/<idioma>/` (envoltorios de `components/pages/`).
 
 ## Créditos
 

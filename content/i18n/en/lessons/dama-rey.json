@@ -1,0 +1,30 @@
+{
+  "title": {
+    "from": "Dama y rey contra rey",
+    "to": "Queen and king against king"
+  },
+  "summary": {
+    "from": "Cómo dar mate con la dama, sin ahogar.",
+    "to": "How to mate with the queen without stalemating."
+  },
+  "pages.0.title": {
+    "from": "El plan",
+    "to": "The plan"
+  },
+  "pages.0.body": {
+    "from": "Con dama y rey contra el rey solo, siempre se puede dar mate. El plan:\n\n- Con la **dama**, encierra al rey rival en una zona cada vez más pequeña, a un salto de caballo de distancia.\n- Acerca tu **rey**: la dama sola no puede dar mate.\n- Con el rey rival en el borde, da mate con la dama protegida por tu rey.\n\n**Cuidado con el ahogado**: deja siempre al rey rival alguna casilla hasta el final.",
+    "to": "With queen and king against a lone king, you can always deliver mate. The plan:\n\n- With the **queen**, box the enemy king into an ever smaller area, a knight’s move away from it.\n- Bring your **king** closer: the queen alone cannot deliver mate.\n- With the enemy king on the edge, mate with the queen protected by your king.\n\n**Watch out for stalemate**: always leave the enemy king a square until the very end."
+  },
+  "pages.1.body": {
+    "from": "El rey negro está en el borde. Da mate.",
+    "to": "The black king is on the edge. Deliver mate."
+  },
+  "pages.2.body": {
+    "from": "Ahora contra Stockfish: da mate con dama y rey. Si una jugada ahoga al rey o regala la dama, se deshace.",
+    "to": "Now against Stockfish: deliver mate with queen and king. If a move stalemates the king or gives away the queen, it is undone."
+  },
+  "pages.2.hint": {
+    "from": "Primero encierra al rey con la dama; luego acerca tu rey.",
+    "to": "First box the king in with the queen; then bring your king closer."
+  }
+}

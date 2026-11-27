@@ -10,7 +10,7 @@ import { Controls, Note, Panel, Statement, Trainer } from './Trainer';
 import { Button } from '@/components/ui/button';
 import { branchNames, buildLine, resolveStartFen, type LinePly } from '@/lib/chess/opening-line';
 import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
-import { useSan, useT } from '@/lib/i18n/react';
+import { useHref, useSan, useT } from '@/lib/i18n/react';
 import type { Opening } from '@/lib/content/schemas';
 import { openingForLevel } from '@/lib/content/levels';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
@@ -30,6 +30,7 @@ const randomLine = (opening: Opening) =>
 export default function OpeningPractice({ opening: fullOpening }: { opening: Opening }) {
   const { progress, update } = useProgress();
   const t = useT();
+  const href = useHref();
   const tx = t.openingPractice;
   const { san: sanToEs } = useSan();
   // Solo las variantes del nivel elegido (y anteriores); las ramas al azar salen de estas.
@@ -239,7 +240,7 @@ export default function OpeningPractice({ opening: fullOpening }: { opening: Ope
         {done && (
           <p className="flex flex-wrap items-center gap-2.5">
             <Button onClick={restart}>{t.common.again}</Button>
-            <Link href={`/aperturas/${opening.id}/`}>{tx.reviewWalkthrough}</Link>
+            <Link href={href({ name: 'opening', id: opening.id })}>{tx.reviewWalkthrough}</Link>
           </p>
         )}
       </Panel>

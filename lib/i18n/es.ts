@@ -108,7 +108,7 @@ export const es = {
 
   openingPractice: {
     start: 'Te toca. Juega la primera jugada de la apertura.',
-    doneClean: (trap: boolean) => (trap ? '¡Trampa completada sin fallos!' : '¡Apertura completada sin fallos!'),
+    doneClean: (trap: boolean): string => (trap ? '¡Trampa completada sin fallos!' : '¡Apertura completada sin fallos!'),
     doneWith: (trap: boolean, errors: number, hints: number) =>
       `${trap ? 'Trampa completada' : 'Apertura completada'} con ${errors === 1 ? '1 fallo' : `${errors} fallos`} y ${hints === 1 ? '1 pista' : `${hints} pistas`}.`,
     alternative: (bookMove: string) => `También se juega, pero en esta línea seguimos con ${bookMove}.`,
@@ -442,6 +442,21 @@ export const es = {
     faqTitle: 'Preguntas frecuentes',
     ctaTitle: 'Empieza hoy tu primera lección',
     ctaText: 'Arranca por el tablero y las piezas. Sin registro, sin esperas.',
+  },
+
+  language: {
+    /** Nombre de cada idioma en su propio idioma (igual en todos los diccionarios). */
+    names: { es: 'Español', en: 'English' },
+    /** Nombre de cada idioma escrito en este (para frases como «Seguir en inglés»). */
+    namesHere: { es: 'español', en: 'inglés' },
+    setting: 'Idioma',
+    settingHelp: 'El progreso y los ajustes son los mismos en todos los idiomas.',
+    // Aviso para quien entra en otro idioma con el navegador en este: va escrito en este idioma.
+    suggestTitle: 'Ajedrez Tutor también está en español',
+    suggestText: 'Las lecciones, aperturas y ejercicios, en tu idioma. Tu progreso se conserva.',
+    suggestGo: 'Cambiar a español',
+    suggestStay: (current: string) => `Seguir en ${current}`,
+    suggestLabel: 'Idioma',
   },
 
   landing: {

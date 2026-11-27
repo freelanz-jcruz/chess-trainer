@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import type { Curriculum as CurriculumData, Lesson } from '@/lib/content/schemas';
 import { useProgress, type Progress } from '@/lib/progress/store';
-import { lessonHref } from '@/lib/content/links';
+import { lessonRoute } from '@/lib/content/links';
 import { levelAllows } from '@/lib/content/levels';
-import { useT } from '@/lib/i18n/react';
+import { useHref, useT } from '@/lib/i18n/react';
 import type { Messages } from '@/lib/i18n';
 
 
@@ -39,6 +39,7 @@ export default function Curriculum({
 }) {
   const { progress } = useProgress();
   const t = useT();
+  const toHref = useHref();
   return (
     <ol className="my-4 grid gap-6">
       {curriculum.blocks.map((b) => (
@@ -51,7 +52,8 @@ export default function Curriculum({
           <p className="my-3.5 text-sm text-muted-foreground">{b.description}</p>
           <ul className="mt-2">
             {b.lessons.filter((l) => levelAllows(progress.settings.level, l.level)).map((l) => {
-              const href = lessonHref(l);
+              const route = lessonRoute(l);
+              const href = route && toHref(route);
               const prog = lessonProgress(l, progress, puzzleIds, t.curriculum);
               return (
                 <li
@@ -77,10 +79,11 @@ export default function Curriculum({
 /** Pie de bloque con las lecciones ocultas por el nivel elegido, para que no pasen desapercibidas. */
 function HiddenByLevel({ count }: { count: number }) {
   const t = useT();
+  const href = useHref();
   if (!count) return null;
   return (
     <li className="border-t border-border pt-2.5 pb-1 text-sm text-muted-foreground">
-      {t.curriculum.hiddenByLevel(count)} · <Link href="/progreso/">{t.curriculum.changeLevel}</Link>
+      {t.curriculum.hiddenByLevel(count)} · <Link href={href({ name: 'progress' })}>{t.curriculum.changeLevel}</Link>
     </li>
   );
 }

@@ -1,0 +1,98 @@
+{
+  "title": {
+    "from": "Rey y peón contra rey",
+    "to": "King and pawn against king"
+  },
+  "summary": {
+    "from": "Cuándo un peón corona solo, cuándo necesita a su rey y cómo acompañarlo.",
+    "to": "When a pawn promotes on its own, when it needs its king and how to escort it."
+  },
+  "pages.0.title": {
+    "from": "Un peón puede bastar",
+    "to": "One pawn can be enough"
+  },
+  "pages.0.body": {
+    "from": "Cuando quedan pocas piezas, un solo peón de ventaja puede decidir la partida: si corona, tendrás una dama contra un rey solo.\n\nHay dos preguntas que hacerse:\n\n- ¿Llega el peón solo, antes de que lo alcance el rey rival?\n- Si no llega, ¿cómo lo acompaña tu rey?",
+    "to": "When few pieces are left, a single extra pawn can decide the game: if it promotes, you will have a queen against a lone king.\n\nThere are two questions to ask:\n\n- Does the pawn get there on its own, before the enemy king catches it?\n- If not, how does your king escort it?"
+  },
+  "pages.1.title": {
+    "from": "La regla del cuadrado",
+    "to": "The rule of the square"
+  },
+  "pages.1.body": {
+    "from": "Imagina un cuadrado que va desde el peón hasta la casilla donde corona, con el mismo número de casillas hacia el lado del rey rival.\n\nSi el rey rival puede **entrar en el cuadrado** con su jugada, alcanza al peón. Si no puede, el peón corona sin ayuda.",
+    "to": "Imagine a square running from the pawn to its promotion square, with the same number of squares towards the enemy king.\n\nIf the enemy king can **step into the square** with its move, it catches the pawn. If it cannot, the pawn promotes without help."
+  },
+  "pages.2.body": {
+    "from": "Juegan las negras. ¿Alcanza el rey negro al peón?",
+    "to": "Black to move. Does the black king catch the pawn?"
+  },
+  "pages.2.options.0": {
+    "from": "Sí",
+    "to": "Yes"
+  },
+  "pages.2.options.1": {
+    "from": "No",
+    "to": "No"
+  },
+  "pages.2.explain": {
+    "from": "El cuadrado llega hasta la columna f y el rey está en h5: con una jugada no puede entrar, así que el peón corona.",
+    "to": "The square reaches the f-file and the king is on h5: it cannot get in with one move, so the pawn promotes."
+  },
+  "pages.3.body": {
+    "from": "Ahora el rey negro está en g5. Juegan las negras. ¿Alcanza al peón?",
+    "to": "Now the black king is on g5. Black to move. Does it catch the pawn?"
+  },
+  "pages.3.options.0": {
+    "from": "Sí",
+    "to": "Yes"
+  },
+  "pages.3.options.1": {
+    "from": "No",
+    "to": "No"
+  },
+  "pages.3.explain": {
+    "from": "Desde g5 el rey entra en el cuadrado (f4, f5 o f6) y llegará a tiempo de capturar el peón.",
+    "to": "From g5 the king steps into the square (f4, f5 or f6) and will arrive in time to capture the pawn."
+  },
+  "pages.4.body": {
+    "from": "El rey negro está fuera del cuadrado. **Corona el peón**.",
+    "to": "The black king is outside the square. **Promote the pawn**."
+  },
+  "pages.4.hint": {
+    "from": "Avanza el peón sin pararte.",
+    "to": "Push the pawn without stopping."
+  },
+  "pages.5.title": {
+    "from": "El rey, delante del peón",
+    "to": "The king in front of the pawn"
+  },
+  "pages.5.body": {
+    "from": "Si el rey rival alcanza al peón, tu rey tiene que acompañarlo. La regla de oro: **el rey va delante del peón**, abriéndole camino.\n\nSi tu rey consigue ponerse **dos casillas delante del peón**, la victoria está asegurada (salvo con un peón de torre).",
+    "to": "If the enemy king catches the pawn, your king has to escort it. The golden rule: **the king goes in front of the pawn**, clearing the way.\n\nIf your king manages to stand **two squares in front of the pawn**, the win is assured (except with a rook’s pawn)."
+  },
+  "pages.6.body": {
+    "from": "Tu rey ya está dos casillas delante del peón. **Corona** contra la defensa de Stockfish.",
+    "to": "Your king is already two squares in front of the pawn. **Promote** against Stockfish’s defence."
+  },
+  "pages.6.hint": {
+    "from": "No empujes el peón todavía: avanza con el rey hacia un lado sin dejar que el rey negro se ponga delante.",
+    "to": "Do not push the pawn yet: advance with the king to one side without letting the black king get in front."
+  },
+  "pages.7.title": {
+    "from": "Cuidado con el peón de torre",
+    "to": "Beware of the rook’s pawn"
+  },
+  "pages.7.body": {
+    "from": "El peón de la columna a o h es la excepción. Si el rey rival llega a la esquina, delante del peón, **es tablas**: tu rey no puede echarlo de allí sin ahogarlo.",
+    "to": "The pawn on the a- or h-file is the exception. If the enemy king reaches the corner, in front of the pawn, **it is a draw**: your king cannot drive it out without stalemating it."
+  },
+  "pages.8.title": {
+    "from": "Resumen",
+    "to": "Summary"
+  },
+  "pages.8.body": {
+    "from": "- Con la **regla del cuadrado** sabes al instante si el peón corona solo.\n- Si no, el **rey va delante** del peón.\n- **Dos casillas delante** del peón, la victoria es segura.\n- El **peón de torre** es tablas si el rey rival llega a la esquina.\n\nEn la siguiente lección verás la herramienta clave para ganar estos finales: la oposición.",
+    "to": "- With the **rule of the square** you know instantly whether the pawn promotes on its own.\n- If not, the **king goes in front** of the pawn.\n- **Two squares in front** of the pawn, the win is certain.\n- The **rook’s pawn** is a draw if the enemy king reaches the corner.\n\nIn the next lesson you will see the key tool for winning these endgames: the opposition."
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": {
+    "from": "Trampa: ataque Fegatello",
+    "to": "Trap: Fried Liver Attack"
+  },
+  "summary": {
+    "from": "Si en los Dos Caballos las negras recapturan en d5 con el caballo, un sacrificio en f7 saca a su rey al centro.",
+    "to": "If, in the Two Knights, Black recaptures on d5 with the knight, a sacrifice on f7 drags their king into the centre."
+  },
+  "steps.0.note": {
+    "from": "Peón al centro.",
+    "to": "Pawn to the centre."
+  },
+  "steps.2.note": {
+    "from": "Desarrollas atacando e5.",
+    "to": "You develop, attacking e5."
+  },
+  "steps.4.note": {
+    "from": "El alfil apunta a f7.",
+    "to": "The bishop aims at f7."
+  },
+  "steps.5.note": {
+    "from": "Las negras desarrollan el otro caballo y atacan e4: son los Dos Caballos.",
+    "to": "Black develops the other knight and attacks e4: this is the Two Knights."
+  },
+  "steps.6.note": {
+    "from": "Dos piezas contra f7. Rompe el principio de no mover dos veces, pero crea una amenaza.",
+    "to": "Two pieces against f7. It breaks the rule of not moving a piece twice, but it creates a threat."
+  },
+  "steps.7.note": {
+    "from": "Las negras cortan la diagonal del alfil.",
+    "to": "Black blocks the bishop’s diagonal."
+  },
+  "steps.8.note": {
+    "from": "Capturas: el alfil vuelve a ver f7.",
+    "to": "You capture: the bishop sees f7 again."
+  },
+  "steps.9.note": {
+    "from": "El error. Lo bueno era ...Ca5, atacando al alfil.",
+    "to": "The mistake. The right move was ...Na5, attacking the bishop."
+  },
+  "steps.10.note": {
+    "from": "Sacrificas el caballo para sacar al rey de su refugio.",
+    "to": "You sacrifice the knight to drag the king out of its shelter."
+  },
+  "steps.11.note": {
+    "from": "El rey captura y queda expuesto.",
+    "to": "The king captures and is left exposed."
+  },
+  "steps.12.note": {
+    "from": "Jaque y ataque doble al caballo de d5, que está clavado.",
+    "to": "Check, and a double attack on the pinned knight on d5."
+  },
+  "steps.13.note": {
+    "from": "El rey tiene que ir al centro para defender el caballo.",
+    "to": "The king has to go to the centre to defend the knight."
+  },
+  "steps.14.note": {
+    "from": "Más presión sobre el caballo clavado. El rey negro, en el centro, sufrirá mucho.",
+    "to": "More pressure on the pinned knight. The black king, in the centre, will suffer a lot."
+  }
+}

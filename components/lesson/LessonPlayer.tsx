@@ -7,7 +7,7 @@ import type { LessonFile, LessonPage } from '@/lib/content/schemas';
 import { updateLesson, useProgress } from '@/lib/progress/store';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useT } from '@/lib/i18n/react';
+import { useHref, useT } from '@/lib/i18n/react';
 import { Note } from '../Trainer';
 import ResultDialog, { TWO_COLUMNS } from '../ResultDialog';
 import { QuizPageView, TextPageView } from './StaticPages';
@@ -21,6 +21,7 @@ const autoComplete = (p: LessonPage) => p.kind === 'text';
 export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; next?: { href: string; title: string } }) {
   const { progress, update } = useProgress();
   const tr = useT();
+  const href = useHref();
   const tl = tr.lesson;
   const router = useRouter();
   const saved = progress.lessons[lesson.id];
@@ -99,7 +100,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
                 <NextLessonLabel title={next.title} />
               </Link>
             ) : (
-              <Link href="/">{tl.backToCurriculum}</Link>
+              <Link href={href({ name: 'home' })}>{tl.backToCurriculum}</Link>
             )}
           </Button>
         </span>
@@ -108,7 +109,7 @@ export default function LessonPlayer({ lesson, next }: { lesson: LessonFile; nex
   );
 
   // Al terminar la lección, la ventana de resultado (móvil) ofrece ir a la siguiente lección.
-  const nextHref = next?.href ?? '/';
+  const nextHref = next?.href ?? href({ name: 'home' });
   const nextLabel = next ? <NextLessonLabel title={next.title} /> : tl.backToCurriculum;
   const goNextLesson = useCallback(() => router.push(nextHref), [router, nextHref]);
 

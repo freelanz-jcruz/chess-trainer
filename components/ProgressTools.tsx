@@ -20,6 +20,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import InstallApp from '@/components/InstallApp';
+import { LanguageSelect } from '@/components/LanguageSwitch';
 import { localDay } from '@/lib/progress/review';
 import {
   currentProgress,
@@ -186,6 +187,9 @@ export default function ProgressTools() {
       <section className="grid gap-3">
         <h2>{ts.title}</h2>
         <div className="divide-y divide-border rounded-lg border border-border bg-card">
+          <SettingRow title={t.language.setting} description={t.language.settingHelp} htmlFor="language">
+            <LanguageSelect id="language" />
+          </SettingRow>
           <SettingRow
             title={ts.level}
             description={ts.levelHelp}

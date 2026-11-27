@@ -1,0 +1,354 @@
+{
+  "name": {
+    "from": "Contra 1.Cf3 y 1.c4: esquema del Gambito de Dama",
+    "to": "Against 1.Nf3 and 1.c4: Queen’s Gambit setup"
+  },
+  "summary": {
+    "from": "Contra la Réti (1.Cf3) y la Inglesa (1.c4) usas las mismas piezas en las mismas casillas que en el Gambito de Dama rehusado: ...d5, ...e6, ...Cf6, ...Ae7 y enroque.",
+    "to": "Against the Réti (1.Nf3) and the English (1.c4) you put the same pieces on the same squares as in the Queen’s Gambit Declined: ...d5, ...e6, ...Nf6, ...Be7 and castling."
+  },
+  "steps.0.note": {
+    "from": "La Réti: las blancas desarrollan antes de mover un peón central.",
+    "to": "The Réti: White develops before moving a central pawn."
+  },
+  "steps.0.branches.0.name": {
+    "from": "1.c4: Inglesa",
+    "to": "1.c4: English Opening"
+  },
+  "steps.0.branches.0.steps.0.note": {
+    "from": "La Inglesa: el peón de c vigila d5 desde un lado.",
+    "to": "The English: the c-pawn watches d5 from the side."
+  },
+  "steps.0.branches.0.steps.1.note": {
+    "from": "Preparas ...d5 para que, si cambian en d5, recuperes con un peón.",
+    "to": "You prepare ...d5 so that, if they exchange on d5, you recapture with a pawn."
+  },
+  "steps.0.branches.0.steps.2.note": {
+    "from": "Las blancas desarrollan y vigilan d5.",
+    "to": "White develops and watches d5."
+  },
+  "steps.0.branches.0.steps.2.branches.0.name": {
+    "from": "2.Cf3 y 3.g3",
+    "to": "2.Nf3 and 3.g3"
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.0.note": {
+    "from": "Las blancas desarrollan el caballo de rey.",
+    "to": "White develops the king’s knight."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.1.note": {
+    "from": "Ocupas el centro: tu esquema de siempre.",
+    "to": "You occupy the centre: your usual setup."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.2.note": {
+    "from": "Las blancas preparan el alfil en g2.",
+    "to": "White prepares the bishop on g2."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.3.note": {
+    "from": "Desarrollas y defiendes d5.",
+    "to": "You develop and defend d5."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.4.note": {
+    "from": "El alfil blanco presiona d5 desde lejos.",
+    "to": "The white bishop puts pressure on d5 from afar."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.5.note": {
+    "from": "Desarrollas y preparas el enroque.",
+    "to": "You develop and prepare castling."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.6.note": {
+    "from": "Las blancas enrocan.",
+    "to": "White castles."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.7.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.8.note": {
+    "from": "Las blancas preparan el otro alfil en b2.",
+    "to": "White prepares the other bishop on b2."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.9.note": {
+    "from": "Ganas espacio y vigilas d4.",
+    "to": "You gain space and watch d4."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.10.note": {
+    "from": "Los dos alfiles blancos miran al centro desde los lados.",
+    "to": "Both white bishops eye the centre from the sides."
+  },
+  "steps.0.branches.0.steps.2.branches.0.steps.11.note": {
+    "from": "Desarrollo completo de tus piezas menores.",
+    "to": "Your minor pieces are fully developed."
+  },
+  "steps.0.branches.0.steps.2.branches.1.name": {
+    "from": "2.g3",
+    "to": "2.g3"
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.0.note": {
+    "from": "Las blancas preparan el alfil en g2.",
+    "to": "White prepares the bishop on g2."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.1.note": {
+    "from": "Ocupas el centro.",
+    "to": "You occupy the centre."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.2.note": {
+    "from": "El alfil presiona d5.",
+    "to": "The bishop puts pressure on d5."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.3.note": {
+    "from": "Desarrollas y defiendes d5.",
+    "to": "You develop and defend d5."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.4.note": {
+    "from": "Otra pieza blanca fuera.",
+    "to": "Another white piece out."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.5.note": {
+    "from": "Preparas el enroque.",
+    "to": "You prepare castling."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.6.note": {
+    "from": "Las blancas enrocan.",
+    "to": "White castles."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.7.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.8.note": {
+    "from": "Las blancas preparan el alfil en b2.",
+    "to": "White prepares the bishop on b2."
+  },
+  "steps.0.branches.0.steps.2.branches.1.steps.9.note": {
+    "from": "Ganas espacio en el centro.",
+    "to": "You gain space in the centre."
+  },
+  "steps.0.branches.0.steps.3.note": {
+    "from": "Ocupas el centro, apoyado por el peón de e6.",
+    "to": "You occupy the centre, supported by the e6 pawn."
+  },
+  "steps.0.branches.0.steps.4.note": {
+    "from": "Las blancas también ocupan el centro: es un Gambito de Dama por otro orden.",
+    "to": "White occupies the centre too: it is a Queen’s Gambit by a different move order."
+  },
+  "steps.0.branches.0.steps.4.branches.0.name": {
+    "from": "3.cxd5",
+    "to": "3.cxd5"
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.0.note": {
+    "from": "Las blancas cambian en el centro.",
+    "to": "White exchanges in the centre."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.1.note": {
+    "from": "Recuperas con el peón: por eso jugaste antes ...e6.",
+    "to": "You recapture with the pawn: that is why you played ...e6 first."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.2.note": {
+    "from": "Las blancas ocupan el centro.",
+    "to": "White occupies the centre."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.3.note": {
+    "from": "Desarrollas y defiendes d5.",
+    "to": "You develop and defend d5."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.4.note": {
+    "from": "El alfil clava tu caballo.",
+    "to": "The bishop pins your knight."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.5.note": {
+    "from": "Rompes la clavada desarrollando.",
+    "to": "You break the pin by developing."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.6.note": {
+    "from": "Las blancas abren paso a su otro alfil.",
+    "to": "White opens the way for their other bishop."
+  },
+  "steps.0.branches.0.steps.4.branches.0.steps.7.note": {
+    "from": "Refuerzas d5: es la variante del cambio del Gambito de Dama.",
+    "to": "You reinforce d5: this is the Exchange Variation of the Queen’s Gambit."
+  },
+  "steps.0.branches.0.steps.5.note": {
+    "from": "Desarrollas y defiendes d5.",
+    "to": "You develop and defend d5."
+  },
+  "steps.0.branches.0.steps.6.note": {
+    "from": "El alfil clava tu caballo.",
+    "to": "The bishop pins your knight."
+  },
+  "steps.0.branches.0.steps.7.note": {
+    "from": "Rompes la clavada y preparas el enroque.",
+    "to": "You break the pin and prepare castling."
+  },
+  "steps.0.branches.0.steps.8.note": {
+    "from": "Las blancas abren paso a su alfil de f1.",
+    "to": "White opens the way for their f1 bishop."
+  },
+  "steps.0.branches.0.steps.9.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.0.branches.0.steps.10.note": {
+    "from": "Las blancas desarrollan el último caballo.",
+    "to": "White develops the last knight."
+  },
+  "steps.0.branches.0.steps.11.note": {
+    "from": "Ya estás en la línea principal del Gambito de Dama rehusado.",
+    "to": "You are now in the main line of the Queen’s Gambit Declined."
+  },
+  "steps.1.note": {
+    "from": "Ocupas el centro con el peón de dama.",
+    "to": "You occupy the centre with the queen’s pawn."
+  },
+  "steps.2.note": {
+    "from": "Las blancas presionan tu peón de d5 desde un lado.",
+    "to": "White puts pressure on your d5 pawn from the side."
+  },
+  "steps.2.branches.0.name": {
+    "from": "2.g3: ataque indio de rey",
+    "to": "2.g3: King’s Indian Attack"
+  },
+  "steps.2.branches.0.steps.0.note": {
+    "from": "Las blancas preparan el alfil en g2.",
+    "to": "White prepares the bishop on g2."
+  },
+  "steps.2.branches.0.steps.1.note": {
+    "from": "Desarrollas y vigilas e4.",
+    "to": "You develop and watch e4."
+  },
+  "steps.2.branches.0.steps.2.note": {
+    "from": "El alfil blanco mira al centro.",
+    "to": "The white bishop eyes the centre."
+  },
+  "steps.2.branches.0.steps.3.note": {
+    "from": "Tu esquema de siempre: abres paso al alfil de f8.",
+    "to": "Your usual setup: you open the way for the f8 bishop."
+  },
+  "steps.2.branches.0.steps.4.note": {
+    "from": "Las blancas enrocan.",
+    "to": "White castles."
+  },
+  "steps.2.branches.0.steps.5.note": {
+    "from": "Preparas el enroque.",
+    "to": "You prepare castling."
+  },
+  "steps.2.branches.0.steps.6.note": {
+    "from": "Las blancas preparan e4.",
+    "to": "White prepares e4."
+  },
+  "steps.2.branches.0.steps.7.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.2.branches.0.steps.8.note": {
+    "from": "El caballo apoya el avance e4.",
+    "to": "The knight supports the e4 advance."
+  },
+  "steps.2.branches.0.steps.9.note": {
+    "from": "Ganas espacio en el flanco de dama.",
+    "to": "You gain space on the queenside."
+  },
+  "steps.2.branches.0.steps.10.note": {
+    "from": "Las blancas atacan tu centro.",
+    "to": "White attacks your centre."
+  },
+  "steps.2.branches.0.steps.11.note": {
+    "from": "Desarrollas y vigilas d4 y e5.",
+    "to": "You develop and watch d4 and e5."
+  },
+  "steps.2.branches.1.name": {
+    "from": "2.d4 y 3.c4",
+    "to": "2.d4 and 3.c4"
+  },
+  "steps.2.branches.1.steps.0.note": {
+    "from": "Las blancas ocupan el centro.",
+    "to": "White occupies the centre."
+  },
+  "steps.2.branches.1.steps.1.note": {
+    "from": "Desarrollas y defiendes d5.",
+    "to": "You develop and defend d5."
+  },
+  "steps.2.branches.1.steps.2.note": {
+    "from": "Ahora sí, el Gambito de Dama.",
+    "to": "Now it is the Queen’s Gambit."
+  },
+  "steps.2.branches.1.steps.3.note": {
+    "from": "Lo rehúsas como siempre.",
+    "to": "You decline it as always."
+  },
+  "steps.2.branches.1.steps.4.note": {
+    "from": "Más presión sobre d5.",
+    "to": "More pressure on d5."
+  },
+  "steps.2.branches.1.steps.5.note": {
+    "from": "Desarrollas y preparas el enroque.",
+    "to": "You develop and prepare castling."
+  },
+  "steps.2.branches.1.steps.6.note": {
+    "from": "El alfil sale a g5.",
+    "to": "The bishop comes out to g5."
+  },
+  "steps.2.branches.1.steps.7.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.2.branches.1.steps.8.note": {
+    "from": "Las blancas abren paso a su alfil.",
+    "to": "White opens the way for their bishop."
+  },
+  "steps.2.branches.1.steps.9.note": {
+    "from": "Misma posición que en el Gambito de Dama rehusado.",
+    "to": "The same position as in the Queen’s Gambit Declined."
+  },
+  "steps.3.note": {
+    "from": "Sostienes d5 con un peón, igual que contra el Gambito de Dama.",
+    "to": "You hold d5 with a pawn, just as against the Queen’s Gambit."
+  },
+  "steps.4.note": {
+    "from": "Las blancas preparan el alfil en g2.",
+    "to": "White prepares the bishop on g2."
+  },
+  "steps.5.note": {
+    "from": "Desarrollas y defiendes d5.",
+    "to": "You develop and defend d5."
+  },
+  "steps.6.note": {
+    "from": "El alfil blanco presiona d5 desde lejos.",
+    "to": "The white bishop puts pressure on d5 from afar."
+  },
+  "steps.7.note": {
+    "from": "Preparas el enroque.",
+    "to": "You prepare castling."
+  },
+  "steps.8.note": {
+    "from": "Las blancas enrocan.",
+    "to": "White castles."
+  },
+  "steps.9.note": {
+    "from": "Rey a salvo.",
+    "to": "King safe."
+  },
+  "steps.10.note": {
+    "from": "Las blancas preparan el otro alfil en b2.",
+    "to": "White prepares the other bishop on b2."
+  },
+  "steps.11.note": {
+    "from": "Ganas espacio y vigilas d4.",
+    "to": "You gain space and watch d4."
+  },
+  "steps.12.note": {
+    "from": "Los dos alfiles blancos miran al centro desde los lados.",
+    "to": "Both white bishops eye the centre from the sides."
+  },
+  "steps.13.note": {
+    "from": "Desarrollas el último caballo.",
+    "to": "You develop the last knight."
+  },
+  "steps.14.note": {
+    "from": "Las blancas refuerzan d4.",
+    "to": "White reinforces d4."
+  },
+  "steps.15.note": {
+    "from": "Preparas tu alfil en b7 para contestar al de g2.",
+    "to": "You prepare your bishop on b7 to answer the one on g2."
+  }
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { withBase } from '@/lib/base-path';
-import { useT } from '@/lib/i18n/react';
+import { useLocale, useT } from '@/lib/i18n/react';
 // Empieza a escuchar el aviso de instalación desde la primera página (llega antes de abrir Ajustes).
 import '@/lib/install';
 
@@ -16,6 +16,7 @@ export default function ServiceWorker() {
   const [offlineReady, setOfflineReady] = useState(false);
   const t = useT();
   const tn = t.notices;
+  const locale = useLocale();
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production' || !('serviceWorker' in navigator)) return;
@@ -26,20 +27,28 @@ export default function ServiceWorker() {
     };
     document.addEventListener('visibilitychange', onVisible);
 
+    // El service worker precachea solo las páginas del idioma con el que se registra (ver sw/sw.ts).
+    // Al cambiar de idioma cambia su dirección y se instala de nuevo: esa «actualización» se activa sola,
+    // sin aviso, porque la página ya se ha recargado en el idioma nuevo.
+    const langOf = (sw: ServiceWorker | null | undefined) => (sw ? new URL(sw.scriptURL).searchParams.get('lang') ?? 'es' : null);
+    const activeLang = langOf(navigator.serviceWorker.controller);
+    const languageChange = activeLang !== null && activeLang !== locale;
+    const onWaiting = (sw: ServiceWorker) => {
+      if (languageChange) sw.postMessage({ type: 'SKIP_WAITING' });
+      else setWaiting(sw); // actualización: hay una versión anterior activa
+    };
+
     navigator.serviceWorker
-      .register(withBase('/sw.js'), { scope: withBase('/') })
+      .register(withBase(`/sw.js?lang=${locale}`), { scope: withBase('/') })
       .then((r) => {
         reg = r;
-        if (r.waiting && navigator.serviceWorker.controller) setWaiting(r.waiting);
+        if (r.waiting && navigator.serviceWorker.controller) onWaiting(r.waiting);
         r.addEventListener('updatefound', () => {
           const sw = r.installing;
           sw?.addEventListener('statechange', () => {
             if (sw.state !== 'installed') return;
-            if (navigator.serviceWorker.controller) {
-              setWaiting(sw); // actualización: hay una versión anterior activa
-            } else {
-              setOfflineReady(true); // primera instalación
-            }
+            if (navigator.serviceWorker.controller) onWaiting(sw);
+            else setOfflineReady(true); // primera instalación
           });
         });
       })
@@ -47,7 +56,7 @@ export default function ServiceWorker() {
         /* sin service worker la app sigue funcionando con conexión */
       });
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     if (!waiting) return;
