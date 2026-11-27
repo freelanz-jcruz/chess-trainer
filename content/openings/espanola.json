@@ -1,0 +1,139 @@
+{
+  "id": "espanola",
+  "name": "Apertura Española: variante Cerrada",
+  "eco": "C97",
+  "side": "white",
+  "kind": "repertoire",
+  "block": 5,
+  "level": "intermedio",
+  "summary": "La Española con blancas: presión duradera sobre el caballo que defiende e5, enroque rápido y centro con c3 y d4. Las ramas cubren las defensas más habituales de las negras.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "e4", "note": "Un peón al centro: abre camino al alfil y a la dama." },
+    { "san": "e5", "note": "Las negras también reclaman el centro." },
+    { "san": "Nf3", "note": "Desarrollas atacando el peón de e5." },
+    { "san": "Nc6", "note": "Las negras lo defienden con el caballo." },
+    { "san": "Bb5", "note": "La Española: el alfil presiona al caballo que defiende e5." },
+    {
+      "san": "a6",
+      "note": "Las negras preguntan al alfil qué piensa hacer.",
+      "branches": [
+        {
+          "id": "berlinesa",
+          "name": "3...Cf6: Berlinesa",
+          "eco": "C65",
+          "steps": [
+            { "san": "Nf6", "note": "Las negras contraatacan e4 en lugar de echar al alfil." },
+            { "san": "d3", "note": "Defiendes e4 con calma y evitas el final que surge tras 4.0-0 Cxe4." },
+            { "san": "Bc5", "note": "El alfil negro sale a su mejor diagonal." },
+            { "san": "c3", "note": "Preparas d4 y das una casilla de retirada al alfil." },
+            { "san": "O-O", "note": "Las negras enrocan." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "d6", "note": "Las negras sostienen e5." },
+            { "san": "h3", "note": "Impides ...Ag4, que clavaría tu caballo." },
+            { "san": "a6", "note": "Ahora sí preguntan al alfil." },
+            { "san": "Ba4", "note": "Conservas el alfil y la presión sobre c6." }
+          ]
+        }
+      ]
+    },
+    { "san": "Ba4", "note": "Te retiras sin cambiar: mantienes la presión sobre el caballo." },
+    { "san": "Nf6", "note": "Las negras desarrollan y atacan e4." },
+    { "san": "O-O", "note": "Enrocas y dejas e4 como cebo: si lo toman, recuperas con la torre en e1." },
+    {
+      "san": "Be7",
+      "note": "Las negras desarrollan con calma: es la variante Cerrada.",
+      "branches": [
+        {
+          "id": "abierta",
+          "name": "5...Cxe4: Abierta",
+          "eco": "C83",
+          "steps": [
+            { "san": "Nxe4", "note": "Las negras aceptan el peón de e4." },
+            { "san": "d4", "note": "Abres el centro de inmediato, con el rey negro aún sin enrocar." },
+            { "san": "b5", "note": "Las negras echan al alfil antes de nada." },
+            { "san": "Bb3", "note": "El alfil apunta a d5 y f7." },
+            { "san": "d5", "note": "Las negras sostienen su caballo con un peón." },
+            { "san": "dxe5", "note": "Recuperas el peón y ganas espacio." },
+            { "san": "Be6", "note": "Las negras refuerzan d5." },
+            { "san": "c3", "note": "Das al alfil una casilla de retirada en c2." },
+            { "san": "Be7", "note": "Las negras desarrollan y preparan el enroque." },
+            { "san": "Nbd2", "note": "Desarrollas y atacas al caballo de e4." },
+            { "san": "O-O", "note": "Las negras enrocan." },
+            { "san": "Bc2", "note": "El alfil apunta al enroque negro." }
+          ]
+        }
+      ]
+    },
+    { "san": "Re1", "note": "La torre defiende e4 y vuelve a amenazar ganar e5." },
+    { "san": "b5", "note": "Las negras echan al alfil para liberar a su caballo." },
+    { "san": "Bb3", "note": "El alfil se coloca en la diagonal que mira a f7." },
+    {
+      "san": "d6",
+      "note": "Las negras sostienen e5.",
+      "branches": [
+        {
+          "id": "marshall",
+          "name": "7...0-0 y 8...d5: Gambito Marshall",
+          "eco": "C89",
+          "level": "avanzado",
+          "steps": [
+            { "san": "O-O", "note": "Las negras enrocan antes de jugar ...d6." },
+            { "san": "c3", "note": "Preparas d4, como siempre." },
+            { "san": "d5", "note": "El Gambito Marshall: las negras dan un peón para atacar tu rey." },
+            { "san": "exd5", "note": "Aceptas el peón." },
+            { "san": "Nxd5", "note": "Las negras recuperan con el caballo." },
+            { "san": "Nxe5", "note": "Tomas otro peón." },
+            { "san": "Nxe5", "note": "Las negras cambian caballos." },
+            { "san": "Rxe5", "note": "La torre recupera: tienes un peón de más, pero vienen a por tu rey." },
+            { "san": "c6", "note": "Las negras sostienen su caballo y preparan ...Ad6." },
+            { "san": "d4", "note": "Desarrollas el alfil de c1 y controlas e5." },
+            { "san": "Bd6", "note": "El alfil echa a la torre y apunta a h2." },
+            { "san": "Re1", "note": "La torre vuelve a casa." },
+            { "san": "Qh4", "note": "La dama negra amenaza mate en h2." },
+            { "san": "g3", "note": "Cierras el paso a la dama." },
+            { "san": "Qh3", "note": "La dama se instala junto a tu rey." },
+            { "san": "Be3", "note": "Desarrollas y tapas la columna e." },
+            { "san": "Bg4", "note": "Otra pieza negra al ataque." },
+            { "san": "Qd3", "note": "La dama defiende y prepara Cd2 y Af1." },
+            { "san": "Rae8", "note": "Las negras traen la última torre." },
+            { "san": "Nd2", "note": "Desarrollas el caballo: el peón de más compensa la presión." }
+          ]
+        }
+      ]
+    },
+    { "san": "c3", "note": "Preparas d4 y das al alfil una casilla en c2." },
+    { "san": "O-O", "note": "Las negras ponen el rey a salvo." },
+    { "san": "h3", "note": "Impides ...Ag4 antes de jugar d4." },
+    {
+      "san": "Na5",
+      "note": "La defensa Chigorin: el caballo echa a tu alfil.",
+      "branches": [
+        {
+          "id": "breyer",
+          "name": "9...Cb8: Breyer",
+          "eco": "C95",
+          "level": "avanzado",
+          "steps": [
+            { "san": "Nb8", "note": "El caballo vuelve para ir a d7 y dejar libre el peón de c." },
+            { "san": "d4", "note": "Ocupas el centro." },
+            { "san": "Nbd7", "note": "El caballo sostiene e5." },
+            { "san": "Nbd2", "note": "Tu caballo va camino de f1 y g3." },
+            { "san": "Bb7", "note": "El alfil presiona e4." },
+            { "san": "Bc2", "note": "Defiendes e4 por segunda vez." },
+            { "san": "Re8", "note": "Las negras preparan ...Af8 para defender su rey." },
+            { "san": "Nf1", "note": "El caballo sigue su camino." },
+            { "san": "Bf8", "note": "El alfil defiende el enroque." },
+            { "san": "Ng3", "note": "El caballo llega a g3, mirando a f5." }
+          ]
+        }
+      ]
+    },
+    { "san": "Bc2", "note": "El alfil se retira y sigue defendiendo e4." },
+    { "san": "c5", "note": "Las negras ganan espacio en el flanco de dama." },
+    { "san": "d4", "note": "Ahora sí: el centro con dos peones." },
+    { "san": "Qc7", "note": "La dama negra sostiene e5." },
+    { "san": "Nbd2", "note": "El caballo irá a f1 y g3, como en tantas líneas de la Española." }
+  ],
+  "alternatives": {}
+}

@@ -1,0 +1,106 @@
+{
+  "id": "lucena-philidor",
+  "title": "Finales de torre: Lucena y Philidor",
+  "block": 7,
+  "level": "intermedio",
+  "summary": "Las dos posiciones clave de torre y peón contra torre: cómo ganar construyendo un puente y cómo hacer tablas con la torre en la sexta fila.",
+  "pages": [
+    {
+      "kind": "text",
+      "title": "La posición de Lucena",
+      "body": "Tu peón está en la séptima, tu rey delante de él y tu torre **corta al rey rival** por la columna f. Parece fácil, pero el rey no puede salir: en cuanto se aparta, la torre negra lo persigue con jaques.\n\nEsta posición se gana siempre, si conoces el método.",
+      "fen": "3K4/3P2k1/8/8/8/8/r7/5R2 w - - 0 1"
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Qué pasa si sacas ya el rey a e7, sin preparar nada?",
+      "fen": "3K4/3P2k1/8/8/8/8/r7/5R2 w - - 0 1",
+      "options": [
+        "La torre negra empieza a dar jaques y el rey no encuentra refugio",
+        "El peón queda clavado y se pierde",
+        "Es ahogado y la partida acaba en tablas"
+      ],
+      "answer": 0,
+      "explain": "El rey blanco tendría que volver a d8 o alejarse mucho del peón. Hace falta un escudo contra los jaques."
+    },
+    {
+      "kind": "text",
+      "title": "Construir el puente",
+      "body": "El método se llama **construir el puente**:\n\n- Primero, la torre sube a la **cuarta fila**.\n- Después, el rey sale de delante del peón.\n- Cuando lleguen los jaques, el rey baja hasta la quinta fila y la torre **se interpone**. Los jaques se acaban y el peón corona.",
+      "fen": "3K4/3P2k1/8/8/8/8/r7/5R2 w - - 0 1",
+      "arrows": [["f1", "f4"]]
+    },
+    {
+      "kind": "move",
+      "body": "Primer paso del puente: **lleva la torre a la cuarta fila**, sin dejar de cortar al rey negro.",
+      "fen": "3K4/3P2k1/8/8/8/8/r7/5R2 w - - 0 1",
+      "goal": "listed",
+      "accept": ["Rf4"],
+      "hint": "La torre sigue en la columna f, pero más arriba.",
+      "success": "Ahora el rey puede salir: la torre servirá de escudo."
+    },
+    {
+      "kind": "move",
+      "body": "Tu rey ha salido y ha bajado esquivando jaques. Llega otro: **interpón la torre**.",
+      "fen": "8/3P2k1/8/3K4/5R2/8/8/4r3 b - - 9 5",
+      "opponentMove": "e1d1",
+      "goal": "listed",
+      "accept": ["Rd4"],
+      "hint": "La torre de la cuarta fila tapa la columna d.",
+      "success": "Se acabaron los jaques: el peón corona."
+    },
+    {
+      "kind": "play",
+      "body": "Ahora entero, contra la defensa de Stockfish. **Corona el peón** construyendo el puente.",
+      "fen": "3K4/3P2k1/8/8/8/8/r7/5R2 w - - 0 1",
+      "goal": "promote",
+      "maxMoves": 15,
+      "hint": "Tf4, saca el rey por e7 y baja hasta la quinta fila. Cuando te den jaque en la columna d, Td4."
+    },
+    {
+      "kind": "text",
+      "title": "La posición de Philidor",
+      "body": "Ahora defiendes tú, con negras. Tu rey está **delante del peón** y tu torre en la **sexta fila**, que corta el paso al rey blanco.\n\nMientras el peón no avance, la torre no se mueve de esa fila. Si el peón llega a la sexta, la torre se va **atrás del todo** y da jaques desde lejos.",
+      "fen": "4k3/R7/7r/3KP3/8/8/8/8 b - - 0 1",
+      "orientation": "black",
+      "highlight": ["a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"]
+    },
+    {
+      "kind": "move",
+      "body": "Tu torre está pasiva en h1. **Colócala en la sexta fila** para frenar al rey blanco.",
+      "fen": "4k3/R7/8/3KP3/8/8/8/7r b - - 0 1",
+      "orientation": "black",
+      "goal": "listed",
+      "accept": ["Rh6"],
+      "hint": "Sube por la columna h.",
+      "success": "El rey blanco ya no puede pasar a la sexta fila."
+    },
+    {
+      "kind": "move",
+      "body": "Las blancas avanzan el peón a la sexta. **Es el momento de cambiar de plan.**",
+      "fen": "4k3/R7/7r/3KP3/8/8/8/8 w - - 0 1",
+      "orientation": "black",
+      "opponentMove": "e5e6",
+      "goal": "listed",
+      "accept": ["Rh1", "Rh2", "Rh3", "Rh4"],
+      "hint": "Lleva la torre lejos, abajo, para dar jaques por detrás.",
+      "success": "El rey blanco ya no tiene dónde esconderse de los jaques: son tablas."
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Por qué la torre se va atrás justo cuando el peón llega a la sexta?",
+      "options": [
+        "Porque el rey blanco ya no puede usar la sexta fila y no tiene refugio contra los jaques",
+        "Porque en la sexta fila la torre quedaría clavada",
+        "Para dar mate al rey blanco"
+      ],
+      "answer": 0,
+      "explain": "Con el peón en e6, el rey blanco no puede ponerse delante de él para cubrirse. La torre lo persigue desde lejos y no puede librarse de los jaques."
+    },
+    {
+      "kind": "text",
+      "title": "Resumen",
+      "body": "- **Lucena (ganar)**: torre a la cuarta fila, rey fuera, y la torre se interpone cuando llegan los jaques.\n- **Philidor (tablas)**: rey delante del peón y torre en la sexta fila. Cuando el peón llega a la sexta, la torre va atrás y da jaques."
+    }
+  ]
+}

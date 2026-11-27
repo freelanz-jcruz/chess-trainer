@@ -13,10 +13,14 @@ import { branchNames, buildLine, resolveStartFen } from '@/lib/chess/opening-lin
 import { sanToEs } from '@/lib/chess/notation-es';
 import { uciToSquares } from '@/lib/chess/game';
 import type { Opening } from '@/lib/content/schemas';
+import { openingForLevel } from '@/lib/content/levels';
 import { updateOpening, useProgress } from '@/lib/progress/store';
 
 /** Recorrido paso a paso de una apertura con una frase breve por jugada. */
-export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
+export default function OpeningWalkthrough({ opening: fullOpening }: { opening: Opening }) {
+  const { progress, update } = useProgress();
+  // Solo las variantes del nivel elegido (y anteriores).
+  const opening = useMemo(() => openingForLevel(fullOpening, progress.settings.level), [fullOpening, progress.settings.level]);
   // Rama elegida en cada punto de elección (medio movimiento -> id de rama; ausente = principal).
   const [choices, setChoices] = useState<Record<number, string>>({});
   const line = useMemo(
@@ -24,7 +28,6 @@ export default function OpeningWalkthrough({ opening }: { opening: Opening }) {
     [opening, choices],
   );
   const [index, setIndex] = useState(-1); // -1 = posición inicial
-  const { progress, update } = useProgress();
 
   const atEnd = index === line.length - 1;
   useEffect(() => {

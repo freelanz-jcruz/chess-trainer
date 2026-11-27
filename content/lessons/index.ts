@@ -16,5 +16,7 @@ import principios from './principios.json';
 import principios_practica from './principios-practica.json';
 import rey_peon from './rey-peon.json';
 import oposicion from './oposicion.json';
+import enfilada_desviacion from './enfilada-desviacion.json';
+import lucena_philidor from './lucena-philidor.json';
 
-export const LESSON_FILES: unknown[] = [tablero, piezas, captura_valor, jaque_mate, tablas, enroque, al_paso, coronacion, mate_pastor, mate_pasillo, mate_coz, dama_rey, torre_rey, principios, principios_practica, rey_peon, oposicion];
+export const LESSON_FILES: unknown[] = [tablero, piezas, captura_valor, jaque_mate, tablas, enroque, al_paso, coronacion, mate_pastor, mate_pasillo, mate_coz, dama_rey, torre_rey, principios, principios_practica, rey_peon, oposicion, enfilada_desviacion, lucena_philidor];

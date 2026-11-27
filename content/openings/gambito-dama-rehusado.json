@@ -102,7 +102,26 @@
             { "san": "Nbd7", "note": "Desarrollas el otro caballo sin tapar el peón de c." },
             { "san": "Bd3", "note": "El alfil blanco apunta a h7." },
             { "san": "O-O", "note": "Rey a salvo." },
-            { "san": "Nf3", "note": "Las blancas desarrollan su último caballo." },
+            {
+              "san": "Nf3",
+              "note": "Las blancas desarrollan su último caballo.",
+              "branches": [
+                {
+                  "id": "carlsbad",
+                  "name": "11.Cge2 y f3",
+                  "eco": "D36",
+                  "level": "avanzado",
+                  "steps": [
+                    { "san": "Nge2", "note": "El caballo va a e2 para dejar libre el peón de f." },
+                    { "san": "Re8", "note": "La torre a la columna e." },
+                    { "san": "O-O", "note": "Las blancas enrocan." },
+                    { "san": "Nf8", "note": "El caballo defiende h7 y puede ir a g6 o e6." },
+                    { "san": "f3", "note": "Las blancas preparan e4 para romper en el centro." },
+                    { "san": "Be6", "note": "El alfil vigila d5 y e4 desde atrás." }
+                  ]
+                }
+              ]
+            },
             { "san": "Re8", "note": "La torre a la columna e, la que está semiabierta para ti." }
           ]
         },
@@ -113,7 +132,28 @@
           "steps": [
             { "san": "Nf3", "note": "Las blancas desarrollan antes de decidir dónde va el alfil." },
             { "san": "Be7", "note": "Tu esquema de siempre." },
-            { "san": "Bf4", "note": "El alfil va a f4 en lugar de g5." },
+            {
+              "san": "Bf4",
+              "note": "El alfil va a f4 en lugar de g5.",
+              "branches": [
+                {
+                  "id": "e3",
+                  "name": "5.e3",
+                  "eco": "D37",
+                  "level": "intermedio",
+                  "steps": [
+                    { "san": "e3", "note": "Las blancas abren paso a su alfil de f1." },
+                    { "san": "O-O", "note": "Rey a salvo." },
+                    { "san": "Bd3", "note": "El alfil blanco apunta a h7." },
+                    { "san": "dxc4", "note": "Cambias cuando el alfil ya se ha movido." },
+                    { "san": "Bxc4", "note": "El alfil recupera el peón." },
+                    { "san": "c5", "note": "Golpeas el centro blanco por el lado." },
+                    { "san": "O-O", "note": "Las blancas enrocan." },
+                    { "san": "a6", "note": "Preparas ...b5 y ...Ab7." }
+                  ]
+                }
+              ]
+            },
             { "san": "O-O", "note": "Rey a salvo." },
             { "san": "e3", "note": "Las blancas abren paso a su otro alfil." },
             { "san": "c5", "note": "Golpeas el centro blanco por el lado." },
@@ -124,11 +164,59 @@
       ]
     },
     { "san": "Be7", "note": "Rompes la clavada y preparas el enroque." },
-    { "san": "e3", "note": "Las blancas abren paso a su alfil de f1." },
+    {
+      "san": "e3",
+      "note": "Las blancas abren paso a su alfil de f1.",
+      "branches": [
+        {
+          "id": "axf6",
+          "name": "5.Axf6",
+          "eco": "D53",
+          "level": "intermedio",
+          "steps": [
+            { "san": "Bxf6", "note": "Las blancas cambian el alfil por tu caballo." },
+            { "san": "Bxf6", "note": "Recuperas con el alfil: tienes la pareja de alfiles." },
+            { "san": "e3", "note": "Las blancas abren paso a su otro alfil." },
+            { "san": "O-O", "note": "Rey a salvo." },
+            { "san": "Nf3", "note": "Las blancas desarrollan." },
+            { "san": "c6", "note": "Primero refuerzas d5: si sacaras ya el caballo a d7, taparía a tu dama." },
+            { "san": "Bd3", "note": "Las blancas desarrollan su último alfil." },
+            { "san": "Nd7", "note": "Ahora sí: el caballo sale y prepara ...e5." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "dxc4", "note": "Cambias cuando el alfil ya se ha movido." },
+            { "san": "Bxc4", "note": "El alfil recupera el peón." },
+            { "san": "e5", "note": "Liberas tu posición: tus alfiles ganan diagonales." }
+          ]
+        }
+      ]
+    },
     { "san": "O-O", "note": "Rey a salvo antes de liberar tu posición." },
     { "san": "Nf3", "note": "Las blancas completan el desarrollo de los caballos." },
     { "san": "Nbd7", "note": "El caballo se desarrolla sin tapar el peón de c, que avanzará luego." },
-    { "san": "Rc1", "note": "La torre blanca a la columna c, que podría abrirse." },
+    {
+      "san": "Rc1",
+      "note": "La torre blanca a la columna c, que podría abrirse.",
+      "branches": [
+        {
+          "id": "ad3",
+          "name": "7.Ad3",
+          "eco": "D60",
+          "level": "intermedio",
+          "steps": [
+            { "san": "Bd3", "note": "Las blancas desarrollan el alfil antes que la torre." },
+            { "san": "dxc4", "note": "Cambias: el alfil tiene que volver a moverse." },
+            { "san": "Bxc4", "note": "El alfil recupera el peón." },
+            { "san": "c5", "note": "Golpeas el centro blanco por el lado." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "a6", "note": "Preparas ...b5 para ganar espacio en el flanco de dama." },
+            { "san": "a4", "note": "Las blancas impiden ...b5." },
+            { "san": "cxd4", "note": "Cambias en el centro." },
+            { "san": "exd4", "note": "Las blancas quedan con un peón aislado en d4." },
+            { "san": "Nb6", "note": "El caballo vigila d5, la casilla delante del peón aislado." }
+          ]
+        }
+      ]
+    },
     { "san": "c6", "note": "Refuerzas d5 y cierras la columna c." },
     { "san": "Bd3", "note": "Las blancas desarrollan su último alfil." },
     { "san": "dxc4", "note": "Cambias cuando el alfil ya se ha movido: tendrá que volver a moverse." },

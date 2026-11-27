@@ -1,6 +1,9 @@
+import { LEVEL_RATING, type Level } from './levels';
 import curriculumJson from '@/content/curriculum.json';
 import puzzleJson from '@/content/puzzles/puzzles.json';
 import italiana from '@/content/openings/italiana-tranquila.json';
+import espanola from '@/content/openings/espanola.json';
+import espanolaCambio from '@/content/openings/espanola-cambio.json';
 import e5 from '@/content/openings/e5-contra-e4.json';
 import gdr from '@/content/openings/gambito-dama-rehusado.json';
 import esquemaGdr from '@/content/openings/esquema-gdr.json';
@@ -21,7 +24,7 @@ import { LESSON_FILES } from '@/content/lessons';
 import { lessonHref } from './links';
 
 /** Registro de aperturas. Añadir una apertura = añadir su JSON aquí. */
-const OPENING_FILES: unknown[] = [italiana, e5, gdr, esquemaGdr, fegatello, legal];
+const OPENING_FILES: unknown[] = [italiana, espanola, espanolaCambio, e5, gdr, esquemaGdr, fegatello, legal];
 
 export const curriculum: Curriculum = curriculumSchema.parse(curriculumJson);
 export const openings: Opening[] = OPENING_FILES.map((o) => openingSchema.parse(o));
@@ -49,21 +52,28 @@ export function getOpening(id: string): Opening | undefined {
   return openings.find((o) => o.id === id);
 }
 
-export type PuzzleSet = { id: string; title: string; themes: string[] | null };
+/** `level` null = «Todos»: problemas de cualquier nivel (la página los limita al nivel elegido). */
+export type PuzzleSet = { id: string; title: string; themes: string[] | null; level: Level | null };
 
 /** Cada lección de tipo "puzzles" del temario es un conjunto; "todos" los junta. */
 export const puzzleSets: PuzzleSet[] = [
-  { id: 'todos', title: 'Todos', themes: null },
+  { id: 'todos', title: 'Todos', themes: null, level: null },
   ...curriculum.blocks.flatMap((b) =>
     b.lessons.flatMap((l) =>
-      l.type === 'puzzles' && l.status === 'available' ? [{ id: l.id, title: l.title, themes: l.themes as string[] }] : [],
+      l.type === 'puzzles' && l.status === 'available'
+        ? [{ id: l.id, title: l.title, themes: l.themes as string[], level: l.level }]
+        : [],
     ),
   ),
 ];
 
+/** Problemas de un conjunto: los de sus temas dentro del tramo de rating de su nivel. */
 export function puzzlesForSet(set: PuzzleSet): Puzzle[] {
   const themes = set.themes;
-  return themes ? puzzles.filter((p) => p.themes.some((t) => themes.includes(t))) : puzzles;
+  const range = set.level ? LEVEL_RATING[set.level] : null;
+  return puzzles.filter(
+    (p) => (!themes || p.themes.some((t) => themes.includes(t))) && (!range || (p.rating >= range.min && p.rating <= range.max)),
+  );
 }
 
 export function puzzleIdsByLesson(): Record<string, string[]> {

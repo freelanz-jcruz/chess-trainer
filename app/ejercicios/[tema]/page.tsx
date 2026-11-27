@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { chipClass } from '@/components/Chip';
+import PuzzleSetNav from '@/components/PuzzleSetNav';
 import PuzzleTrainer from '@/components/PuzzleTrainer';
 import { puzzleSets, puzzlesForSet } from '@/lib/content/load';
 
@@ -21,14 +20,9 @@ export default async function PuzzlesPage({ params }: { params: Promise<{ tema: 
   return (
     <>
       <h1 className="mb-5">Ejercicios</h1>
-      <nav className="mt-2 mb-5 flex flex-wrap gap-1.5" aria-label="Temas">
-        {puzzleSets.map((s) => (
-          <Link key={s.id} href={`/ejercicios/${s.id}/`} className={chipClass(s.id === tema)}>
-            {s.title}
-          </Link>
-        ))}
-      </nav>
-      <PuzzleTrainer puzzles={puzzlesForSet(set)} title={set.title} />
+      <PuzzleSetNav sets={puzzleSets.map(({ id, title, level }) => ({ id, title, level }))} current={tema} />
+      {/* «Todos» (sin nivel) se limita al nivel elegido; un tema concreto muestra siempre los suyos. */}
+      <PuzzleTrainer puzzles={puzzlesForSet(set)} title={set.title} limitToLevel={!set.level} />
     </>
   );
 }

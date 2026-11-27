@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const LEVELS = ['principiante', 'intermedio', 'avanzado'] as const;
 export const levelSchema = z.enum(LEVELS);
+export type Level = z.infer<typeof levelSchema>;
 
 export const MAX_NOTE_LENGTH = 140;
 
@@ -60,7 +61,24 @@ export const openingSchema = z.object({
 });
 export type Opening = z.infer<typeof openingSchema>;
 
-export const PUZZLE_THEMES = ['mateIn1', 'mateIn2', 'hangingPiece', 'fork', 'pin', 'discoveredAttack'] as const;
+/** Los seis primeros son los de principiante; el resto, temas de Lichess para los niveles superiores. */
+export const PUZZLE_THEMES = [
+  'mateIn1',
+  'mateIn2',
+  'hangingPiece',
+  'fork',
+  'pin',
+  'discoveredAttack',
+  'mateIn3',
+  'mateIn4',
+  'backRankMate',
+  'skewer',
+  'deflection',
+  'attraction',
+  'xRayAttack',
+  'interference',
+  'quietMove',
+] as const;
 export type PuzzleTheme = (typeof PUZZLE_THEMES)[number];
 
 const uci = z.string().regex(/^[a-h][1-8][a-h][1-8][qrbn]?$/);

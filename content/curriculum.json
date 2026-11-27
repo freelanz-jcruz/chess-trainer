@@ -127,6 +127,37 @@
           "themes": [
             "mateIn2"
           ]
+        },
+        {
+          "id": "mate-en-3",
+          "title": "Mate en 3",
+          "type": "puzzles",
+          "status": "available",
+          "level": "intermedio",
+          "themes": [
+            "mateIn3"
+          ]
+        },
+        {
+          "id": "mate-ultima-fila",
+          "title": "Mate en la última fila",
+          "type": "puzzles",
+          "status": "available",
+          "level": "intermedio",
+          "themes": [
+            "backRankMate"
+          ]
+        },
+        {
+          "id": "mates-avanzados",
+          "title": "Mates en 3 y 4",
+          "type": "puzzles",
+          "status": "available",
+          "level": "avanzado",
+          "themes": [
+            "mateIn3",
+            "mateIn4"
+          ]
         }
       ]
     },
@@ -162,6 +193,22 @@
           "type": "opening",
           "status": "available",
           "ref": "italiana-tranquila"
+        },
+        {
+          "id": "espanola",
+          "title": "Española (blancas)",
+          "type": "opening",
+          "status": "available",
+          "level": "intermedio",
+          "ref": "espanola"
+        },
+        {
+          "id": "espanola-cambio",
+          "title": "Española del cambio (blancas)",
+          "type": "opening",
+          "status": "available",
+          "level": "intermedio",
+          "ref": "espanola-cambio"
         },
         {
           "id": "e5-contra-e4",
@@ -240,6 +287,102 @@
           "themes": [
             "discoveredAttack"
           ]
+        },
+        {
+          "id": "enfilada-desviacion",
+          "title": "Enfilada, desviación y rayos X",
+          "type": "lesson",
+          "status": "available",
+          "level": "intermedio",
+          "ref": "enfilada-desviacion"
+        },
+        {
+          "id": "enfilada",
+          "title": "Enfilada",
+          "type": "puzzles",
+          "status": "available",
+          "level": "intermedio",
+          "themes": [
+            "skewer"
+          ]
+        },
+        {
+          "id": "desviacion",
+          "title": "Desviación",
+          "type": "puzzles",
+          "status": "available",
+          "level": "intermedio",
+          "themes": [
+            "deflection"
+          ]
+        },
+        {
+          "id": "atraccion",
+          "title": "Atracción",
+          "type": "puzzles",
+          "status": "available",
+          "level": "intermedio",
+          "themes": [
+            "attraction"
+          ]
+        },
+        {
+          "id": "tactica-intermedia",
+          "title": "Táctica intermedia",
+          "type": "puzzles",
+          "status": "available",
+          "level": "intermedio",
+          "themes": [
+            "fork",
+            "pin",
+            "discoveredAttack",
+            "hangingPiece"
+          ]
+        },
+        {
+          "id": "rayos-x",
+          "title": "Rayos X",
+          "type": "puzzles",
+          "status": "available",
+          "level": "avanzado",
+          "themes": [
+            "xRayAttack"
+          ]
+        },
+        {
+          "id": "interferencia",
+          "title": "Interferencia",
+          "type": "puzzles",
+          "status": "available",
+          "level": "avanzado",
+          "themes": [
+            "interference"
+          ]
+        },
+        {
+          "id": "jugada-tranquila",
+          "title": "Jugada tranquila",
+          "type": "puzzles",
+          "status": "available",
+          "level": "avanzado",
+          "themes": [
+            "quietMove"
+          ]
+        },
+        {
+          "id": "tactica-avanzada",
+          "title": "Táctica avanzada",
+          "type": "puzzles",
+          "status": "available",
+          "level": "avanzado",
+          "themes": [
+            "fork",
+            "pin",
+            "skewer",
+            "discoveredAttack",
+            "deflection",
+            "attraction"
+          ]
         }
       ]
     },
@@ -261,6 +404,14 @@
           "type": "lesson",
           "status": "available",
           "ref": "oposicion"
+        },
+        {
+          "id": "lucena-philidor",
+          "title": "Finales de torre: Lucena y Philidor",
+          "type": "lesson",
+          "status": "available",
+          "level": "intermedio",
+          "ref": "lucena-philidor"
         }
       ]
     }

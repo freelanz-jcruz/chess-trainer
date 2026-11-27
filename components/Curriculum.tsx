@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import type { Curriculum as CurriculumData, Lesson } from '@/lib/content/schemas';
 import { useProgress, type Progress } from '@/lib/progress/store';
 import { lessonHref } from '@/lib/content/links';
+import { LEVEL_LABEL, levelAllows } from '@/lib/content/levels';
 
 
 function lessonProgress(l: Lesson, p: Progress, puzzleIds: Record<string, string[]>): string | null {
@@ -46,7 +47,7 @@ export default function Curriculum({
           </h2>
           <p className="my-3.5 text-sm text-muted-foreground">{b.description}</p>
           <ul className="mt-2">
-            {b.lessons.map((l) => {
+            {b.lessons.filter((l) => levelAllows(progress.settings.level, l.level)).map((l) => {
               const href = lessonHref(l);
               const prog = lessonProgress(l, progress, puzzleIds);
               return (
@@ -54,14 +55,29 @@ export default function Curriculum({
                   key={l.id}
                   className={`flex items-center justify-between gap-2 border-t border-border py-1.5 ${href ? '' : 'text-muted-foreground'}`}
                 >
-                  {href ? <Link className="no-underline font-medium text-[1.0rem] hover:text-(--hover) py-2" href={href}>{l.title}</Link> : <span>{l.title}</span>}
+                  <span className="flex flex-wrap items-center gap-x-2">
+                    {href ? <Link className="no-underline font-medium text-[1.0rem] hover:text-(--hover) py-2" href={href}>{l.title}</Link> : <span>{l.title}</span>}
+                    {l.level !== 'principiante' && <Badge variant="muted">{LEVEL_LABEL[l.level]}</Badge>}
+                  </span>
                   {href ? prog && <Badge>{prog}</Badge> : <Badge variant="muted">próximamente</Badge>}
                 </li>
               );
             })}
+            <HiddenByLevel count={b.lessons.filter((l) => !levelAllows(progress.settings.level, l.level)).length} />
           </ul>
         </li>
       ))}
     </ol>
+  );
+}
+
+/** Pie de bloque con las lecciones ocultas por el nivel elegido, para que no pasen desapercibidas. */
+function HiddenByLevel({ count }: { count: number }) {
+  if (!count) return null;
+  return (
+    <li className="border-t border-border pt-2.5 pb-1 text-sm text-muted-foreground">
+      {count === 1 ? 'Una lección más' : `${count} lecciones más`} en niveles superiores ·{' '}
+      <Link href="/progreso/">cambiar el nivel</Link>
+    </li>
   );
 }

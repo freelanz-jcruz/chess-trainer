@@ -11,6 +11,7 @@ import { opposite, playUci, toUci, turnColor, uciToSquares } from '@/lib/chess/g
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Puzzle } from '@/lib/content/schemas';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
+import { LEVEL_RATING } from '@/lib/content/levels';
 import { reviewKey } from '@/lib/progress/review';
 import { scheduleReview, today, updatePuzzle, useProgress } from '@/lib/progress/store';
 
@@ -27,16 +28,23 @@ export default function PuzzleTrainer({
   puzzles,
   title,
   mode = 'set',
+  limitToLevel = false,
   onFinished,
 }: {
   puzzles: Puzzle[];
   title: string;
   mode?: 'set' | 'review';
+  /** Solo los problemas hasta el nivel elegido en Ajustes (para «Todos»). */
+  limitToLevel?: boolean;
   /** Modo repaso: no quedan problemas pendientes hoy. */
   onFinished?: () => void;
 }) {
   const { progress, update } = useProgress();
-  const ordered = useMemo(() => [...puzzles].sort((a, b) => a.rating - b.rating), [puzzles]);
+  const maxRating = limitToLevel ? LEVEL_RATING[progress.settings.level].max : Infinity;
+  const ordered = useMemo(
+    () => puzzles.filter((p) => p.rating <= maxRating).sort((a, b) => a.rating - b.rating),
+    [puzzles, maxRating],
+  );
   const solvedCount = ordered.filter((p) => progress.puzzles[p.id]?.solved).length;
   const day = today();
   const isDue = useCallback(

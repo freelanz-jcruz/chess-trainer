@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useSyncExternalStore } from 'react';
+import { LEVELS, type Level } from '@/lib/content/schemas';
 import { DEFAULT_THEME, THEMES, type Theme } from '@/lib/theme';
 import { applySchedule, localDay, type ReviewKind, type Reviews } from './review';
 
@@ -24,7 +25,8 @@ export type PuzzleProgress = {
 export type LessonProgress = { completed: boolean; lastPage: number };
 
 export type { Theme } from '@/lib/theme';
-export type Settings = { engineTimeMs: number; showCoordinates: boolean; theme: Theme };
+/** `level`: el temario, las variantes y los ejercicios muestran ese nivel y los anteriores (ver lib/content/levels.ts). */
+export type Settings = { engineTimeMs: number; showCoordinates: boolean; theme: Theme; level: Level };
 
 export type Progress = {
   version: 1;
@@ -36,7 +38,7 @@ export type Progress = {
   settings: Settings;
 };
 
-export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true, theme: DEFAULT_THEME };
+export const DEFAULT_SETTINGS: Settings = { engineTimeMs: 1000, showCoordinates: true, theme: DEFAULT_THEME, level: 'principiante' };
 
 function empty(): Progress {
   return { version: 1, openings: {}, puzzles: {}, lessons: {}, reviews: {}, settings: { ...DEFAULT_SETTINGS } };
@@ -62,6 +64,7 @@ function normalizeSettings(data: unknown): Settings {
   const s = { ...DEFAULT_SETTINGS, ...(isRecord(data) ? (data as Partial<Settings>) : {}) };
   // Un tema desconocido (p. ej. de una versión futura) vuelve al de defecto.
   if (!THEMES.includes(s.theme)) s.theme = DEFAULT_SETTINGS.theme;
+  if (!LEVELS.includes(s.level)) s.level = DEFAULT_SETTINGS.level;
   return s;
 }
 

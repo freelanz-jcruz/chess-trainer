@@ -30,6 +30,7 @@ import {
   type Progress,
   type Settings,
 } from '@/lib/progress/store';
+import { LEVEL_LABEL, LEVELS, type Level } from '@/lib/content/levels';
 import { THEME_LABEL, THEMES, type Theme } from '@/lib/theme';
 
 const APP = 'chess-trainer';
@@ -187,6 +188,24 @@ export default function ProgressTools() {
       <section className="grid gap-3">
         <h2>Ajustes</h2>
         <div className="divide-y divide-border rounded-lg border border-border bg-card">
+          <SettingRow
+            title="Nivel"
+            description="El temario, las variantes de las aperturas y los ejercicios muestran tu nivel y los anteriores."
+          >
+            <RadioGroup
+              aria-label="Nivel"
+              className="flex flex-wrap gap-x-4 gap-y-2"
+              value={progress.settings.level}
+              onValueChange={(v) => setSetting('level', v as Level)}
+            >
+              {LEVELS.map((l) => (
+                <Label key={l} className="cursor-pointer font-normal">
+                  <RadioGroupItem value={l} />
+                  {LEVEL_LABEL[l]}
+                </Label>
+              ))}
+            </RadioGroup>
+          </SettingRow>
           <SettingRow title="Tema" description="Azul marino, gris oscuro o claro; también desde el botón de la cabecera.">
             <RadioGroup
               aria-label="Tema"

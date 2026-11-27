@@ -1,0 +1,111 @@
+{
+  "id": "enfilada-desviacion",
+  "title": "Enfilada, desviación y rayos X",
+  "block": 6,
+  "level": "intermedio",
+  "summary": "Tres golpes tácticos de nivel intermedio: atacar a través de una pieza, apartar a un defensor y apoyar una casilla desde detrás.",
+  "pages": [
+    {
+      "kind": "text",
+      "title": "La enfilada",
+      "body": "La enfilada se parece a la clavada, pero al revés: la pieza **más valiosa está delante**. Cuando se aparta, la que estaba detrás queda a tiro.\n\nAquí la torre da jaque en a6. El rey tiene que salir de la fila y la dama de g6 cae.",
+      "fen": "8/6p1/2k3q1/8/8/8/5PPP/R5K1 w - - 0 1",
+      "arrows": [["a1", "a6"]],
+      "highlight": ["g6"]
+    },
+    {
+      "kind": "quiz",
+      "body": "¿Qué diferencia hay entre una clavada y una enfilada?",
+      "options": [
+        "En la clavada la pieza valiosa está detrás; en la enfilada, delante",
+        "Son lo mismo con distinto nombre",
+        "La enfilada solo la pueden hacer los alfiles"
+      ],
+      "answer": 0,
+      "explain": "En la clavada, la pieza de delante no puede moverse sin dejar expuesta la de detrás. En la enfilada, la de delante tiene que moverse y la de detrás se pierde."
+    },
+    {
+      "kind": "move",
+      "body": "El rey negro se ha colocado en la misma columna que su dama. **Gana la dama** con una enfilada.",
+      "fen": "3q4/K7/Q7/2k5/8/8/8/8 b - - 24 80",
+      "opponentMove": "c5d5",
+      "goal": "listed",
+      "accept": ["Qd3+"],
+      "hint": "Da jaque por la columna d.",
+      "success": "El rey tiene que apartarse y la dama de d8 queda indefensa."
+    },
+    {
+      "kind": "move",
+      "body": "Juegas con negras. El rey blanco y su dama están en la misma fila. **Aprovéchalo.**",
+      "fen": "6KQ/1r6/6k1/8/8/8/8/8 w - - 1 56",
+      "orientation": "black",
+      "opponentMove": "g8f8",
+      "goal": "listed",
+      "accept": ["Rb8+"],
+      "hint": "Un jaque por la octava fila.",
+      "success": "El rey se aparta y la torre se come la dama de h8."
+    },
+    {
+      "kind": "text",
+      "title": "La desviación",
+      "body": "A veces una pieza **sostiene algo importante**: defiende otra pieza, vigila una casilla o frena un peón.\n\nSi la obligas a moverse con un jaque, una captura o una amenaza, deja de cumplir su función. Aquí el jaque en g6 aparta al rey blanco de la torre de h2.",
+      "fen": "8/8/5r2/8/8/6K1/7R/6k1 b - - 0 80",
+      "orientation": "black",
+      "arrows": [["f6", "g6"], ["g1", "h2"]]
+    },
+    {
+      "kind": "move",
+      "body": "La torre negra de d5 está atacada por tu rey, pero la defiende el rey negro. **Aparta a ese defensor.**",
+      "fen": "8/8/4K3/4p2R/4k3/3r4/8/8 b - - 17 60",
+      "opponentMove": "d3d5",
+      "goal": "listed",
+      "accept": ["Rh4+"],
+      "hint": "Un jaque obliga al rey negro a moverse.",
+      "success": "Después del jaque, el rey negro ya no defiende d5 y tu rey se come la torre."
+    },
+    {
+      "kind": "move",
+      "body": "Juegas con negras. El caballo blanco vigila g1, la casilla donde quieres coronar. **Desvíalo.**",
+      "fen": "8/8/8/7p/5K2/5N2/5kp1/8 w - - 0 56",
+      "orientation": "black",
+      "opponentMove": "f4e4",
+      "goal": "listed",
+      "accept": ["h4"],
+      "hint": "Ofrece el otro peón.",
+      "success": "Si el caballo toma en h4, ya no vigila g1 y coronas."
+    },
+    {
+      "kind": "text",
+      "title": "Rayos X",
+      "body": "Una pieza puede **actuar a través de otra**. Aquí, la torre de d1 apoya a la de d2 por detrás: si se cambian piezas en la columna d, la de atrás entra en juego.\n\nEl truco funciona igual con piezas rivales: una torre o un alfil defienden una casilla aunque haya una pieza enemiga en medio, porque esa pieza puede desaparecer en un cambio.",
+      "fen": "3r4/8/8/8/8/8/3R4/3R4 w - - 0 1",
+      "arrows": [["d1", "d8"]]
+    },
+    {
+      "kind": "move",
+      "body": "Juegas con negras. La dama blanca de d8 parece defendida por la torre de e8. **Cuenta bien los atacantes** y gana material.",
+      "fen": "3QRr1k/6p1/K4qPp/1P6/1P6/8/8/8 w - - 6 47",
+      "orientation": "black",
+      "opponentMove": "b5b6",
+      "goal": "listed",
+      "accept": ["Qxd8"],
+      "hint": "Tu torre de f8 ve d8 a través de la torre blanca de e8.",
+      "success": "Si Txd8, tu torre de f8 recupera por rayos X: has cambiado la dama por la dama y una torre."
+    },
+    {
+      "kind": "move",
+      "body": "Tu alfil de b2 mira hacia g7 a través del alfil negro. **Corona** con ayuda de los rayos X.",
+      "fen": "3b4/8/1p2k1P1/1Pp5/2K5/8/1B6/8 b - - 10 52",
+      "opponentMove": "d8f6",
+      "goal": "listed",
+      "accept": ["g7"],
+      "hint": "Avanza el peón aunque parezca que se lo comen.",
+      "success": "Si el alfil negro toma en g7, tu alfil lo captura por la diagonal larga. Si no, el peón corona."
+    },
+    {
+      "kind": "text",
+      "title": "Resumen",
+      "body": "- **Enfilada**: ataque a una pieza valiosa que, al apartarse, deja otra a tiro detrás.\n- **Desviación**: obliga a un defensor a moverse para que deje de proteger algo.\n- **Rayos X**: una pieza actúa a través de otra, propia o rival.\n\nEn Ejercicios tienes conjuntos de cada tema para practicarlos."
+    }
+  ]
+}

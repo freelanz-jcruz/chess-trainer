@@ -12,6 +12,7 @@ import { branchNames, buildLine, resolveStartFen, type LinePly } from '@/lib/che
 import { playUci, toUci, uciToSquares } from '@/lib/chess/game';
 import { sanToEs } from '@/lib/chess/notation-es';
 import type { Opening } from '@/lib/content/schemas';
+import { openingForLevel } from '@/lib/content/levels';
 import { useMoveEvaluator } from '@/lib/engine/use-engine';
 import { currentProgress, scheduleReview, updateOpening, useProgress } from '@/lib/progress/store';
 
@@ -28,8 +29,10 @@ const randomLine = (opening: Opening) =>
   });
 
 /** El usuario juega su bando de la apertura; la app responde con el libro y valora cada jugada. */
-export default function OpeningPractice({ opening }: { opening: Opening }) {
+export default function OpeningPractice({ opening: fullOpening }: { opening: Opening }) {
   const { progress, update } = useProgress();
+  // Solo las variantes del nivel elegido (y anteriores); las ramas al azar salen de estas.
+  const opening = useMemo(() => openingForLevel(fullOpening, progress.settings.level), [fullOpening, progress.settings.level]);
   const myColor = opening.side;
   const myTurnLetter = myColor === 'white' ? 'w' : 'b';
   const startFen = resolveStartFen(opening.startFen);
@@ -51,7 +54,8 @@ export default function OpeningPractice({ opening }: { opening: Opening }) {
   // Se elige al montar, en el cliente (el azar no puede ir en el HTML generado al compilar), leyendo el
   // progreso guardado directamente: en el primer render aún se ve el progreso por defecto.
   useEffect(() => {
-    if (currentProgress().openings[opening.id]?.practiceRuns) setLine(randomLine(opening));
+    const saved = currentProgress();
+    if (saved.openings[opening.id]?.practiceRuns) setLine(randomLine(openingForLevel(fullOpening, saved.settings.level)));
     // Solo al entrar en la página.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

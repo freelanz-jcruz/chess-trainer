@@ -26,7 +26,8 @@ import {
   type Opening,
   type OpeningStep,
 } from '../lib/content/schemas';
-import { lessons as registeredLessons, openings as registeredOpenings } from '../lib/content/load';
+import { lessons as registeredLessons, openings as registeredOpenings, puzzleSets, puzzlesForSet } from '../lib/content/load';
+import { LEVEL_LABEL, type Level } from '../lib/content/levels';
 import type { Analysis, Engine } from '../lib/engine/engine';
 import { assessMove, VERDICT_LABEL, type Verdict } from '../lib/engine/evaluate';
 
@@ -74,7 +75,8 @@ async function analyze(fen: string): Promise<Analysis> {
 }
 
 // ---------- Temario ----------
-function validateCurriculum(openingIds: Set<string>, puzzleThemes: Set<string>, lessonIds: Set<string>) {
+/** `openingIds` / `lessonIds`: id del fichero -> su nivel, para comprobar que coincide con el del temario. */
+function validateCurriculum(openingIds: Map<string, Level>, lessonIds: Map<string, Level>) {
   console.log('\nTemario');
   const parsed = curriculumSchema.safeParse(readJson(join(CONTENT, 'curriculum.json')));
   if (!parsed.success) {
@@ -89,8 +91,15 @@ function validateCurriculum(openingIds: Set<string>, puzzleThemes: Set<string>, 
       if (l.status !== 'available') continue;
       if (l.type === 'opening' && !openingIds.has(l.ref)) error(`La lección ${l.id} apunta a una apertura inexistente: ${l.ref}`);
       if (l.type === 'lesson' && !lessonIds.has(l.ref)) error(`La lección ${l.id} apunta a un fichero de lección inexistente: ${l.ref}`);
-      if (l.type === 'puzzles' && !l.themes.some((t) => puzzleThemes.has(t)))
-        error(`La lección ${l.id} no tiene ningún problema de los temas ${l.themes.join(', ')}`);
+      if (l.type === 'puzzles') {
+        // Mismos problemas que verá la app: sus temas, dentro del tramo de rating de su nivel.
+        const n = puzzlesForSet(puzzleSets.find((s) => s.id === l.id)!).length;
+        if (!n) error(`La lección ${l.id} no tiene ningún problema de los temas ${l.themes.join(', ')} en su nivel`);
+        else if (n < 20) warn(`La lección ${l.id} solo tiene ${n} problemas (npm run puzzles -- --add)`);
+      }
+      const fileLevel = l.type === 'opening' ? openingIds.get(l.ref) : l.type === 'lesson' ? lessonIds.get(l.ref) : undefined;
+      if (fileLevel && fileLevel !== l.level)
+        error(`La lección ${l.id} es de nivel ${LEVEL_LABEL[l.level]} en el temario, pero su contenido es ${LEVEL_LABEL[fileLevel]}`);
     }
   }
   ok(`${parsed.data.blocks.length} bloques, ${seen.size} lecciones`);
@@ -285,20 +294,18 @@ async function validateLesson(l: LessonFile) {
 }
 
 // ---------- Problemas ----------
-async function validatePuzzles(): Promise<Set<string>> {
+async function validatePuzzles(): Promise<void> {
   console.log('\nProblemas');
-  const themes = new Set<string>();
   const parsed = puzzleFileSchema.safeParse(readJson(join(CONTENT, 'puzzles', 'puzzles.json')));
   if (!parsed.success) {
     error(`puzzles.json no cumple el esquema: ${parsed.error.message}`);
-    return themes;
+    return;
   }
   const ids = new Set<string>();
   let deepChecked = 0;
   for (const p of parsed.data.puzzles) {
     if (ids.has(p.id)) error(`Problema repetido: ${p.id}`);
     ids.add(p.id);
-    p.themes.forEach((t) => themes.add(t));
     let fen = p.fen;
     for (const m of [p.opponentMove, ...p.solution]) {
       const r = playUci(fen, m);
@@ -317,7 +324,6 @@ async function validatePuzzles(): Promise<Set<string>> {
     }
   }
   ok(`${parsed.data.puzzles.length} problemas con jugadas legales${deep ? `; ${deepChecked} comprobados con Stockfish` : ''}`);
-  return themes;
 }
 
 async function main() {
@@ -326,7 +332,7 @@ async function main() {
   // Aperturas: todos los ficheros deben cumplir el esquema y estar registrados en lib/content/load.ts.
   const dir = join(CONTENT, 'openings');
   const files = readdirSync(dir).filter((f) => f.endsWith('.json'));
-  const openingIds = new Set<string>();
+  const openingIds = new Map<string, Level>();
   const valid: Opening[] = [];
   console.log('\nFicheros de aperturas');
   for (const f of files) {
@@ -337,14 +343,14 @@ async function main() {
     }
     if (`${parsed.data.id}.json` !== f) error(`${f}: el id (${parsed.data.id}) no coincide con el nombre del fichero`);
     if (!registeredOpenings.some((o) => o.id === parsed.data.id)) error(`${f}: no está registrada en lib/content/load.ts`);
-    openingIds.add(parsed.data.id);
+    openingIds.set(parsed.data.id, parsed.data.level);
     valid.push(parsed.data);
   }
   ok(`${files.length} fichero(s)`);
 
   // Lecciones: esquema y registro en content/lessons/index.ts.
   const ldir = join(CONTENT, 'lessons');
-  const lessonIds = new Set<string>();
+  const lessonIds = new Map<string, Level>();
   const validLessons: LessonFile[] = [];
   console.log('\nFicheros de lecciones');
   const lfiles = readdirSync(ldir).filter((f) => f.endsWith('.json'));
@@ -356,13 +362,13 @@ async function main() {
     }
     if (`${parsed.data.id}.json` !== f) error(`${f}: el id (${parsed.data.id}) no coincide con el nombre del fichero`);
     if (!registeredLessons.some((l) => l.id === parsed.data.id)) error(`${f}: no está registrada en content/lessons/index.ts`);
-    lessonIds.add(parsed.data.id);
+    lessonIds.set(parsed.data.id, parsed.data.level);
     validLessons.push(parsed.data);
   }
   ok(`${lfiles.length} fichero(s)`);
 
-  const themes = await validatePuzzles();
-  validateCurriculum(openingIds, themes, lessonIds);
+  await validatePuzzles();
+  validateCurriculum(openingIds, lessonIds);
   for (const op of valid) await validateOpening(op);
   for (const l of validLessons) await validateLesson(l);
 

@@ -216,11 +216,107 @@
             { "san": "c3", "note": "Las blancas preparan d4." },
             { "san": "O-O", "note": "Rey a salvo: se llega a la misma posición tranquila." }
           ]
+        },
+        {
+          "id": "evans",
+          "name": "4.b4: Gambito Evans",
+          "eco": "C51",
+          "level": "intermedio",
+          "steps": [
+            { "san": "b4", "note": "Las blancas dan un peón para ganar tiempo y montar el centro con c3 y d4." },
+            { "san": "Bxb4", "note": "Aceptas el gambito: un peón es un peón." },
+            { "san": "c3", "note": "Las blancas echan a tu alfil y preparan d4." },
+            { "san": "Be7", "note": "Retirada sólida: el alfil defiende tu flanco de rey." },
+            { "san": "d4", "note": "Las blancas ocupan el centro." },
+            { "san": "Na5", "note": "Atacas el alfil que apunta a f7." },
+            { "san": "Be2", "note": "El alfil se aparta y defiende el centro." },
+            { "san": "exd4", "note": "Cambias en el centro." },
+            { "san": "Qxd4", "note": "La dama blanca recupera y ataca g7." },
+            { "san": "Nf6", "note": "Desarrollas y defiendes g7." },
+            { "san": "e5", "note": "Las blancas echan a tu caballo." },
+            { "san": "Nc6", "note": "Atacas a la dama con el otro caballo, que vuelve al centro." },
+            { "san": "Qh4", "note": "La dama se aparta, sin dejar de mirar a tu flanco de rey." },
+            { "san": "Nd5", "note": "El caballo se instala en el centro: sigues con un peón de más." }
+          ]
         }
       ]
     },
     { "san": "Nf6", "note": "Otra pieza fuera, presionando el peón de e4." },
-    { "san": "d3", "note": "Las blancas defienden e4: es la versión tranquila." },
+    {
+      "san": "d3",
+      "note": "Las blancas defienden e4: es la versión tranquila.",
+      "branches": [
+        {
+          "id": "giuoco-piano",
+          "name": "4.c3 y 5.d4: Giuoco Piano",
+          "eco": "C54",
+          "level": "intermedio",
+          "steps": [
+            { "san": "d4", "note": "Las blancas van a por el centro de inmediato." },
+            { "san": "exd4", "note": "Cambias: no puedes mantener e5." },
+            {
+              "san": "cxd4",
+              "note": "Las blancas forman un centro de dos peones.",
+              "branches": [
+                {
+                  "id": "e5",
+                  "name": "6.e5",
+                  "eco": "C54",
+                  "steps": [
+                    { "san": "e5", "note": "Las blancas echan a tu caballo en lugar de recuperar el peón." },
+                    { "san": "d5", "note": "Contraataque en el centro: atacas el alfil de c4." },
+                    { "san": "Bb5", "note": "El alfil se aparta y clava tu caballo." },
+                    { "san": "Ne4", "note": "El caballo se instala en el centro." },
+                    { "san": "cxd4", "note": "Las blancas recuperan el peón." },
+                    { "san": "Bb6", "note": "El alfil se retira a una diagonal segura." },
+                    { "san": "Nc3", "note": "Las blancas desarrollan." },
+                    { "san": "O-O", "note": "Rey a salvo." }
+                  ]
+                }
+              ]
+            },
+            { "san": "Bb4+", "note": "Jaque: obligas a las blancas a tapar." },
+            {
+              "san": "Bd2",
+              "note": "Las blancas tapan y ofrecen cambiar alfiles.",
+              "branches": [
+                {
+                  "id": "moller",
+                  "name": "7.Cc3: ataque Møller",
+                  "eco": "C54",
+                  "level": "avanzado",
+                  "steps": [
+                    { "san": "Nc3", "note": "Las blancas sacrifican el peón de e4." },
+                    { "san": "Nxe4", "note": "Lo tomas: tu caballo ataca al de c3." },
+                    { "san": "O-O", "note": "Las blancas enrocan y dejan el caballo." },
+                    { "san": "Bxc3", "note": "Ganas una pieza por un momento." },
+                    { "san": "d5", "note": "La idea de Møller: el peón ataca tu caballo de c6." },
+                    { "san": "Bf6", "note": "El alfil vuelve a defender tu flanco de rey." },
+                    { "san": "Re1", "note": "La torre clava tu caballo de e4." },
+                    { "san": "Ne7", "note": "El caballo se aparta y defiende." },
+                    { "san": "Rxe4", "note": "Las blancas recuperan la pieza." },
+                    { "san": "d6", "note": "Liberas tu alfil de c8 y frenas el peón de d5." },
+                    { "san": "Bg5", "note": "Las blancas cambian el defensor de tu rey." },
+                    { "san": "Bxg5", "note": "Cambias alfiles." },
+                    { "san": "Nxg5", "note": "El caballo amenaza h7." },
+                    { "san": "O-O", "note": "Enrocas: tienes un peón de más y puedes defender h7." }
+                  ]
+                }
+              ]
+            },
+            { "san": "Bxd2+", "note": "Cambias alfiles." },
+            { "san": "Nbxd2", "note": "Las blancas recuperan con el caballo." },
+            { "san": "d5", "note": "Golpeas el centro antes de que avance e5." },
+            { "san": "exd5", "note": "Las blancas cambian." },
+            { "san": "Nxd5", "note": "Tu caballo se centraliza." },
+            { "san": "Qb3", "note": "La dama ataca tu caballo de d5." },
+            { "san": "Nce7", "note": "Lo defiendes con el otro caballo." },
+            { "san": "O-O", "note": "Las blancas enrocan." },
+            { "san": "O-O", "note": "Rey a salvo: el peón de d4 aislado puede ser una debilidad." }
+          ]
+        }
+      ]
+    },
     { "san": "d6", "note": "Sostienes e5 y abres paso a tu alfil de c8." },
     { "san": "O-O", "note": "Las blancas ponen el rey a salvo." },
     { "san": "O-O", "note": "Tú también: rey a salvo y torre conectada." },

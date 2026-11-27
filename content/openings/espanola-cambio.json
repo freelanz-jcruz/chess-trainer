@@ -1,0 +1,79 @@
+{
+  "id": "espanola-cambio",
+  "name": "Apertura Española: variante del Cambio",
+  "eco": "C69",
+  "side": "white",
+  "kind": "repertoire",
+  "block": 5,
+  "level": "intermedio",
+  "summary": "Cambias el alfil por el caballo de c6 para doblar los peones negros. Luego cambias damas y juegas un final en el que tu mayoría de peones en el flanco de rey vale más.",
+  "startFen": "startpos",
+  "steps": [
+    { "san": "e4", "note": "Un peón al centro." },
+    { "san": "e5", "note": "Las negras responden igual." },
+    { "san": "Nf3", "note": "Desarrollas atacando e5." },
+    { "san": "Nc6", "note": "Las negras lo defienden." },
+    { "san": "Bb5", "note": "El alfil presiona al defensor de e5." },
+    { "san": "a6", "note": "Las negras preguntan al alfil." },
+    { "san": "Bxc6", "note": "Cambias: los peones negros quedan doblados en la columna c." },
+    {
+      "san": "dxc6",
+      "note": "Las negras capturan hacia fuera y abren líneas para sus alfiles.",
+      "branches": [
+        {
+          "id": "bxc6",
+          "name": "4...bxc6",
+          "eco": "C68",
+          "steps": [
+            { "san": "bxc6", "note": "Las negras capturan hacia el centro." },
+            { "san": "d4", "note": "Abres el centro: e5 ya no tiene defensor." },
+            { "san": "exd4", "note": "Las negras cambian." },
+            { "san": "Qxd4", "note": "La dama recupera el peón y ataca g7." },
+            { "san": "Nf6", "note": "Las negras desarrollan y atacan e4." },
+            { "san": "e5", "note": "Echas al caballo ganando espacio." },
+            { "san": "c5", "note": "El peón ataca a tu dama." },
+            { "san": "Qd3", "note": "La dama se aparta y vigila d5: tienes más espacio y peones más sanos." }
+          ]
+        }
+      ]
+    },
+    { "san": "O-O", "note": "Enrocas antes de nada: ahora sí amenazas ganar e5." },
+    {
+      "san": "f6",
+      "note": "Las negras sostienen e5 con un peón.",
+      "branches": [
+        {
+          "id": "ag4",
+          "name": "5...Ag4",
+          "eco": "C69",
+          "steps": [
+            { "san": "Bg4", "note": "Las negras clavan tu caballo." },
+            { "san": "h3", "note": "Preguntas al alfil." },
+            { "san": "h5", "note": "Las negras lo dejan ahí: si tomas, abren la columna h contra tu rey." },
+            { "san": "d3", "note": "No tomas en g4: defiendes e4 y desarrollas sin riesgos." },
+            { "san": "Qf6", "note": "La dama negra presiona tu caballo clavado." },
+            { "san": "Nbd2", "note": "Desarrollas y preparas Te1 y Cc4." },
+            { "san": "Ne7", "note": "El caballo negro va hacia g6." },
+            { "san": "Re1", "note": "La torre sostiene e4." },
+            { "san": "Ng6", "note": "El caballo llega a g6, mirando a f4." },
+            { "san": "d4", "note": "Golpeas el centro." }
+          ]
+        }
+      ]
+    },
+    { "san": "d4", "note": "Abres el centro para cambiar damas." },
+    { "san": "exd4", "note": "Las negras cambian." },
+    { "san": "Nxd4", "note": "El caballo recupera el peón en el centro." },
+    { "san": "c5", "note": "Las negras echan a tu caballo." },
+    { "san": "Nb3", "note": "El caballo se retira y ofrece cambiar damas." },
+    { "san": "Qxd1", "note": "Las negras cambian damas." },
+    { "san": "Rxd1", "note": "Recuperas con la torre, que domina la columna d." },
+    { "san": "Bg4", "note": "El alfil ataca tu torre." },
+    { "san": "f3", "note": "Echas al alfil y defiendes e4." },
+    { "san": "Be6", "note": "El alfil se retira y ataca tu caballo." },
+    { "san": "Nc3", "note": "Desarrollas: el plan es cambiar piezas y llegar a un final de peones." },
+    { "san": "Bd6", "note": "Las negras desarrollan." },
+    { "san": "Be3", "note": "Tu alfil ataca el peón de c5." }
+  ],
+  "alternatives": {}
+}
